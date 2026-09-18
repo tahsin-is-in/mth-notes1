@@ -175,7 +175,7 @@ const App = (() => {
 
   function paletteSkeleton() {
     return `
-      <div class="cmdk-backdrop" id="cmdk-backdrop" hidden>
+      <div class="cmdk-backdrop" id="cmdk-backdrop" style="display:none;">
         <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="Search">
           <div class="cmdk-input-row">
             <span class="cmdk-icon" aria-hidden="true">\ud83d\udd0d</span>
@@ -214,7 +214,7 @@ const App = (() => {
     const backdrop = document.getElementById('cmdk-backdrop');
     const input = document.getElementById('cmdk-input');
     if (!backdrop) return;
-    backdrop.hidden = false;
+    backdrop.style.display = 'flex';
     input.value = '';
     input.focus();
     paletteActiveIndex = -1;
@@ -227,7 +227,7 @@ const App = (() => {
 
   function closePalette() {
     const backdrop = document.getElementById('cmdk-backdrop');
-    if (backdrop) backdrop.hidden = true;
+    if (backdrop) backdrop.style.display = 'none';
   }
 
   function wirePalette() {
@@ -287,7 +287,7 @@ const App = (() => {
     const prefs = Store.getPrefs();
     const theme = Store.getTheme();
     return `
-      <div class="settings-backdrop" id="settings-backdrop" hidden>
+      <div class="settings-backdrop" id="settings-backdrop" style="display:none;">
         <div class="settings-panel" role="dialog" aria-modal="true" aria-label="Reading settings">
           <div class="settings-header">
             <h2>Settings</h2>
@@ -343,11 +343,11 @@ const App = (() => {
 
   function openSettings() {
     const el = document.getElementById('settings-backdrop');
-    if (el) el.hidden = false;
+    if (el) el.style.display = 'flex';
   }
   function closeSettings() {
     const el = document.getElementById('settings-backdrop');
-    if (el) el.hidden = true;
+    if (el) el.style.display = 'none';
   }
 
   function wireSettings() {
