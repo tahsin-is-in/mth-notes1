@@ -972,6 +972,14 @@ body {
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+/* ---------- Overlay hidden-state fix ----------
+   [hidden] must win over the .cmdk-backdrop / .settings-backdrop
+   `display: flex` rules above, or the overlays never actually hide. */
+.cmdk-backdrop[hidden],
+.settings-backdrop[hidden] {
+  display: none !important;
+}
+
 /* ---------- Print ---------- */
 @media print {
   .sidebar, .topbar, .lecture-toc, .lecture-actions, .lecture-footer-nav, .bottom-nav, .site-footer { display: none !important; }
