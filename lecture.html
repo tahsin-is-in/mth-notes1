@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lecture — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+</script>
+</head>
+<body data-nav="courses">
+<div class="reading-progress-bar" id="reading-progress-bar" style="width:0%"></div>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap" id="lecture-page-wrap">
+        <p class="section-sub">Loading lecture\u2026</p>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<script src="js/markdown.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script>
+  const slug = Router.getParam('c');
+  const file = Router.getParam('l');
+  const wrap = document.getElementById('lecture-page-wrap');
+
+  function setStatusUI(course, lecture, status) {
+    const btn = document.getElementById('mark-complete-btn');
+    if (!btn) return;
+    btn.textContent = status === 'completed' ? '\u2713 Completed' : 'Mark as completed';
+    btn.classList.toggle('btn-primary', status !== 'completed');
+    btn.classList.toggle('btn-secondary', status === 'completed');
+  }
+
+  function buildToc(headings) {
+    if (!headings.length) return '';
+    return `
+      <nav class="lecture-toc" aria-label="Table of contents">
+        <div class="lecture-toc-title">On this page</div>
+        ${headings.map(h => `<a href="#${h.id}" class="${h.level === 'h3' ? 'toc-h3' : ''}" data-toc-id="${h.id}">${UI.escapeHtml(h.text)}</a>`).join('')}
+      </nav>`;
+  }
+
+  App.getCourses().then(data => {
+    const course = data.courses.find(c => c.slug === slug);
+    App.mountShell('courses', slug);
+
+    if (!course || !file) {
+      App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Courses', url: 'courses.html' }, { label: 'Not found' }]);
+      wrap.innerHTML = UI.emptyState('\u26a0\ufe0f', 'Lecture not found', 'That lecture link looks incomplete. Try opening the course page instead.');
+      return;
+    }
+
+    const lectures = course.lectures || [];
+    const idx = lectures.findIndex(l => l.file === file);
+    const lecture = lectures[idx];
+
+    if (!lecture) {
+      App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Courses', url: 'courses.html' }, { label: course.code, url: Router.courseUrl(slug) }, { label: 'Not found' }]);
+      wrap.innerHTML = UI.emptyState('\u26a0\ufe0f', 'Lecture not found', 'This lecture may have been renamed or removed.');
+      return;
+    }
+
+    App.setBreadcrumbs([
+      { label: 'Home', url: 'index.html' },
+      { label: 'Courses', url: 'courses.html' },
+      { label: course.code, url: Router.courseUrl(slug) },
+      { label: 'Lectures', url: Router.courseUrl(slug) },
+      { label: lecture.title }
+    ]);
+    document.title = `${lecture.title} — MTH Notes`;
+
+    Store.addRecent({ courseSlug: slug, courseCode: course.code, courseTitle: course.title, file, title: lecture.title });
+
+    const status = Store.getLectureStatus(slug, file);
+    const isFav = Store.isFavorite(`lecture:${slug}:${file}`);
+    const prev = lectures[idx - 1];
+    const next = lectures[idx + 1];
+
+    wrap.innerHTML = `
+      <div class="lecture-layout">
+        <article class="lecture-main">
+          <div class="lecture-header">
+            <div class="lecture-eyebrow">${UI.escapeHtml(course.code)} / Lectures / Lecture ${String(idx + 1).padStart(2, '0')}</div>
+            <h1 class="lecture-title">${UI.escapeHtml(lecture.title)}</h1>
+            <div class="lecture-actions">
+              <button class="btn btn-secondary btn-sm" id="mark-complete-btn"></button>
+              <button class="btn btn-ghost btn-sm" id="bookmark-btn">${isFav ? '\u2605 Bookmarked' : '\u2606 Bookmark'}</button>
+              <button class="btn btn-ghost btn-sm" id="copy-link-btn">\ud83d\udd17 Copy link</button>
+              <button class="btn btn-ghost btn-sm" id="print-btn">\ud83d\udda8\ufe0f Print</button>
+            </div>
+          </div>
+          <div class="lecture-article" id="lecture-article">
+            <p class="section-sub">Loading notes\u2026</p>
+          </div>
+          <div class="lecture-footer-nav">
+            ${prev ? `<a class="footer-nav-link prev" href="${Router.lectureUrl(slug, prev.file)}"><span class="fnl-label">\u2190 Previous</span><span class="fnl-title">${UI.escapeHtml(prev.title)}</span></a>` : '<span></span>'}
+            ${next ? `<a class="footer-nav-link next" href="${Router.lectureUrl(slug, next.file)}"><span class="fnl-label">Next \u2192</span><span class="fnl-title">${UI.escapeHtml(next.title)}</span></a>` : ''}
+          </div>
+        </article>
+        <div id="toc-mount"></div>
+      </div>
+    `;
+
+    setStatusUI(course, lecture, status);
+
+    document.getElementById('mark-complete-btn').addEventListener('click', () => {
+      const current = Store.getLectureStatus(slug, file);
+      const newStatus = current === 'completed' ? 'not-started' : 'completed';
+      Store.setLectureStatus(slug, file, newStatus);
+      setStatusUI(course, lecture, newStatus);
+      UI.toast(newStatus === 'completed' ? 'Marked as completed' : 'Marked as not started');
+    });
+
+    document.getElementById('bookmark-btn').addEventListener('click', (e) => {
+      const id = `lecture:${slug}:${file}`;
+      const nowFav = Store.toggleFavorite({
+        id, type: 'lecture', title: lecture.title, courseCode: course.code, courseSlug: slug,
+        url: Router.lectureUrl(slug, file)
+      });
+      e.target.textContent = nowFav ? '\u2605 Bookmarked' : '\u2606 Bookmark';
+      UI.toast(nowFav ? 'Bookmarked' : 'Bookmark removed');
+    });
+
+    document.getElementById('copy-link-btn').addEventListener('click', () => {
+      Router.copyCurrentLink().then(() => UI.toast('Link copied'));
+    });
+
+    document.getElementById('print-btn').addEventListener('click', () => window.print());
+
+    // If a lecture is opened and was "not started", nudge it to "in progress".
+    if (status === 'not-started') {
+      Store.setLectureStatus(slug, file, 'in-progress');
+    }
+
+    // Fetch and render the markdown note.
+    fetch(Router.courseDataPath(slug, 'lectures', file))
+      .then(r => {
+        if (!r.ok) throw new Error('not found');
+        return r.text();
+      })
+      .then(raw => {
+        const { html, headings } = MarkdownRenderer.render(raw);
+        document.getElementById('lecture-article').innerHTML = html;
+        document.getElementById('toc-mount').innerHTML = buildToc(headings);
+        wireToc();
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          window.MathJax.typesetPromise([document.getElementById('lecture-article')]);
+        }
+      })
+      .catch(() => {
+        document.getElementById('lecture-article').innerHTML =
+          `<p>This lecture's note file could not be loaded. Check that <code>${UI.escapeHtml(Router.courseDataPath(slug, 'lectures', file))}</code> exists in the repository.</p>`;
+      });
+
+    function wireToc() {
+      const links = Array.from(document.querySelectorAll('#toc-mount a'));
+      const headingsEls = links.map(l => document.getElementById(l.getAttribute('data-toc-id')));
+      function onScroll() {
+        let activeIdx = 0;
+        headingsEls.forEach((el, i) => {
+          if (el && el.getBoundingClientRect().top < 120) activeIdx = i;
+        });
+        links.forEach((l, i) => l.classList.toggle('active', i === activeIdx));
+
+        // Reading progress bar based on scroll through the article.
+        const article = document.getElementById('lecture-article');
+        const total = article.scrollHeight - window.innerHeight;
+        const scrolled = window.scrollY - article.offsetTop + 200;
+        const pct = total > 0 ? Math.min(100, Math.max(0, (scrolled / total) * 100)) : 0;
+        document.getElementById('reading-progress-bar').style.width = pct + '%';
+      }
+      document.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+  }).catch(() => {
+    wrap.innerHTML = UI.emptyState('\u26a0\ufe0f', 'Something went wrong', 'Could not load course data.');
+  });
+</script>
+</body>
+</html>

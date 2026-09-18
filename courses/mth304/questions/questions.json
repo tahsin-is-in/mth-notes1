@@ -1,0 +1,59 @@
+{
+  "course": "MTH 304",
+  "questions": [
+    {
+      "id": "304-d1",
+      "category": "definition",
+      "text": "Define a group, and state the four group axioms.",
+      "tags": ["group", "axioms"]
+    },
+    {
+      "id": "304-d2",
+      "category": "definition",
+      "text": "Define a subgroup and give the subgroup test.",
+      "tags": ["subgroup", "subgroup test"]
+    },
+    {
+      "id": "304-t1",
+      "category": "theorem",
+      "text": "State Lagrange's Theorem.",
+      "tags": ["lagrange's theorem"]
+    },
+    {
+      "id": "304-p1",
+      "category": "proof",
+      "text": "Prove that the identity element of a group is unique.",
+      "tags": ["group", "identity element", "proof"]
+    },
+    {
+      "id": "304-p2",
+      "category": "proof",
+      "text": "Prove Lagrange's Theorem using cosets.",
+      "tags": ["lagrange's theorem", "cosets", "proof"]
+    },
+    {
+      "id": "304-pr1",
+      "category": "problem",
+      "text": "List all subgroups of Z_12 and verify Lagrange's Theorem for each.",
+      "tags": ["cyclic group", "subgroup", "problem"]
+    },
+    {
+      "id": "304-short1",
+      "category": "short",
+      "text": "Is every cyclic group abelian? Justify briefly.",
+      "tags": ["cyclic group", "abelian"]
+    },
+    {
+      "id": "304-viva1",
+      "category": "viva",
+      "text": "Why does the order of an element always divide the order of the group?",
+      "tags": ["lagrange's theorem", "order of an element", "viva"]
+    },
+    {
+      "id": "304-imp1",
+      "category": "important",
+      "text": "Lagrange's converse is false in general \u2014 give a group where a divisor of |G| is not the order of any subgroup.",
+      "tags": ["lagrange's theorem", "converse"]
+    }
+  ]
+}

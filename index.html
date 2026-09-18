@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MTH Notes — My Mathematics Study Library</title>
+<meta name="description" content="A personal Mathematics study library for lectures, notes, questions, formulas, and resources." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-nav="home">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap">
+
+        <section class="hero">
+          <div class="hero-eyebrow">Third Year Mathematics</div>
+          <h1>MTH Notes</h1>
+          <p class="subtitle">My Mathematics Study Library</p>
+          <p class="desc">A beautifully organized space for lectures, notes, questions, resources, and revision.</p>
+          <a class="btn btn-primary" href="courses.html">Explore Courses \u2192</a>
+          <p class="hero-formula" id="math-quote"></p>
+        </section>
+
+        <section aria-labelledby="quick-access-heading">
+          <div class="section-head"><h2 id="quick-access-heading">Quick Access</h2></div>
+          <div class="quick-grid" id="quick-access-grid"></div>
+        </section>
+
+        <div class="two-col-grid">
+          <div>
+            <section aria-labelledby="continue-heading">
+              <div class="section-head"><h2 id="continue-heading">Continue Studying</h2></div>
+              <div id="continue-studying-list"></div>
+            </section>
+
+            <section aria-labelledby="recent-heading">
+              <div class="section-head"><h2 id="recent-heading">Recently Added</h2></div>
+              <div class="lecture-list" id="recently-added-list"></div>
+            </section>
+          </div>
+
+          <div>
+            <section aria-labelledby="progress-heading" style="margin-bottom:1.5rem;">
+              <div class="side-panel">
+                <div class="overall-progress-ring-label">
+                  <span>Overall Study Progress</span>
+                  <span id="overall-progress-percent">0%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" id="overall-progress-fill" style="width:0%"></div></div>
+                <p class="section-sub" id="overall-progress-caption" style="margin-top:0.75rem;">Loading\u2026</p>
+              </div>
+            </section>
+
+            <section aria-labelledby="formula-heading" style="margin-bottom:1.5rem;">
+              <div class="side-panel">
+                <div class="settings-label">Formula of the Day</div>
+                <div class="formula-of-day" id="formula-of-day"></div>
+                <div class="formula-of-day-caption" id="formula-of-day-caption"></div>
+              </div>
+            </section>
+
+            <section aria-labelledby="revision-heading">
+              <div class="side-panel">
+                <div class="settings-label">Quick Revision</div>
+                <div id="quick-revision-list"></div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script>
+  App.mountShell('home');
+
+  document.getElementById('quick-access-grid').innerHTML = [
+    { icon: '\ud83d\udcda', label: 'Courses', desc: 'Browse all subjects', url: 'courses.html' },
+    { icon: '\ud83d\udcdd', label: 'Lecture Notes', desc: 'Latest topics', url: 'courses.html' },
+    { icon: '\u2753', label: 'Important Questions', desc: 'Exam-ready bank', url: 'questions.html' },
+    { icon: '\ud83d\udcc4', label: 'Resources', desc: 'Slides & references', url: 'resources.html' },
+    { icon: '\ud83d\udd0d', label: 'Search', desc: 'Find anything fast', url: 'search.html' },
+    { icon: '\u2b50', label: 'Favorites', desc: 'Your saved items', url: 'favorites.html' }
+  ].map(UI.quickCard).join('');
+
+  const quote = UI.mathQuote();
+  document.getElementById('math-quote').textContent = `\u201c${quote.text}\u201d \u2014 ${quote.by}`;
+
+  const fod = UI.formulaOfTheDay();
+  document.getElementById('formula-of-day').innerHTML = fod.tex;
+  document.getElementById('formula-of-day-caption').textContent = fod.caption;
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([document.getElementById('formula-of-day')]);
+  }
+
+  App.getCourses().then(data => {
+    const courses = data.courses;
+
+    // Overall progress
+    const stats = Store.getOverallStats(courses);
+    document.getElementById('overall-progress-percent').textContent = stats.percent + '%';
+    document.getElementById('overall-progress-fill').style.width = stats.percent + '%';
+    document.getElementById('overall-progress-caption').textContent =
+      stats.totalLectures > 0
+        ? `${stats.percent}% of your saved study materials completed (${stats.totalCompleted}/${stats.totalLectures} lectures)`
+        : 'Add lectures to your courses to start tracking progress.';
+
+    // Continue studying (recents)
+    const recents = Store.getRecents();
+    const continueEl = document.getElementById('continue-studying-list');
+    if (!recents.length) {
+      continueEl.innerHTML = UI.emptyState('\ud83d\udcd6', 'Nothing yet', 'Open a lecture to see it appear here for quick access.');
+    } else {
+      continueEl.innerHTML = recents.slice(0, 4).map(r => {
+        const course = courses.find(c => c.slug === r.courseSlug);
+        const total = course ? (course.lectures || []).length : 0;
+        const cs = Store.getCourseCompletionStats(r.courseSlug, total);
+        return `
+          <a class="continue-card" href="${Router.lectureUrl(r.courseSlug, r.file)}" style="display:block;">
+            <div class="continue-card-course">${UI.escapeHtml(r.courseCode)}</div>
+            <div class="continue-card-title">${UI.escapeHtml(r.title)}</div>
+            <div class="continue-card-progress">
+              <div class="progress-track" style="flex:1;"><div class="progress-fill" style="width:${cs.percent}%"></div></div>
+              <span class="progress-label">${cs.percent}%</span>
+            </div>
+          </a>`;
+      }).join('');
+    }
+
+    // Recently added lectures — newest lecture per populated course (by data order)
+    const withLectures = courses.filter(c => (c.lectures || []).length > 0);
+    const recentlyAdded = [];
+    withLectures.forEach(c => {
+      const last = c.lectures[c.lectures.length - 1];
+      recentlyAdded.push({ course: c, lecture: last, index: c.lectures.length - 1 });
+    });
+    const raEl = document.getElementById('recently-added-list');
+    raEl.innerHTML = recentlyAdded.length
+      ? recentlyAdded.map(r => UI.lectureRow(r.course, r.lecture, r.index)).join('')
+      : UI.emptyState('\u2728', 'No lectures yet', 'New lectures you add on GitHub will appear here.');
+
+    // Quick revision — favorites
+    const favs = Store.getFavorites().slice(0, 5);
+    const revEl = document.getElementById('quick-revision-list');
+    revEl.innerHTML = favs.length
+      ? favs.map(f => `<a class="revision-item" href="${f.url}">${'\u2b50'} <span>${UI.escapeHtml(f.title)}</span></a>`).join('')
+      : `<p class="section-sub" style="margin:0.5rem 0 0;">Bookmark lectures or questions to revise them here.</p>`;
+  });
+</script>
+</body>
+</html>

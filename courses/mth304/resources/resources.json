@@ -1,0 +1,7 @@
+{
+  "course": "MTH 304",
+  "resources": [
+    { "title": "Lecture Slides \u2013 Groups & Subgroups", "type": "pdf", "file": "../../../assets/pdf/mth304-groups.pdf", "description": "Definitions, axioms, and first examples of groups." },
+    { "title": "Group Theory Visualisations (external)", "type": "link", "url": "https://groupexplorer.sourceforge.net/", "description": "Interactive Cayley diagrams for small groups." }
+  ]
+}

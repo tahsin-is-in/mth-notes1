@@ -1,0 +1,7 @@
+{
+  "course": "MTH 303",
+  "resources": [
+    { "title": "Laplace Transform Table", "type": "pdf", "file": "../../../assets/pdf/mth303-laplace-table.pdf", "description": "Standard table of Laplace transform pairs." },
+    { "title": "Paul's Online Math Notes \u2013 Series Solutions (external)", "type": "link", "url": "https://tutorial.math.lamar.edu/classes/de/SeriesSolutions.aspx", "description": "Extra worked examples on power series solutions." }
+  ]
+}

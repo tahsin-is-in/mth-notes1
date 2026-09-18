@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Search — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-nav="search">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap narrow">
+        <div class="section-head" style="margin-top:0;">
+          <h2>Search</h2>
+        </div>
+        <p class="section-sub">Search across every course, lecture, question, and resource. Press <kbd style="font-family:var(--font-mono);border:1px solid var(--border);border-radius:4px;padding:0.05rem 0.4rem;">Ctrl</kbd> + <kbd style="font-family:var(--font-mono);border:1px solid var(--border);border-radius:4px;padding:0.05rem 0.4rem;">K</kbd> anywhere on the site to search instantly.</p>
+        <input type="text" class="search-input-lg" id="search-input" placeholder="Try “uniform convergence”, “MTH 304”, “Lagrange”…" autofocus />
+        <div id="search-results" style="margin-top:1.75rem;"></div>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+<script>
+  App.mountShell('search');
+  App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Search' }]);
+
+  const input = document.getElementById('search-input');
+  const resultsEl = document.getElementById('search-results');
+  let indexItems = null;
+
+  resultsEl.innerHTML = '<p class="section-sub">Building the search index\u2026</p>';
+
+  App.getCourses().then(data => SearchIndex.build(data)).then(items => {
+    indexItems = items;
+    resultsEl.innerHTML = '<p class="section-sub">Start typing to search.</p>';
+    if (input.value) runSearch();
+  });
+
+  function typeIcon(type) {
+    return { course: '\ud83d\udcda', lecture: '\ud83d\udcd6', question: '\u2753', resource: '\ud83d\udcc4' }[type] || '\u2022';
+  }
+
+  function runSearch() {
+    if (!indexItems) return;
+    const q = input.value.trim();
+    if (!q) {
+      resultsEl.innerHTML = '<p class="section-sub">Start typing to search.</p>';
+      return;
+    }
+    const results = SearchIndex.query(indexItems, q, 50);
+    resultsEl.innerHTML = results.length
+      ? `<div class="lecture-list">${results.map(r => `
+          <a class="lecture-row" href="${r.url}">
+            <span class="lecture-row-num" aria-hidden="true" style="width:auto;font-size:1rem;">${typeIcon(r.type)}</span>
+            <span class="lecture-row-main">
+              <span class="lecture-row-title">${UI.escapeHtml(r.title)}</span>
+              <span class="lecture-row-summary">${UI.escapeHtml(r.sub)}</span>
+            </span>
+          </a>`).join('')}</div>`
+      : UI.emptyState('\ud83d\udd0d', 'No results', `Nothing matched "${q}". Try a shorter or different term.`);
+  }
+
+  input.addEventListener('input', runSearch);
+
+  const initialQuery = Router.getParam('q');
+  if (initialQuery) input.value = initialQuery;
+</script>
+</body>
+</html>

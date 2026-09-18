@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Favorites — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-nav="favorites">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap">
+        <div class="section-head" style="margin-top:0;">
+          <h2>\u2b50 My Favorites</h2>
+        </div>
+        <p class="section-sub">Everything you've bookmarked, stored only on this device.</p>
+        <div id="favorites-content"></div>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+<script>
+  App.mountShell('favorites');
+  App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Favorites' }]);
+
+  function typeIcon(type) {
+    return { course: '\ud83d\udcda', lecture: '\ud83d\udcd6', question: '\u2753', resource: '\ud83d\udcc4' }[type] || '\u2b50';
+  }
+  function typeLabel(type) {
+    return { course: 'Courses', lecture: 'Lectures', question: 'Questions', resource: 'Resources' }[type] || 'Other';
+  }
+
+  function render() {
+    const favs = Store.getFavorites();
+    const content = document.getElementById('favorites-content');
+    if (!favs.length) {
+      content.innerHTML = UI.emptyState('\u2b50', 'No favorites yet', 'Tap the star icon on a lecture, course, or question to save it here.');
+      return;
+    }
+
+    const groups = {};
+    favs.forEach(f => { (groups[f.type] = groups[f.type] || []).push(f); });
+
+    const order = ['lecture', 'question', 'course', 'resource'];
+    content.innerHTML = order.filter(t => groups[t]).map(type => `
+      <div class="fav-section-title">${typeIcon(type)} ${typeLabel(type)}</div>
+      <div class="lecture-list">
+        ${groups[type].map(f => `
+          <a class="lecture-row" href="${f.url}">
+            <span class="lecture-row-main">
+              <span class="lecture-row-title">${UI.escapeHtml(f.title)}</span>
+              <span class="lecture-row-summary">${UI.escapeHtml(f.courseCode || '')}</span>
+            </span>
+            <button class="icon-btn" data-remove-fav="${f.id}" aria-label="Remove favorite" style="color:var(--gold)">\u2605</button>
+          </a>`).join('')}
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('favorites-content').addEventListener('click', e => {
+    const btn = e.target.closest('[data-remove-fav]');
+    if (!btn) return;
+    e.preventDefault();
+    Store.removeFavorite(btn.getAttribute('data-remove-fav'));
+    UI.toast('Removed from favorites');
+    render();
+  });
+
+  render();
+</script>
+</body>
+</html>

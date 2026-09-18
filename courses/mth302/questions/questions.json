@@ -1,0 +1,47 @@
+{
+  "course": "MTH 302",
+  "questions": [
+    {
+      "id": "302-d1",
+      "category": "definition",
+      "text": "Define an analytic (holomorphic) function on an open set.",
+      "tags": ["analytic function", "holomorphic"]
+    },
+    {
+      "id": "302-t1",
+      "category": "theorem",
+      "text": "State the Cauchy\u2013Riemann equations and the theorem that relates them to differentiability.",
+      "tags": ["cauchy-riemann equations", "differentiability"]
+    },
+    {
+      "id": "302-t2",
+      "category": "theorem",
+      "text": "State Cauchy's Integral Formula.",
+      "tags": ["cauchy integral formula"]
+    },
+    {
+      "id": "302-p1",
+      "category": "proof",
+      "text": "Prove that if f = u + iv is analytic, then u and v are harmonic functions.",
+      "tags": ["harmonic function", "cauchy-riemann equations", "proof"]
+    },
+    {
+      "id": "302-pr1",
+      "category": "problem",
+      "text": "Evaluate the contour integral of 1/(z^2 + 1) around |z| = 2 using residues.",
+      "tags": ["contour integral", "residues", "problem"]
+    },
+    {
+      "id": "302-viva1",
+      "category": "viva",
+      "text": "Why must the Cauchy\u2013Riemann equations hold at a point for a function to be complex differentiable there, and why is that not sufficient on its own?",
+      "tags": ["cauchy-riemann equations", "viva"]
+    },
+    {
+      "id": "302-imp1",
+      "category": "important",
+      "text": "Every analytic function is infinitely differentiable \u2014 explain why this has no real-variable analogue.",
+      "tags": ["analytic function", "infinitely differentiable"]
+    }
+  ]
+}

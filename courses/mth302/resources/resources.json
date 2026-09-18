@@ -1,0 +1,7 @@
+{
+  "course": "MTH 302",
+  "resources": [
+    { "title": "Lecture Slides \u2013 Cauchy\u2013Riemann Equations", "type": "pdf", "file": "../../../assets/pdf/mth302-cauchy-riemann.pdf", "description": "Derivation and worked examples." },
+    { "title": "Contour Integration Cheat Sheet", "type": "pdf", "file": "../../../assets/pdf/mth302-contour-integration.pdf", "description": "One-page summary of common contour integral techniques." }
+  ]
+}

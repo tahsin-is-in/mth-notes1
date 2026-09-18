@@ -1,0 +1,8 @@
+{
+  "course": "MTH 301",
+  "resources": [
+    { "title": "Lecture Slides \u2013 Metric Spaces", "type": "pdf", "file": "../../../assets/pdf/mth301-metric-spaces.pdf", "description": "Slide deck covering metric space axioms and examples." },
+    { "title": "Problem Sheet 1", "type": "pdf", "file": "../../../assets/pdf/mth301-problem-sheet-1.pdf", "description": "Practice problems on completeness and compactness." },
+    { "title": "Baby Rudin \u2013 Chapter 7 (external)", "type": "link", "url": "https://en.wikipedia.org/wiki/Uniform_convergence", "description": "Background reading on uniform convergence." }
+  ]
+}

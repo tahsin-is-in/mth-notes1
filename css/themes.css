@@ -1,0 +1,116 @@
+/* ==========================================================================
+   themes.css — color tokens for light / dark / system modes
+   Toggled via [data-theme="light"] / [data-theme="dark"] on <html>.
+   With no attribute set, the OS preference (prefers-color-scheme) applies.
+   ========================================================================== */
+
+:root {
+  /* ---- Light palette (default) ---- */
+  --bg: #FAF9F5;
+  --bg-elevated: #FFFFFF;
+  --bg-sunken: #F1EFE8;
+  --ink: #1C2029;
+  --ink-soft: #565C6B;
+  --ink-faint: #8A8F9C;
+  --border: #E4E0D6;
+  --border-strong: #D2CDBF;
+
+  --accent: #2F4C6B;         /* deep academic blue-ink */
+  --accent-strong: #1F3650;
+  --accent-soft: #E8EEF3;
+  --accent-contrast: #FFFFFF;
+
+  --gold: #A6772C;           /* muted amber — used sparingly for emphasis */
+  --gold-soft: #F5EDDC;
+
+  --green: #3F7A56;
+  --green-soft: #E6F0EA;
+  --red: #A6402F;
+  --red-soft: #F5E7E3;
+
+  --shadow-sm: 0 1px 2px rgba(28, 32, 41, 0.06);
+  --shadow-md: 0 4px 16px rgba(28, 32, 41, 0.08);
+  --shadow-lg: 0 12px 32px rgba(28, 32, 41, 0.12);
+
+  --code-bg: #F1EEE6;
+  --selection-bg: rgba(47, 76, 107, 0.16);
+
+  color-scheme: light;
+}
+
+/* ---- Dark palette ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161C;
+    --bg-elevated: #1B1E27;
+    --bg-sunken: #101217;
+    --ink: #E8E6E0;
+    --ink-soft: #A7ACBA;
+    --ink-faint: #6F7585;
+    --border: #2B2F3B;
+    --border-strong: #3A3F4E;
+
+    --accent: #86A6CB;
+    --accent-strong: #A9C2E0;
+    --accent-soft: #202836;
+    --accent-contrast: #101521;
+
+    --gold: #D8AD5E;
+    --gold-soft: #2A2517;
+
+    --green: #7CB899;
+    --green-soft: #172420;
+    --red: #D08272;
+    --red-soft: #2A1B18;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+
+    --code-bg: #20242F;
+    --selection-bg: rgba(134, 166, 203, 0.28);
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #14161C;
+  --bg-elevated: #1B1E27;
+  --bg-sunken: #101217;
+  --ink: #E8E6E0;
+  --ink-soft: #A7ACBA;
+  --ink-faint: #6F7585;
+  --border: #2B2F3B;
+  --border-strong: #3A3F4E;
+
+  --accent: #86A6CB;
+  --accent-strong: #A9C2E0;
+  --accent-soft: #202836;
+  --accent-contrast: #101521;
+
+  --gold: #D8AD5E;
+  --gold-soft: #2A2517;
+
+  --green: #7CB899;
+  --green-soft: #172420;
+  --red: #D08272;
+  --red-soft: #2A1B18;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+
+  --code-bg: #20242F;
+  --selection-bg: rgba(134, 166, 203, 0.28);
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+::selection {
+  background: var(--selection-bg);
+}

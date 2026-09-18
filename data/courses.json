@@ -1,0 +1,221 @@
+{
+  "years": [
+    {
+      "year": "Third Year Mathematics",
+      "courseSlugs": [
+        "mth301", "mth302", "mth303", "mth304", "mth305", "mth306",
+        "mth307", "mth308", "mth309", "mth310", "mth350", "mth399"
+      ]
+    }
+  ],
+  "courses": [
+    {
+      "code": "MTH 301",
+      "slug": "mth301",
+      "title": "Real Analysis II",
+      "year": "Third Year",
+      "icon": "\u222b",
+      "description": "Metric spaces, completeness, compactness, and the convergence of sequences and series of functions.",
+      "topics": ["Metric Spaces", "Completeness", "Compactness", "Uniform Convergence", "Series of Functions", "Equicontinuity"],
+      "questionCount": 8,
+      "resourceCount": 3,
+      "lectures": [
+        {
+          "title": "Metric Spaces",
+          "file": "01-metric-spaces.md",
+          "summary": "Distance functions, open and closed balls, and the basic topology they induce.",
+          "keywords": ["metric space", "distance function", "open ball", "closed ball", "metric topology"]
+        },
+        {
+          "title": "Complete Metric Spaces",
+          "file": "02-complete-metric-spaces.md",
+          "summary": "Cauchy sequences, completeness, and why R^n is complete.",
+          "keywords": ["cauchy sequence", "completeness", "complete metric space", "banach"]
+        },
+        {
+          "title": "Uniform Convergence",
+          "file": "03-uniform-convergence.md",
+          "summary": "Pointwise vs. uniform convergence of sequences of functions and why the difference matters.",
+          "keywords": ["uniform convergence", "pointwise convergence", "sequence of functions", "sup norm"]
+        },
+        {
+          "title": "Series of Functions",
+          "file": "04-series-of-functions.md",
+          "summary": "The Weierstrass M-test and term-by-term integration and differentiation.",
+          "keywords": ["series of functions", "weierstrass m-test", "power series", "term by term"]
+        }
+      ]
+    },
+    {
+      "code": "MTH 302",
+      "slug": "mth302",
+      "title": "Complex Analysis",
+      "year": "Third Year",
+      "icon": "\u2124",
+      "description": "Holomorphic functions, contour integration, and the beautiful rigidity of complex-differentiable maps.",
+      "topics": ["Analytic Functions", "Cauchy\u2013Riemann Equations", "Contour Integration", "Cauchy's Integral Formula", "Residues", "Conformal Mapping"],
+      "questionCount": 7,
+      "resourceCount": 2,
+      "lectures": [
+        {
+          "title": "Analytic Functions & the Cauchy\u2013Riemann Equations",
+          "file": "01-analytic-functions.md",
+          "summary": "Complex differentiability and the conditions that characterise it.",
+          "keywords": ["analytic function", "holomorphic", "cauchy-riemann equations", "complex differentiable"]
+        },
+        {
+          "title": "Cauchy's Integral Formula",
+          "file": "02-cauchy-integral-formula.md",
+          "summary": "How the values of an analytic function inside a contour are determined by its values on the boundary.",
+          "keywords": ["cauchy integral formula", "contour integral", "cauchy's theorem", "residues"]
+        }
+      ]
+    },
+    {
+      "code": "MTH 303",
+      "slug": "mth303",
+      "title": "Ordinary Differential Equations II",
+      "year": "Third Year",
+      "icon": "\u2202",
+      "description": "Series solutions, special functions, and Laplace transform techniques for solving ODEs.",
+      "topics": ["Power Series Solutions", "Legendre Equation", "Bessel Equation", "Laplace Transforms", "Systems of ODEs"],
+      "questionCount": 6,
+      "resourceCount": 2,
+      "lectures": [
+        {
+          "title": "Power Series Solutions",
+          "file": "01-power-series-solutions.md",
+          "summary": "Solving linear ODEs about an ordinary point using power series.",
+          "keywords": ["power series solution", "ordinary point", "recurrence relation"]
+        },
+        {
+          "title": "The Laplace Transform",
+          "file": "02-laplace-transform.md",
+          "summary": "Turning differential equations into algebraic ones with the Laplace transform.",
+          "keywords": ["laplace transform", "inverse laplace transform", "initial value problem"]
+        }
+      ]
+    },
+    {
+      "code": "MTH 304",
+      "slug": "mth304",
+      "title": "Abstract Algebra",
+      "year": "Third Year",
+      "icon": "\u2295",
+      "description": "Groups, rings, and the structures that make algebra 'abstract' \u2014 and powerful.",
+      "topics": ["Groups", "Subgroups", "Cyclic Groups", "Lagrange's Theorem", "Rings", "Ideals"],
+      "questionCount": 9,
+      "resourceCount": 2,
+      "lectures": [
+        {
+          "title": "Groups and Subgroups",
+          "file": "01-groups-and-subgroups.md",
+          "summary": "The group axioms, first examples, and how to recognise a subgroup.",
+          "keywords": ["group", "subgroup", "group axioms", "abelian group"]
+        },
+        {
+          "title": "Lagrange's Theorem",
+          "file": "02-lagrange-theorem.md",
+          "summary": "Why the order of a subgroup always divides the order of the group.",
+          "keywords": ["lagrange's theorem", "cosets", "order of a group", "index"]
+        }
+      ]
+    },
+    {
+      "code": "MTH 305",
+      "slug": "mth305",
+      "title": "Fundamentals of Topology",
+      "year": "Third Year",
+      "icon": "\u25ef",
+      "description": "Open sets, continuity, and connectedness \u2014 the language beneath modern analysis.",
+      "topics": ["Topological Spaces", "Basis", "Continuity", "Connectedness", "Compactness"],
+      "questionCount": 0,
+      "resourceCount": 0,
+      "lectures": []
+    },
+    {
+      "code": "MTH 306",
+      "slug": "mth306",
+      "title": "Numerical Analysis II",
+      "year": "Third Year",
+      "icon": "\u2248",
+      "description": "Numerical methods for differentiation, integration, and solving differential equations.",
+      "topics": ["Numerical Differentiation", "Numerical Integration", "Runge\u2013Kutta Methods", "Error Analysis"],
+      "questionCount": 0,
+      "resourceCount": 0,
+      "lectures": []
+    },
+    {
+      "code": "MTH 307",
+      "slug": "mth307",
+      "title": "Mathematical Methods",
+      "year": "Third Year",
+      "icon": "\u2211",
+      "description": "Fourier series, boundary value problems, and techniques for applied mathematics.",
+      "topics": ["Fourier Series", "Sturm\u2013Liouville Theory", "Boundary Value Problems", "Integral Transforms"],
+      "questionCount": 0,
+      "resourceCount": 0,
+      "lectures": []
+    },
+    {
+      "code": "MTH 308",
+      "slug": "mth308",
+      "title": "Optimization",
+      "year": "Third Year",
+      "icon": "\u25b3",
+      "description": "Linear and nonlinear optimization, convexity, and the theory of optimal solutions.",
+      "topics": ["Linear Programming", "Convexity", "Lagrange Multipliers", "KKT Conditions"],
+      "questionCount": 0,
+      "resourceCount": 0,
+      "lectures": []
+    },
+    {
+      "code": "MTH 309",
+      "slug": "mth309",
+      "title": "Stochastic Calculus",
+      "year": "Third Year",
+      "icon": "\u03c3",
+      "description": "Brownian motion, stochastic integration, and Ito's formula.",
+      "topics": ["Brownian Motion", "Martingales", "Ito Integral", "Ito's Formula", "Stochastic Differential Equations"],
+      "questionCount": 0,
+      "resourceCount": 0,
+      "lectures": []
+    },
+    {
+      "code": "MTH 310",
+      "slug": "mth310",
+      "title": "Introduction to Actuarial Mathematics",
+      "year": "Third Year",
+      "icon": "%",
+      "description": "Interest theory, annuities, and the mathematics behind insurance and pensions.",
+      "topics": ["Interest Theory", "Annuities", "Life Tables", "Premium Calculation"],
+      "questionCount": 0,
+      "resourceCount": 0,
+      "lectures": []
+    },
+    {
+      "code": "MTH 350",
+      "slug": "mth350",
+      "title": "Math Lab III (FORTRAN)",
+      "year": "Third Year",
+      "icon": "\u2318",
+      "description": "Scientific computing and numerical programming in FORTRAN.",
+      "topics": ["FORTRAN Syntax", "Numerical Programs", "Root Finding", "Matrix Computations"],
+      "questionCount": 0,
+      "resourceCount": 0,
+      "lectures": []
+    },
+    {
+      "code": "MTH 399",
+      "slug": "mth399",
+      "title": "Viva Voce",
+      "year": "Third Year",
+      "icon": "?",
+      "description": "Oral examination covering the full third-year syllabus.",
+      "topics": ["Comprehensive Review", "Oral Presentation", "Core Theorems"],
+      "questionCount": 0,
+      "resourceCount": 0,
+      "lectures": []
+    }
+  ]
+}

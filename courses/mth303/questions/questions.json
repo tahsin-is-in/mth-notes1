@@ -1,0 +1,41 @@
+{
+  "course": "MTH 303",
+  "questions": [
+    {
+      "id": "303-d1",
+      "category": "definition",
+      "text": "Define an ordinary point and a singular point of a linear second-order ODE.",
+      "tags": ["ordinary point", "singular point"]
+    },
+    {
+      "id": "303-t1",
+      "category": "theorem",
+      "text": "State the existence theorem for power series solutions near an ordinary point.",
+      "tags": ["power series solution", "existence theorem"]
+    },
+    {
+      "id": "303-p1",
+      "category": "proof",
+      "text": "Derive the Laplace transform of f(t) = e^{at} from the defining integral.",
+      "tags": ["laplace transform", "proof"]
+    },
+    {
+      "id": "303-pr1",
+      "category": "problem",
+      "text": "Solve y'' - 2y' + y = e^t, y(0) = 0, y'(0) = 1, using the Laplace transform.",
+      "tags": ["laplace transform", "initial value problem", "problem"]
+    },
+    {
+      "id": "303-pr2",
+      "category": "problem",
+      "text": "Find the first four terms of the power series solution to y'' + xy = 0 about x = 0.",
+      "tags": ["power series solution", "recurrence relation", "problem"]
+    },
+    {
+      "id": "303-pq1",
+      "category": "previous",
+      "text": "(2023) Use Laplace transforms to solve a system of two coupled first-order ODEs.",
+      "tags": ["laplace transform", "system of odes"]
+    }
+  ]
+}

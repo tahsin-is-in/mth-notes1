@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Course — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-nav="courses">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap" id="course-page-wrap">
+        <p class="section-sub">Loading course\u2026</p>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+<script>
+  const slug = Router.getParam('c');
+
+  App.getCourses().then(data => {
+    const course = data.courses.find(c => c.slug === slug);
+    App.mountShell('courses', slug);
+
+    const wrap = document.getElementById('course-page-wrap');
+
+    if (!course) {
+      App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Courses', url: 'courses.html' }, { label: 'Not found' }]);
+      wrap.innerHTML = UI.emptyState('\u26a0\ufe0f', 'Course not found', 'That course code doesn\u2019t exist. Check the link or browse all courses.');
+      return;
+    }
+
+    App.setBreadcrumbs([
+      { label: 'Home', url: 'index.html' },
+      { label: 'Courses', url: 'courses.html' },
+      { label: course.code }
+    ]);
+    document.title = `${course.code} \u2014 ${course.title} — MTH Notes`;
+
+    const lectureCount = (course.lectures || []).length;
+    const stats = Store.getCourseCompletionStats(course.slug, lectureCount);
+    const isFav = Store.isFavorite(`course:${course.slug}`);
+
+    wrap.innerHTML = `
+      <div class="course-hero">
+        <div class="course-icon" aria-hidden="true">${course.icon || '\u2211'}</div>
+        <div>
+          <div class="course-hero-code">${UI.escapeHtml(course.code)} \u00b7 ${UI.escapeHtml(course.year || 'Third Year')}</div>
+          <h1>${UI.escapeHtml(course.title)}</h1>
+          <p>${UI.escapeHtml(course.description || '')}</p>
+          ${lectureCount > 0 ? `
+            <div class="progress-row">
+              <div class="progress-track"><div class="progress-fill" style="width:${stats.percent}%"></div></div>
+              <span class="progress-label">${stats.percent}% \u00b7 ${stats.completed}/${stats.total} lectures</span>
+            </div>` : ''}
+          <div style="margin-top:1rem;">
+            <button class="btn btn-secondary btn-sm ${isFav ? 'is-fav' : ''}" data-fav-course="${course.slug}" aria-pressed="${isFav}">
+              ${isFav ? '\u2605 Favorited' : '\u2606 Add to Favorites'}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-cards">
+        <a class="tab-card" href="#lectures-section">
+          <span class="tc-icon" aria-hidden="true">\ud83d\udcd6</span>
+          <span><span class="tc-title">Lectures</span><br /><span class="tc-count">${lectureCount} available</span></span>
+        </a>
+        <a class="tab-card" href="${Router.questionsUrl(course.slug)}">
+          <span class="tc-icon" aria-hidden="true">\u2753</span>
+          <span><span class="tc-title">Questions</span><br /><span class="tc-count">${course.questionCount || 0} in bank</span></span>
+        </a>
+        <a class="tab-card" href="${Router.resourcesUrl(course.slug)}">
+          <span class="tc-icon" aria-hidden="true">\ud83d\udcc4</span>
+          <span><span class="tc-title">Resources</span><br /><span class="tc-count">${course.resourceCount || 0} items</span></span>
+        </a>
+      </div>
+
+      ${(course.topics && course.topics.length) ? `
+        <div class="section-head"><h2>Syllabus</h2></div>
+        <div class="topic-chip-list">
+          ${course.topics.map(t => `<span class="topic-chip">${UI.escapeHtml(t)}</span>`).join('')}
+        </div>` : ''}
+
+      <div class="section-head" id="lectures-section"><h2>Lectures</h2></div>
+      <div class="lecture-list" id="lecture-list"></div>
+    `;
+
+    const lectureListEl = document.getElementById('lecture-list');
+    lectureListEl.innerHTML = lectureCount > 0
+      ? course.lectures.map((lec, i) => UI.lectureRow(course, lec, i)).join('')
+      : UI.emptyState('\ud83d\udd28', 'No lectures yet', 'Add a .md file to courses/' + course.slug + '/lectures/ and list it in data/courses.json to see it here.');
+  }).catch(() => {
+    document.getElementById('course-page-wrap').innerHTML = UI.emptyState('\u26a0\ufe0f', 'Something went wrong', 'Could not load course data.');
+  });
+</script>
+</body>
+</html>

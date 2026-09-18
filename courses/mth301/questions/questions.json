@@ -1,0 +1,53 @@
+{
+  "course": "MTH 301",
+  "questions": [
+    {
+      "id": "301-d1",
+      "category": "definition",
+      "text": "Define a metric space and state the three axioms a metric must satisfy.",
+      "tags": ["metric space", "axioms"]
+    },
+    {
+      "id": "301-d2",
+      "category": "definition",
+      "text": "What does it mean for a metric space to be complete?",
+      "tags": ["completeness", "cauchy sequence"]
+    },
+    {
+      "id": "301-t1",
+      "category": "theorem",
+      "text": "State the Bolzano\u2013Weierstrass theorem.",
+      "tags": ["bolzano-weierstrass", "bounded sequence"]
+    },
+    {
+      "id": "301-t2",
+      "category": "theorem",
+      "text": "State the Weierstrass M-test for uniform convergence of a series of functions.",
+      "tags": ["weierstrass m-test", "uniform convergence", "series"]
+    },
+    {
+      "id": "301-p1",
+      "category": "proof",
+      "text": "Prove that every convergent sequence in a metric space is a Cauchy sequence.",
+      "tags": ["cauchy sequence", "convergence", "proof"]
+    },
+    {
+      "id": "301-p2",
+      "category": "proof",
+      "text": "Prove that a uniform limit of a sequence of continuous functions is continuous.",
+      "tags": ["uniform convergence", "continuity", "proof"]
+    },
+    {
+      "id": "301-pr1",
+      "category": "problem",
+      "text": "Determine whether the sequence f_n(x) = x^n converges uniformly on [0, 1].",
+      "tags": ["uniform convergence", "pointwise convergence", "problem"]
+    },
+    {
+      "id": "301-pq1",
+      "category": "previous",
+      "text": "(2024) Show that the space C[a, b] with the sup metric is a complete metric space.",
+      "tags": ["complete metric space", "function space", "sup metric"]
+    }
+  ]
+}
