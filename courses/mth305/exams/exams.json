@@ -1,0 +1,17 @@
+{
+  "course": "MTH 305",
+  "exams": [
+    {
+      "id": "305-ch01-exam",
+      "type": "chapter",
+      "chapterId": "MTH305-CH01",
+      "title": "Chapter Exam \u2014 Topological Spaces",
+      "totalMarks": 25,
+      "recommendedMinutes": 60,
+      "difficulty": "medium",
+      "instructions": "Answer all questions.",
+      "questionIds": ["305-d1", "305-d2", "305-t1", "305-past-01", "305-past-02", "305-past-03", "305-past-04"],
+      "mcqIds": ["305-mcq-01", "305-mcq-02", "305-mcq-03", "305-mcq-04", "305-mcq-05"]
+    }
+  ]
+}

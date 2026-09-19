@@ -1,0 +1,25 @@
+{
+  "course": "MTH 304",
+  "formulas": [
+    {
+      "id": "304-f-01",
+      "chapterId": "MTH304-CH02",
+      "name": "Lagrange's Theorem",
+      "formula": "|G| = [G:H]\\cdot|H|",
+      "symbols": "[G:H]: the index (number of distinct left cosets of H in G).",
+      "conditions": "G finite, H \\le G.",
+      "whenToUse": "Ruling out impossible subgroup orders, or computing an index.",
+      "commonMistake": "Treating this as an iff \u2014 the converse (a subgroup of every divisor order exists) is false in general."
+    },
+    {
+      "id": "304-f-02",
+      "chapterId": "MTH304-CH01",
+      "name": "Subgroup Test",
+      "formula": "a*b^{-1}\\in H\\ \\forall a,b\\in H \\iff H\\le G",
+      "symbols": "H: a non-empty subset of G.",
+      "conditions": "H must be non-empty to start.",
+      "whenToUse": "Verifying a candidate subgroup in one step.",
+      "commonMistake": "Checking only closure (a*b\\in H) and forgetting inverses."
+    }
+  ]
+}

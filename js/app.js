@@ -79,9 +79,28 @@ const App = (() => {
     { id: 'about', icon: '\u2139\ufe0f', label: 'About', url: 'about.html' }
   ];
 
+  const STUDY_TOOLS_ITEMS = [
+    { id: 'past-papers', icon: '\ud83d\udcc4', label: 'Past Papers', url: 'past-papers.html' },
+    { id: 'mcqs', icon: '\u2705', label: 'MCQ Practice', url: 'mcqs.html' },
+    { id: 'practice', icon: '\ud83c\udfb2', label: 'Practice Me', url: 'practice.html' },
+    { id: 'theorems', icon: '\u2b50', label: 'Theorems', url: 'theorems.html' },
+    { id: 'formulas', icon: '\ud83e\uddee', label: 'Formulas', url: 'formulas.html' },
+    { id: 'definitions', icon: '\ud83d\udcd6', label: 'Definitions', url: 'definitions.html' },
+    { id: 'viva', icon: '\ud83c\udf99', label: 'Viva Prep', url: 'viva.html' },
+    { id: 'exam-prep', icon: '\ud83c\udfaf', label: 'Exam Prep', url: 'exam-prep.html' },
+    { id: 'revision', icon: '\ud83d\udd01', label: "Today's Revision", url: 'revision.html' },
+    { id: 'coverage', icon: '\ud83d\udcca', label: 'Coverage', url: 'coverage.html' }
+  ];
+
   function sidebarSkeleton(activeNav) {
     const collapsed = Store.getSidebarCollapsed();
     const navHtml = NAV_ITEMS.map(item => `
+      <a class="nav-item ${activeNav === item.id ? 'active' : ''}" href="${item.url}">
+        <span class="nav-icon" aria-hidden="true">${item.icon}</span>
+        <span class="nav-label">${item.label}</span>
+      </a>`).join('');
+
+    const studyToolsHtml = STUDY_TOOLS_ITEMS.map(item => `
       <a class="nav-item ${activeNav === item.id ? 'active' : ''}" href="${item.url}">
         <span class="nav-icon" aria-hidden="true">${item.icon}</span>
         <span class="nav-label">${item.label}</span>
@@ -95,6 +114,8 @@ const App = (() => {
         </div>
         <nav class="sidebar-nav">
           ${navHtml}
+          <div class="sidebar-section-title">Study Tools</div>
+          ${studyToolsHtml}
           <div class="sidebar-section-title">Courses</div>
           <div id="sidebar-course-list">
             <div class="sub-nav-item">Loading\u2026</div>
@@ -190,7 +211,10 @@ const App = (() => {
   }
 
   function typeIcon(type) {
-    return { course: '\ud83d\udcda', lecture: '\ud83d\udcd6', question: '\u2753', resource: '\ud83d\udcc4' }[type] || '\u2022';
+    return {
+      course: '\ud83d\udcda', lecture: '\ud83d\udcd6', question: '\u2753', resource: '\ud83d\udcc4',
+      topic: '\ud83d\udcd7', theorem: '\u2b50', formula: '\ud83e\uddee', mcq: '\u2705', viva: '\ud83c\udf99', definition: '\ud83d\udcd6'
+    }[type] || '\u2022';
   }
 
   function renderPaletteResults(results) {

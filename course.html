@@ -37,6 +37,7 @@
 <script src="js/router.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/search.js"></script>
+<script src="js/content.js"></script>
 <script src="js/app.js"></script>
 <script>
   const slug = Router.getParam('c');
@@ -105,9 +106,40 @@
           ${course.topics.map(t => `<span class="topic-chip">${UI.escapeHtml(t)}</span>`).join('')}
         </div>` : ''}
 
-      <div class="section-head" id="lectures-section"><h2>Lectures</h2></div>
+      <div class="section-head"><h2>Chapters &amp; Topics</h2>
+        <a class="section-link" href="exams.html?c=${course.slug}">Exams \u2192</a>
+      </div>
+      <div class="lecture-list" id="chapter-list" style="margin-bottom:2.5rem;"></div>
+
+      <div class="filter-bar">
+        <a class="filter-chip" href="theorems.html?c=${course.slug}">\u2b50 Theorem Sheet</a>
+        <a class="filter-chip" href="formulas.html?c=${course.slug}">\ud83e\uddee Formula Sheet</a>
+        <a class="filter-chip" href="viva.html?c=${course.slug}">\ud83c\udf99 Viva Prep</a>
+        <a class="filter-chip" href="mcqs.html?c=${course.slug}">\u2705 MCQ Practice</a>
+      </div>
+
+      <div class="section-head" id="lectures-section"><h2>Lecture Notes</h2></div>
       <div class="lecture-list" id="lecture-list"></div>
     `;
+
+    Content.getCourseChapters(course.slug).then(chData => {
+      const chapters = chData.chapters || [];
+      const chapterListEl = document.getElementById('chapter-list');
+      chapterListEl.innerHTML = chapters.length
+        ? chapters.map(ch => {
+            const topicCount = (ch.topics || []).length;
+            const doneCount = (ch.topics || []).filter(t => t.status === 'complete').length;
+            return `
+              <a class="lecture-row" href="chapter.html?c=${course.slug}&ch=${ch.id}">
+                <span class="lecture-row-main">
+                  <span class="lecture-row-title">${UI.escapeHtml(ch.title)}</span>
+                  <span class="lecture-row-summary">${doneCount}/${topicCount} topics written</span>
+                </span>
+                <span class="lecture-row-arrow" aria-hidden="true">\u2192</span>
+              </a>`;
+          }).join('')
+        : UI.emptyState('\ud83d\udcda', 'No chapters listed yet', 'This course\u2019s chapter breakdown hasn\u2019t been added to data/chapters.json yet.');
+    });
 
     const lectureListEl = document.getElementById('lecture-list');
     lectureListEl.innerHTML = lectureCount > 0

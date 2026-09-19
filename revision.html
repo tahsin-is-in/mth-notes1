@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Today's Revision — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-nav="revision">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap narrow">
+        <div class="section-head" style="margin-top:0;"><h2>\ud83d\udd01 Today's Revision</h2></div>
+        <p class="section-sub">Topics you've tagged while studying, prioritized by how hard you marked them.</p>
+        <div id="revision-list"></div>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+<script>
+  App.mountShell('revision');
+  App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: "Today's Revision" }]);
+
+  const TAG_WEIGHT = { 'needs-revision': 0, hard: 1, medium: 2, easy: 3 };
+  const TAG_LABEL = { 'needs-revision': 'Needs Revision', hard: 'Hard', medium: 'Medium', easy: 'Easy' };
+
+  App.getCourses().then(async data => {
+    const tags = Store.getAllRevisionTags();
+    const topicIds = Object.keys(tags);
+    const chData = await Content.getChapters();
+
+    const items = [];
+    topicIds.forEach(topicId => {
+      // Find which course this topic belongs to, by ID prefix (e.g. MTH301-...).
+      const courseCode = topicId.split('-')[0]; // "MTH301"
+      const course = data.courses.find(c => c.code.replace(/\s+/g, '') === courseCode);
+      if (!course) return;
+      const courseChapters = chData[course.slug];
+      if (!courseChapters) return;
+      const topic = Content.flattenTopics(courseChapters).find(t => t.id === topicId);
+      if (!topic) return;
+      items.push({ topic, course, tag: tags[topicId].tag, taggedAt: tags[topicId].taggedAt });
+    });
+
+    items.sort((a, b) => (TAG_WEIGHT[a.tag] - TAG_WEIGHT[b.tag]) || (b.taggedAt - a.taggedAt));
+
+    const el = document.getElementById('revision-list');
+    if (!items.length) {
+      el.innerHTML = UI.emptyState('\u2728', 'Nothing tagged yet', 'Open a topic page and use the "Tag for revision" dropdown to build your revision queue.');
+      return;
+    }
+
+    el.innerHTML = items.map(item => `
+      <a class="lecture-row" href="topic.html?c=${item.course.slug}&t=${item.topic.id}">
+        <span class="lecture-status-dot ${item.tag === 'easy' ? 'completed' : (item.tag === 'needs-revision' ? '' : 'in-progress')}"></span>
+        <span class="lecture-row-main">
+          <span class="lecture-row-title">${UI.escapeHtml(item.topic.title)}</span>
+          <span class="lecture-row-summary">${UI.escapeHtml(item.course.code)} \u00b7 ${TAG_LABEL[item.tag] || item.tag}</span>
+        </span>
+        <span class="lecture-row-arrow" aria-hidden="true">\u2192</span>
+      </a>`).join('');
+  });
+</script>
+</body>
+</html>

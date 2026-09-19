@@ -1,0 +1,344 @@
+{
+  "_readme": "Every topic in the official University of Dhaka 3rd Year syllabus has a stable ID here (COURSE-CHxx-Txx), whether or not its full study page has been written yet. 'status' is an author-declared hint; the Coverage Dashboard (coverage.html) verifies it against the real files at runtime. status values: complete | partial | not-available. A topic with status 'not-available' has no 'file' yet and topic.html shows it honestly as not yet written, while still keeping it browsable and searchable so the syllabus stays whole.",
+  "mth301": {
+    "credits": 3,
+    "chapters": [
+      { "id": "MTH301-CH01", "title": "Sequences and Series of Functions", "topics": [
+        { "id": "MTH301-CH01-T01", "title": "Pointwise Convergence", "status": "not-available" },
+        { "id": "MTH301-CH01-T02", "title": "Uniform Convergence", "status": "complete", "file": "uniform-convergence.md" },
+        { "id": "MTH301-CH01-T03", "title": "Cauchy Criterion for Uniform Convergence", "status": "not-available" },
+        { "id": "MTH301-CH01-T04", "title": "Interchangeability of Limiting Processes", "status": "not-available" },
+        { "id": "MTH301-CH01-T05", "title": "Power Series", "status": "not-available" },
+        { "id": "MTH301-CH01-T06", "title": "Differentiation and Integration of Power Series", "status": "not-available" },
+        { "id": "MTH301-CH01-T07", "title": "Abel's Continuity Theorem", "status": "not-available" }
+      ]},
+      { "id": "MTH301-CH02", "title": "Metric Spaces", "topics": [
+        { "id": "MTH301-CH02-T01", "title": "Definition and Examples of Metric Spaces", "status": "complete", "file": "metric-spaces.md" },
+        { "id": "MTH301-CH02-T02", "title": "Epsilon-Neighbourhoods, Open and Closed Sets", "status": "not-available" },
+        { "id": "MTH301-CH02-T03", "title": "Interior, Exterior, and Boundary", "status": "not-available" },
+        { "id": "MTH301-CH02-T04", "title": "Bounded Sets and Equivalent Metrics", "status": "not-available" },
+        { "id": "MTH301-CH02-T05", "title": "Cluster Points, Derived Set, Closure", "status": "not-available" }
+      ]},
+      { "id": "MTH301-CH03", "title": "Sequences in Metric Spaces", "topics": [
+        { "id": "MTH301-CH03-T01", "title": "Convergence in Metric Spaces", "status": "not-available" },
+        { "id": "MTH301-CH03-T02", "title": "Cauchy Sequences and Complete Metric Spaces", "status": "complete", "file": "complete-metric-spaces.md" }
+      ]},
+      { "id": "MTH301-CH04", "title": "Continuity of Functions", "topics": [
+        { "id": "MTH301-CH04-T01", "title": "Continuity in Metric Spaces", "status": "not-available" },
+        { "id": "MTH301-CH04-T02", "title": "Uniform Continuity", "status": "not-available" }
+      ]},
+      { "id": "MTH301-CH05", "title": "Compactness in Metric Spaces", "topics": [
+        { "id": "MTH301-CH05-T01", "title": "Necessary and Sufficient Conditions for Compactness", "status": "not-available" },
+        { "id": "MTH301-CH05-T02", "title": "Heine\u2013Borel Theorem", "status": "not-available" }
+      ]},
+      { "id": "MTH301-CH06", "title": "Differentiation in R\u207f", "topics": [
+        { "id": "MTH301-CH06-T01", "title": "Definition and Properties", "status": "not-available" },
+        { "id": "MTH301-CH06-T02", "title": "Jacobian and Chain Rule", "status": "not-available" },
+        { "id": "MTH301-CH06-T03", "title": "Implicit and Inverse Function Theorems", "status": "not-available" }
+      ]},
+      { "id": "MTH301-CH07", "title": "Integration in R\u207f", "topics": [
+        { "id": "MTH301-CH07-T01", "title": "Definition and Properties", "status": "not-available" },
+        { "id": "MTH301-CH07-T02", "title": "Fubini's Theorem", "status": "not-available" },
+        { "id": "MTH301-CH07-T03", "title": "Change of Variables", "status": "not-available" }
+      ]}
+    ]
+  },
+  "mth302": {
+    "credits": 3,
+    "chapters": [
+      { "id": "MTH302-CH01", "title": "The Complex Plane", "topics": [
+        { "id": "MTH302-CH01-T01", "title": "Metric Properties and Geometry of the Complex Plane", "status": "not-available" },
+        { "id": "MTH302-CH01-T02", "title": "The Point at Infinity and Stereographic Projection", "status": "not-available" }
+      ]},
+      { "id": "MTH302-CH02", "title": "Functions of a Complex Variable", "topics": [
+        { "id": "MTH302-CH02-T01", "title": "Limit, Continuity, and Differentiability", "status": "not-available" },
+        { "id": "MTH302-CH02-T02", "title": "Analytic Functions and the Cauchy\u2013Riemann Equations", "status": "complete", "file": "analytic-functions.md" },
+        { "id": "MTH302-CH02-T03", "title": "Harmonic Functions", "status": "not-available" }
+      ]},
+      { "id": "MTH302-CH03", "title": "Complex Integration", "topics": [
+        { "id": "MTH302-CH03-T01", "title": "Line Integration and Winding Number", "status": "not-available" },
+        { "id": "MTH302-CH03-T02", "title": "Cauchy's Theorem and Cauchy's Integral Formula", "status": "complete", "file": "cauchy-integral-formula.md" },
+        { "id": "MTH302-CH03-T03", "title": "Liouville's Theorem and the Fundamental Theorem of Algebra", "status": "not-available" },
+        { "id": "MTH302-CH03-T04", "title": "Rouch\u00e9's Theorem", "status": "not-available" },
+        { "id": "MTH302-CH03-T05", "title": "Maximum and Minimum Modulus Principle", "status": "not-available" }
+      ]},
+      { "id": "MTH302-CH04", "title": "Singularities", "topics": [
+        { "id": "MTH302-CH04-T01", "title": "Taylor and Laurent Series", "status": "not-available" },
+        { "id": "MTH302-CH04-T02", "title": "Residues and Cauchy's Residue Theorem", "status": "not-available" },
+        { "id": "MTH302-CH04-T03", "title": "Evaluation of Integrals by Contour Integration", "status": "not-available" },
+        { "id": "MTH302-CH04-T04", "title": "Branch Points and Branch Cuts", "status": "not-available" }
+      ]},
+      { "id": "MTH302-CH05", "title": "Bilinear Transformations and Mappings", "topics": [
+        { "id": "MTH302-CH05-T01", "title": "Linear Fractional Transformations", "status": "not-available" },
+        { "id": "MTH302-CH05-T02", "title": "Conformal Mappings", "status": "not-available" }
+      ]}
+    ]
+  },
+  "mth303": {
+    "credits": 3,
+    "chapters": [
+      { "id": "MTH303-CH01", "title": "Existence and Uniqueness Theory", "topics": [
+        { "id": "MTH303-CH01-T01", "title": "Fundamental Existence and Uniqueness Theorem", "status": "not-available" },
+        { "id": "MTH303-CH01-T02", "title": "Dependence on Initial Conditions and Parameters", "status": "not-available" },
+        { "id": "MTH303-CH01-T03", "title": "Existence/Uniqueness for Systems and Higher-Order Equations", "status": "not-available" }
+      ]},
+      { "id": "MTH303-CH02", "title": "Series Solutions of Second Order Linear Equations", "topics": [
+        { "id": "MTH303-CH02-T01", "title": "Taylor Series Solutions About an Ordinary Point", "status": "complete", "file": "power-series-solutions.md" },
+        { "id": "MTH303-CH02-T02", "title": "Frobenius Series Solutions About Regular Singular Points", "status": "not-available" }
+      ]},
+      { "id": "MTH303-CH03", "title": "Legendre Functions", "topics": [
+        { "id": "MTH303-CH03-T01", "title": "Generating Function and Recurrence Relations", "status": "not-available" },
+        { "id": "MTH303-CH03-T02", "title": "Legendre Differential Equation and Functions of First/Second Kind", "status": "not-available" }
+      ]},
+      { "id": "MTH303-CH04", "title": "Bessel Functions", "topics": [
+        { "id": "MTH303-CH04-T01", "title": "Generating Function and Bessel's Equation", "status": "not-available" },
+        { "id": "MTH303-CH04-T02", "title": "Orthogonality and Modified Bessel Functions", "status": "not-available" }
+      ]},
+      { "id": "MTH303-CH05", "title": "Hermite and Laguerre Polynomials", "topics": [
+        { "id": "MTH303-CH05-T01", "title": "Generating Functions and Rodrigue's Formula", "status": "not-available" }
+      ]},
+      { "id": "MTH303-CH06", "title": "Special Functions", "topics": [
+        { "id": "MTH303-CH06-T01", "title": "Gamma and Error Functions", "status": "not-available" },
+        { "id": "MTH303-CH06-T02", "title": "Hypergeometric Functions", "status": "not-available" }
+      ]},
+      { "id": "MTH303-CH07", "title": "Systems of Linear First Order Differential Equations", "topics": [
+        { "id": "MTH303-CH07-T01", "title": "Elimination and Matrix Methods", "status": "not-available" },
+        { "id": "MTH303-CH07-T02", "title": "The Laplace Transform Method", "status": "complete", "file": "laplace-transform.md" },
+        { "id": "MTH303-CH07-T03", "title": "Variation of Parameters and Matrix Exponential", "status": "not-available" }
+      ]}
+    ]
+  },
+  "mth304": {
+    "credits": 3,
+    "chapters": [
+      { "id": "MTH304-CH01", "title": "Groups", "topics": [
+        { "id": "MTH304-CH01-T01", "title": "Groupoids, Semigroups, Monoids", "status": "not-available" },
+        { "id": "MTH304-CH01-T02", "title": "Groups and Subgroups", "status": "complete", "file": "groups-and-subgroups.md" },
+        { "id": "MTH304-CH01-T03", "title": "Order of an Element, Cyclic Groups", "status": "not-available" }
+      ]},
+      { "id": "MTH304-CH02", "title": "Cosets and Lagrange's Theorem", "topics": [
+        { "id": "MTH304-CH02-T01", "title": "Cosets and Coset Decomposition", "status": "not-available" },
+        { "id": "MTH304-CH02-T02", "title": "Lagrange's Theorem", "status": "complete", "file": "lagrange-theorem.md" },
+        { "id": "MTH304-CH02-T03", "title": "Normal Subgroups and Quotient Groups", "status": "not-available" }
+      ]},
+      { "id": "MTH304-CH03", "title": "Permutation Groups", "topics": [
+        { "id": "MTH304-CH03-T01", "title": "Symmetric Groups, Cycles, Transpositions", "status": "not-available" },
+        { "id": "MTH304-CH03-T02", "title": "Even and Odd Permutations, Alternating Groups", "status": "not-available" }
+      ]},
+      { "id": "MTH304-CH04", "title": "Homomorphisms and Isomorphisms", "topics": [
+        { "id": "MTH304-CH04-T01", "title": "Homomorphisms, Kernels, and Isomorphisms", "status": "not-available" },
+        { "id": "MTH304-CH04-T02", "title": "Cayley's Theorem", "status": "not-available" },
+        { "id": "MTH304-CH04-T03", "title": "Automorphisms and the Isomorphism Theorems", "status": "not-available" }
+      ]},
+      { "id": "MTH304-CH05", "title": "Rings", "topics": [
+        { "id": "MTH304-CH05-T01", "title": "Rings and Their Properties", "status": "not-available" },
+        { "id": "MTH304-CH05-T02", "title": "Characteristic of a Ring", "status": "not-available" }
+      ]},
+      { "id": "MTH304-CH06", "title": "Subrings, Ideals, and Quotient Rings", "topics": [
+        { "id": "MTH304-CH06-T01", "title": "Subring and Ideal", "status": "not-available" },
+        { "id": "MTH304-CH06-T02", "title": "Prime and Maximal Ideals", "status": "not-available" }
+      ]},
+      { "id": "MTH304-CH07", "title": "Ring Homomorphisms and Embeddings", "topics": [
+        { "id": "MTH304-CH07-T01", "title": "Homomorphism of Rings and Isomorphism Theorems", "status": "not-available" },
+        { "id": "MTH304-CH07-T02", "title": "Embedding an Integral Domain in a Field", "status": "not-available" }
+      ]},
+      { "id": "MTH304-CH08", "title": "Divisibility and Factorization", "topics": [
+        { "id": "MTH304-CH08-T01", "title": "Units, Associates, HCF, LCM", "status": "not-available" },
+        { "id": "MTH304-CH08-T02", "title": "PID, Euclidean Domains, UFD", "status": "not-available" }
+      ]}
+    ]
+  },
+  "mth305": {
+    "credits": 3,
+    "chapters": [
+      { "id": "MTH305-CH01", "title": "Topological Spaces", "topics": [
+        { "id": "MTH305-CH01-T01", "title": "Definitions and Examples", "status": "complete", "file": "topological-spaces.md" },
+        { "id": "MTH305-CH01-T02", "title": "Metric Topology, Base and Subbase", "status": "not-available" },
+        { "id": "MTH305-CH01-T03", "title": "Subspace and Topological Properties", "status": "not-available" },
+        { "id": "MTH305-CH01-T04", "title": "Closed Sets, Closure, and Limit Points", "status": "complete", "file": "closure-and-limit-points.md" }
+      ]},
+      { "id": "MTH305-CH02", "title": "Continuous Functions", "topics": [
+        { "id": "MTH305-CH02-T01", "title": "Continuity and Sequential Continuity", "status": "not-available" },
+        { "id": "MTH305-CH02-T02", "title": "Uniform Continuity and Homeomorphisms", "status": "not-available" }
+      ]},
+      { "id": "MTH305-CH03", "title": "Separation Axioms", "topics": [
+        { "id": "MTH305-CH03-T01", "title": "T\u2080, T\u2081, T\u2082 Spaces", "status": "not-available" },
+        { "id": "MTH305-CH03-T02", "title": "Regular and Normal Spaces", "status": "not-available" }
+      ]},
+      { "id": "MTH305-CH04", "title": "Countability of Topological Spaces", "topics": [
+        { "id": "MTH305-CH04-T01", "title": "First and Second Countable Spaces", "status": "not-available" },
+        { "id": "MTH305-CH04-T02", "title": "Separable Spaces and Lindel\u00f6f's Theorem", "status": "not-available" }
+      ]},
+      { "id": "MTH305-CH05", "title": "Compactness", "topics": [
+        { "id": "MTH305-CH05-T01", "title": "Compact Spaces and Product Spaces", "status": "not-available" },
+        { "id": "MTH305-CH05-T02", "title": "Tychonoff's Theorem", "status": "not-available" },
+        { "id": "MTH305-CH05-T03", "title": "Sequential Compactness and Total Boundedness", "status": "not-available" }
+      ]},
+      { "id": "MTH305-CH06", "title": "Connectedness", "topics": [
+        { "id": "MTH305-CH06-T01", "title": "Connected Spaces and Components", "status": "not-available" },
+        { "id": "MTH305-CH06-T02", "title": "Path-wise and Locally Connected Spaces", "status": "not-available" }
+      ]}
+    ]
+  },
+  "mth306": {
+    "credits": 3,
+    "chapters": [
+      { "id": "MTH306-CH01", "title": "Iterative Techniques in Matrix Algebra", "topics": [
+        { "id": "MTH306-CH01-T01", "title": "Jacobi and Gauss\u2013Seidel Methods", "status": "not-available" },
+        { "id": "MTH306-CH01-T02", "title": "SOR Method", "status": "not-available" },
+        { "id": "MTH306-CH01-T03", "title": "Power Method for Eigenvalues", "status": "not-available" },
+        { "id": "MTH306-CH01-T04", "title": "Householder's Method and the QR Method", "status": "not-available" }
+      ]},
+      { "id": "MTH306-CH02", "title": "Nonlinear Systems of Equations", "topics": [
+        { "id": "MTH306-CH02-T01", "title": "Newton's Method for Systems", "status": "not-available" },
+        { "id": "MTH306-CH02-T02", "title": "Quasi-Newton and Steepest Descent Methods", "status": "not-available" }
+      ]},
+      { "id": "MTH306-CH03", "title": "Initial Value Problems for ODEs", "topics": [
+        { "id": "MTH306-CH03-T01", "title": "Euler and Modified Euler Methods", "status": "not-available" },
+        { "id": "MTH306-CH03-T02", "title": "Runge\u2013Kutta Methods", "status": "not-available" },
+        { "id": "MTH306-CH03-T03", "title": "Multi-step Methods (Adams\u2013Bashforth, Adams\u2013Moulton)", "status": "not-available" }
+      ]},
+      { "id": "MTH306-CH04", "title": "Boundary Value Problems for ODEs", "topics": [
+        { "id": "MTH306-CH04-T01", "title": "Shooting Method", "status": "not-available" },
+        { "id": "MTH306-CH04-T02", "title": "Finite Difference Methods", "status": "not-available" }
+      ]},
+      { "id": "MTH306-CH05", "title": "Finite Difference Methods for PDEs", "topics": [
+        { "id": "MTH306-CH05-T01", "title": "Heat and Wave Equations", "status": "not-available" },
+        { "id": "MTH306-CH05-T02", "title": "2D Elliptic BVPs", "status": "not-available" }
+      ]}
+    ]
+  },
+  "mth307": {
+    "credits": 3,
+    "chapters": [
+      { "id": "MTH307-CH01", "title": "Fourier Series", "topics": [
+        { "id": "MTH307-CH01-T01", "title": "Fourier Series and Convergence", "status": "not-available" },
+        { "id": "MTH307-CH01-T02", "title": "Fourier Sine and Cosine Series", "status": "not-available" },
+        { "id": "MTH307-CH01-T03", "title": "Complex Form and Applications", "status": "not-available" }
+      ]},
+      { "id": "MTH307-CH02", "title": "Laplace Transforms", "topics": [
+        { "id": "MTH307-CH02-T01", "title": "Basic Definitions, Properties, and Existence Theorem", "status": "not-available" },
+        { "id": "MTH307-CH02-T02", "title": "Inverse Transforms and Applications to BVPs", "status": "not-available" }
+      ]},
+      { "id": "MTH307-CH03", "title": "Fourier Transforms", "topics": [
+        { "id": "MTH307-CH03-T01", "title": "Fourier Transform, Inversion, Sine/Cosine Transforms", "status": "not-available" },
+        { "id": "MTH307-CH03-T02", "title": "Convolution and Parseval's Theorem", "status": "not-available" }
+      ]},
+      { "id": "MTH307-CH04", "title": "Eigenvalue Problems and Sturm\u2013Liouville BVPs", "topics": [
+        { "id": "MTH307-CH04-T01", "title": "Regular Sturm\u2013Liouville Problems", "status": "not-available" },
+        { "id": "MTH307-CH04-T02", "title": "Green's Functions and Eigenfunction Expansion", "status": "not-available" }
+      ]}
+    ]
+  },
+  "mth308": {
+    "credits": 3,
+    "chapters": [
+      { "id": "MTH308-CH01", "title": "Convex Sets and Introduction to LP", "topics": [
+        { "id": "MTH308-CH01-T01", "title": "Convex Sets, Hyperplanes, Half-Spaces", "status": "not-available" },
+        { "id": "MTH308-CH01-T02", "title": "Extreme Points and Basic Feasible Solutions", "status": "not-available" }
+      ]},
+      { "id": "MTH308-CH02", "title": "LP Formulation", "topics": [
+        { "id": "MTH308-CH02-T01", "title": "Formulating Real-World Problems as LPs", "status": "not-available" }
+      ]},
+      { "id": "MTH308-CH03", "title": "Solution Techniques for LP", "topics": [
+        { "id": "MTH308-CH03-T01", "title": "Graphical Method", "status": "not-available" },
+        { "id": "MTH308-CH03-T02", "title": "Simplex Method", "status": "not-available" },
+        { "id": "MTH308-CH03-T03", "title": "Two-Phase and Big-M Methods", "status": "not-available" }
+      ]},
+      { "id": "MTH308-CH04", "title": "Duality and Sensitivity", "topics": [
+        { "id": "MTH308-CH04-T01", "title": "Duality Theorems and Complementary Slackness", "status": "not-available" },
+        { "id": "MTH308-CH04-T02", "title": "Dual Simplex and Sensitivity Analysis", "status": "not-available" }
+      ]},
+      { "id": "MTH308-CH05", "title": "Introductory Nonlinear Programming", "topics": [
+        { "id": "MTH308-CH05-T01", "title": "Classification and Convexity of NLPs", "status": "not-available" }
+      ]},
+      { "id": "MTH308-CH06", "title": "Solution Techniques for Constrained NLPs", "topics": [
+        { "id": "MTH308-CH06-T01", "title": "Lagrange Multiplier Method", "status": "not-available" },
+        { "id": "MTH308-CH06-T02", "title": "Kuhn\u2013Tucker Conditions", "status": "not-available" }
+      ]},
+      { "id": "MTH308-CH07", "title": "Quadratic Programming", "topics": [
+        { "id": "MTH308-CH07-T01", "title": "Complementary Pivot and Wolfe's Method", "status": "not-available" }
+      ]}
+    ]
+  },
+  "mth309": {
+    "credits": 3,
+    "chapters": [
+      { "id": "MTH309-CH01", "title": "Sigma-Algebra, Filtration, and Conditional Expectation", "topics": [
+        { "id": "MTH309-CH01-T01", "title": "Sigma-Algebras and Filtration", "status": "complete", "file": "sigma-algebra-filtration.md" },
+        { "id": "MTH309-CH01-T02", "title": "Conditional Expectation and Measurability", "status": "not-available" }
+      ]},
+      { "id": "MTH309-CH02", "title": "Martingales and Brownian Motion", "topics": [
+        { "id": "MTH309-CH02-T01", "title": "Martingales and Stopping Times", "status": "not-available" },
+        { "id": "MTH309-CH02-T02", "title": "Brownian Motion as a Limit of Random Walks", "status": "complete", "file": "brownian-motion.md" },
+        { "id": "MTH309-CH02-T03", "title": "Quadratic Variation of Brownian Motion", "status": "not-available" }
+      ]},
+      { "id": "MTH309-CH03", "title": "It\u00f4's Formula and Stochastic Calculus", "topics": [
+        { "id": "MTH309-CH03-T01", "title": "The It\u00f4 Integral", "status": "not-available" },
+        { "id": "MTH309-CH03-T02", "title": "It\u00f4's Formula", "status": "not-available" }
+      ]},
+      { "id": "MTH309-CH04", "title": "Stochastic Differential Equations", "topics": [
+        { "id": "MTH309-CH04-T01", "title": "Basic SDEs and Geometric Brownian Motion", "status": "not-available" },
+        { "id": "MTH309-CH04-T02", "title": "Euler and Milstein Numerical Schemes", "status": "not-available" }
+      ]},
+      { "id": "MTH309-CH05", "title": "Calibration", "topics": [
+        { "id": "MTH309-CH05-T01", "title": "Calibrating SDE Parameters from Data", "status": "not-available" }
+      ]}
+    ]
+  },
+  "mth310": {
+    "credits": 3,
+    "chapters": [
+      { "id": "MTH310-CH01", "title": "Theory of Interest", "topics": [
+        { "id": "MTH310-CH01-T01", "title": "Simple and Compound Interest", "status": "not-available" },
+        { "id": "MTH310-CH01-T02", "title": "Rate of Discount and Force of Interest", "status": "not-available" }
+      ]},
+      { "id": "MTH310-CH02", "title": "Annuities and Their Applications", "topics": [
+        { "id": "MTH310-CH02-T01", "title": "Annuity-Immediate, Annuity-Due, Deferred Annuities", "status": "complete", "file": "annuities.md" },
+        { "id": "MTH310-CH02-T02", "title": "Perpetuities and Amortization", "status": "not-available" },
+        { "id": "MTH310-CH02-T03", "title": "Sinking Funds and Loan Refinancing", "status": "not-available" }
+      ]},
+      { "id": "MTH310-CH03", "title": "Individual Risk Models", "topics": [
+        { "id": "MTH310-CH03-T01", "title": "Models for Individual Claim Random Variables", "status": "not-available" }
+      ]},
+      { "id": "MTH310-CH04", "title": "Survival Distributions", "topics": [
+        { "id": "MTH310-CH04-T01", "title": "The Survival Function and Force of Mortality", "status": "complete", "file": "survival-functions.md" },
+        { "id": "MTH310-CH04-T02", "title": "Curtate Future Lifetime", "status": "not-available" }
+      ]},
+      { "id": "MTH310-CH05", "title": "Life Tables", "topics": [
+        { "id": "MTH310-CH05-T01", "title": "Life Table Functions and the Deterministic Survivorship Group", "status": "not-available" }
+      ]},
+      { "id": "MTH310-CH06", "title": "Life Insurance", "topics": [
+        { "id": "MTH310-CH06-T01", "title": "Insurance Payable at the Moment/End of Year of Death", "status": "not-available" }
+      ]},
+      { "id": "MTH310-CH07", "title": "Life Annuities", "topics": [
+        { "id": "MTH310-CH07-T01", "title": "Pure Endowments and Continuous/Discrete Life Annuities", "status": "not-available" }
+      ]},
+      { "id": "MTH310-CH08", "title": "Net Premium", "topics": [
+        { "id": "MTH310-CH08-T01", "title": "Fully Continuous and Fully Discrete Premiums", "status": "not-available" }
+      ]}
+    ]
+  },
+  "mth350": {
+    "credits": 3,
+    "chapters": [
+      { "id": "MTH350-CH01", "title": "FORTRAN Basics", "topics": [
+        { "id": "MTH350-CH01-T01", "title": "Syntax, Variables, and Control Flow", "status": "complete", "file": "fortran-basics.md" }
+      ]},
+      { "id": "MTH350-CH02", "title": "Numerical Algorithms in FORTRAN", "topics": [
+        { "id": "MTH350-CH02-T01", "title": "Root-Finding and Linear Systems Programs", "status": "not-available" }
+      ]},
+      { "id": "MTH350-CH03", "title": "Lab Exercises", "topics": [
+        { "id": "MTH350-CH03-T01", "title": "Solved Lab Programs from the Third-Year Syllabus", "status": "not-available" }
+      ]}
+    ]
+  },
+  "mth399": {
+    "credits": 2,
+    "chapters": [
+      { "id": "MTH399-CH01", "title": "Third-Year Comprehensive Viva Bank", "topics": [
+        { "id": "MTH399-CH01-T01", "title": "Cross-Course Rapid-Fire Viva Questions", "status": "not-available" }
+      ]}
+    ]
+  }
+}

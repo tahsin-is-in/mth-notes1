@@ -1,0 +1,40 @@
+{
+  "course": "MTH 301",
+  "exams": [
+    {
+      "id": "301-ch01-exam",
+      "type": "chapter",
+      "chapterId": "MTH301-CH01",
+      "title": "Chapter Exam \u2014 Sequences and Series of Functions",
+      "totalMarks": 25,
+      "recommendedMinutes": 60,
+      "difficulty": "medium",
+      "instructions": "Answer all questions. Definitions and theorem statements are worth partial credit even without full proofs.",
+      "questionIds": ["301-t2", "301-p2", "301-pr1", "301-past-02", "301-past-04"],
+      "mcqIds": ["301-mcq-01", "301-mcq-02"]
+    },
+    {
+      "id": "301-ch02-03-exam",
+      "type": "chapter",
+      "chapterId": "MTH301-CH03",
+      "title": "Chapter Exam \u2014 Metric Spaces \u0026 Completeness",
+      "totalMarks": 25,
+      "recommendedMinutes": 60,
+      "difficulty": "medium",
+      "instructions": "Answer all questions.",
+      "questionIds": ["301-d1", "301-d2", "301-t1", "301-p1", "301-past-03", "301-pq1"],
+      "mcqIds": ["301-mcq-03", "301-mcq-04", "301-mcq-05"]
+    },
+    {
+      "id": "301-mock-final",
+      "type": "mock",
+      "title": "Mock Final Exam \u2014 MTH 301 Real Analysis II",
+      "totalMarks": 70,
+      "recommendedMinutes": 180,
+      "difficulty": "hard",
+      "instructions": "Answer any five of the following. All questions carry equal value unless stated otherwise.",
+      "questionIds": ["301-pq1", "301-past-01", "301-past-02", "301-past-03", "301-p2", "301-t1"],
+      "mcqIds": []
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "course": "MTH 305",
+  "viva": [
+    {
+      "id": "305-viva-01",
+      "topicId": "MTH305-CH01-T01",
+      "question": "Why is only 'finite' intersection required, not arbitrary intersection?",
+      "answer": "Arbitrary intersections of open sets in familiar spaces can collapse to single points, which are not open.",
+      "why": "Requiring arbitrary intersection-closure would make almost no interesting topology satisfy the axioms.",
+      "followUp": "Give an explicit example where an infinite intersection of open sets is not open.",
+      "trap": "Assuming intersections behave exactly like unions in the axioms."
+    },
+    {
+      "id": "305-viva-02",
+      "topicId": "MTH305-CH01-T04",
+      "question": "Can a point be in a set without being one of its limit points?",
+      "answer": "Yes \u2014 an isolated point of A is a standard example.",
+      "why": "The definition of a limit point requires OTHER points of A nearby, not just membership itself.",
+      "followUp": "Is every point of a finite set a limit point of that set?",
+      "trap": "Confusing 'p \\in A' with 'p is a limit point of A'."
+    }
+  ]
+}

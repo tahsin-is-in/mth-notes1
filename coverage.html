@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Content Coverage — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-nav="coverage">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap">
+        <div class="section-head" style="margin-top:0;"><h2>Content Coverage Dashboard</h2></div>
+        <p class="section-sub">
+          Every number below is computed live from the actual data files in this repository \u2014 nothing here is
+          manually typed or assumed. This site does not claim a topic, question, or exam exists unless it is
+          genuinely present in <code style="background:var(--code-bg); padding:0.1em 0.4em; border-radius:4px;">data/chapters.json</code>
+          and the corresponding course folders.
+        </p>
+        <div id="overall-summary" class="side-panel" style="margin-bottom:1.5rem;"></div>
+        <div style="overflow-x:auto;">
+          <table class="coverage-table" id="coverage-table">
+            <thead>
+              <tr>
+                <th>Course</th><th>Chapters</th><th>Topics</th><th>MCQs</th>
+                <th>Questions (solved)</th><th>Past Qs</th><th>Chapter Exams</th><th>Mock Exams</th><th>Viva Qs</th>
+              </tr>
+            </thead>
+            <tbody id="coverage-tbody">
+              <tr><td colspan="9" class="section-sub">Computing\u2026</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+<script>
+  App.mountShell('coverage');
+  App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Content Coverage' }]);
+
+  App.getCourses().then(async data => {
+    const stats = await Promise.all(data.courses.map(c => Content.computeCourseStats(c.slug)));
+    const byCode = data.courses.map((c, i) => Object.assign({ code: c.code }, stats[i]));
+
+    const totals = byCode.reduce((acc, s) => {
+      acc.topicsTotal += s.topicsTotal; acc.topicsComplete += s.topicsComplete;
+      acc.mcqs += s.mcqs; acc.questionsTotal += s.questionsTotal; acc.questionsSolved += s.questionsSolved;
+      acc.pastQuestions += s.pastQuestions; acc.chapterExams += s.chapterExams; acc.mockExams += s.mockExams;
+      acc.vivaCount += s.vivaCount;
+      return acc;
+    }, { topicsTotal: 0, topicsComplete: 0, mcqs: 0, questionsTotal: 0, questionsSolved: 0, pastQuestions: 0, chapterExams: 0, mockExams: 0, vivaCount: 0 });
+
+    const pct = totals.topicsTotal > 0 ? Math.round((totals.topicsComplete / totals.topicsTotal) * 100) : 0;
+
+    document.getElementById('overall-summary').innerHTML = `
+      <div class="settings-label">Overall syllabus coverage</div>
+      <div class="progress-row" style="max-width:100%;">
+        <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <span class="progress-label">${totals.topicsComplete} / ${totals.topicsTotal} topics (${pct}%)</span>
+      </div>
+      <p class="section-sub" style="margin:0.75rem 0 0;">
+        ${totals.mcqs} MCQs \u00b7 ${totals.questionsSolved}/${totals.questionsTotal} questions fully solved \u00b7
+        ${totals.pastQuestions} tagged past-exam questions \u00b7 ${totals.chapterExams} chapter exams \u00b7
+        ${totals.mockExams} mock exams \u00b7 ${totals.vivaCount} viva questions.
+      </p>`;
+
+    document.getElementById('coverage-tbody').innerHTML = byCode.map(s => {
+      const topicPct = s.topicsTotal > 0 ? Math.round((s.topicsComplete / s.topicsTotal) * 100) : 0;
+      return `
+        <tr>
+          <td><a href="course.html?c=${s.slug}" style="font-weight:600;">${UI.escapeHtml(s.code)}</a></td>
+          <td>${s.chapters}</td>
+          <td>
+            <span class="coverage-bar-mini"><span class="coverage-bar-mini-fill" style="width:${topicPct}%"></span></span>
+            ${s.topicsComplete}/${s.topicsTotal}${s.topicsPartial ? ` (+${s.topicsPartial} partial)` : ''}
+          </td>
+          <td>${s.mcqs}</td>
+          <td>${s.questionsSolved}/${s.questionsTotal}</td>
+          <td>${s.pastQuestions}</td>
+          <td>${s.chapterExams}</td>
+          <td>${s.mockExams}</td>
+          <td>${s.vivaCount}</td>
+        </tr>`;
+    }).join('');
+  });
+</script>
+</body>
+</html>

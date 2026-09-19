@@ -1,0 +1,17 @@
+{
+  "course": "MTH 309",
+  "exams": [
+    {
+      "id": "309-ch01-02-exam",
+      "type": "chapter",
+      "chapterId": "MTH309-CH02",
+      "title": "Chapter Exam \u2014 Sigma-Algebras, Martingales \u0026 Brownian Motion",
+      "totalMarks": 25,
+      "recommendedMinutes": 60,
+      "difficulty": "hard",
+      "instructions": "Answer all questions.",
+      "questionIds": ["309-d1", "309-d2", "309-t1", "309-past-01", "309-past-02", "309-past-03"],
+      "mcqIds": ["309-mcq-01", "309-mcq-02", "309-mcq-03"]
+    }
+  ]
+}

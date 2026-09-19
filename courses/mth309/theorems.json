@@ -1,0 +1,29 @@
+{
+  "course": "MTH 309",
+  "theorems": [
+    {
+      "id": "309-th-01",
+      "name": "Brownian Motion as a Scaling Limit of Random Walks",
+      "topicId": "MTH309-CH02-T02",
+      "statement": "For a symmetric random walk S_n rescaled as W_n(t)=S_{\\lfloor nt\\rfloor}/\\sqrt n, W_n(t) \\to B(t) in distribution as n\\to\\infty.",
+      "conditions": "Steps must be i.i.d. mean-zero, finite variance.",
+      "intuition": "Dividing by sqrt(n) normalizes the variance to match Brownian motion's unit-time variance.",
+      "proofSketch": "Central Limit Theorem applied at each fixed t, plus tightness of the process.",
+      "example": "A fair coin-flip random walk, rescaled, converges to standard Brownian motion.",
+      "relatedTheorems": [],
+      "examReady": "State the sqrt(n) scaling and why it matches variances."
+    },
+    {
+      "id": "309-th-02",
+      "name": "Quadratic Variation of Brownian Motion",
+      "topicId": "MTH309-CH02-T02",
+      "statement": "For a partition with mesh \\to 0, \\sum_k [B(t_{k+1})-B(t_k)]^2 \\to T over [0,T].",
+      "conditions": "Convergence is in probability (and L^2).",
+      "intuition": "Unlike smooth functions (quadratic variation 0), Brownian motion's roughness gives it positive quadratic variation.",
+      "proofSketch": "Each term has expectation \\Delta t_k; variance of the sum \\to 0 as mesh shrinks.",
+      "example": "This positive quadratic variation is exactly why Ito calculus departs from ordinary calculus.",
+      "relatedTheorems": ["309-th-01"],
+      "examReady": "E[Q_n]=T exactly for every partition; Var(Q_n)\\to0."
+    }
+  ]
+}

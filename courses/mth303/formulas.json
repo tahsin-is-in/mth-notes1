@@ -1,0 +1,35 @@
+{
+  "course": "MTH 303",
+  "formulas": [
+    {
+      "id": "303-f-01",
+      "chapterId": "MTH303-CH07",
+      "name": "Laplace Transform of f'",
+      "formula": "\\mathcal L\\{f'(t)\\} = sF(s) - f(0)",
+      "symbols": "F(s): the Laplace transform of f(t).",
+      "conditions": "f of exponential order.",
+      "whenToUse": "Converting an ODE into an algebraic equation in s.",
+      "commonMistake": "Forgetting the -f(0) term."
+    },
+    {
+      "id": "303-f-02",
+      "chapterId": "MTH303-CH07",
+      "name": "Laplace Transform of f''",
+      "formula": "\\mathcal L\\{f''(t)\\} = s^2F(s) - sf(0) - f'(0)",
+      "symbols": "F(s): the Laplace transform of f(t).",
+      "conditions": "f, f' of exponential order.",
+      "whenToUse": "Second-order IVPs.",
+      "commonMistake": "Omitting the -f'(0) term or mis-ordering the initial-condition terms."
+    },
+    {
+      "id": "303-f-03",
+      "chapterId": "MTH303-CH02",
+      "name": "Power Series Recurrence Setup",
+      "formula": "y=\\sum_{n=0}^\\infty a_nx^n,\\quad y''=\\sum_{n=2}^\\infty n(n-1)a_nx^{n-2}",
+      "symbols": "a_n: unknown coefficients to be found via the recurrence.",
+      "conditions": "Valid about an ordinary point.",
+      "whenToUse": "Setting up a power series solution.",
+      "commonMistake": "Off-by-one indexing errors when re-indexing y'' to match powers of x^n."
+    }
+  ]
+}

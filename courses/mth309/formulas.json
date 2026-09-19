@@ -1,0 +1,35 @@
+{
+  "course": "MTH 309",
+  "formulas": [
+    {
+      "id": "309-f-01",
+      "chapterId": "MTH309-CH02",
+      "name": "Brownian Motion Increment",
+      "formula": "B(t)-B(s) \\sim N(0,\\,t-s)",
+      "symbols": "s<t: two time points.",
+      "conditions": "Independent of the path up to time s.",
+      "whenToUse": "Computing probabilities or moments involving Brownian motion.",
+      "commonMistake": "Forgetting the increment's variance is t-s, not t."
+    },
+    {
+      "id": "309-f-02",
+      "chapterId": "MTH309-CH02",
+      "name": "Covariance of Brownian Motion",
+      "formula": "\\operatorname{Cov}(B(s),B(t)) = \\min(s,t)",
+      "symbols": "s,t: two time points.",
+      "conditions": "N/A.",
+      "whenToUse": "Computing joint moments of Brownian motion at two times.",
+      "commonMistake": "Using s+t or st instead of min(s,t)."
+    },
+    {
+      "id": "309-f-03",
+      "chapterId": "MTH309-CH03",
+      "name": "Ito's Isometry / Key Rule",
+      "formula": "(dB_t)^2 = dt",
+      "symbols": "dB_t: the Brownian increment.",
+      "conditions": "This is a heuristic rule made rigorous via quadratic variation.",
+      "whenToUse": "Deriving Ito's formula and any stochastic calculus computation.",
+      "commonMistake": "Treating (dB)^2 as negligible, as in ordinary calculus."
+    }
+  ]
+}

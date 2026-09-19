@@ -1,0 +1,29 @@
+{
+  "course": "MTH 303",
+  "theorems": [
+    {
+      "id": "303-th-01",
+      "name": "Existence of Power Series Solutions",
+      "topicId": "MTH303-CH02-T01",
+      "statement": "If x0 is an ordinary point, y''+p(x)y'+q(x)y=0 has two linearly independent power series solutions about x0, converging at least out to the nearest singular point (real or complex).",
+      "conditions": "p, q must be analytic at x0.",
+      "intuition": "Substituting a power series and matching coefficients always succeeds at an ordinary point.",
+      "proofSketch": "Standard existence theory for analytic ODEs; the recurrence relation determines all coefficients from a0,a1.",
+      "example": "The Airy equation y''-xy=0 has two independent series solutions about x=0.",
+      "relatedTheorems": [],
+      "examReady": "Identify ordinary point, substitute series, re-index, extract recurrence."
+    },
+    {
+      "id": "303-th-02",
+      "name": "Laplace Transform of Derivatives",
+      "topicId": "MTH303-CH07-T02",
+      "statement": "L{f'(t)} = sF(s) - f(0); L{f''(t)} = s^2F(s) - sf(0) - f'(0).",
+      "conditions": "f must be of exponential order for the transform to exist.",
+      "intuition": "Integration by parts converts each derivative into multiplication by s, minus an initial-condition correction.",
+      "proofSketch": "Integrate by parts once for f', apply twice for f''.",
+      "example": "Solving y''-3y'+2y=0, y(0)=1, y'(0)=0 via transform + partial fractions.",
+      "relatedTheorems": [],
+      "examReady": "Transform both sides, solve algebraically for Y(s), invert via partial fractions."
+    }
+  ]
+}

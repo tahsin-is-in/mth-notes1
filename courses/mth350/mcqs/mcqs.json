@@ -1,0 +1,52 @@
+{
+  "course": "MTH 350",
+  "mcqs": [
+    {
+      "id": "350-mcq-01",
+      "topicId": "MTH350-CH01-T01",
+      "category": "conceptual",
+      "question": "Why should every FORTRAN program include IMPLICIT NONE?",
+      "options": {
+        "A": "It makes the program run faster",
+        "B": "It forces explicit declaration, catching typos as compile errors",
+        "C": "It is required by the FORTRAN90 standard for all programs",
+        "D": "It enables double precision by default"
+      },
+      "correct": "B",
+      "explanation": "Without IMPLICIT NONE, FORTRAN silently creates new variables from misspelled names, hiding bugs.",
+      "whyOthersWrong": {
+        "A": "It has no effect on runtime performance.",
+        "C": "It's strongly recommended, not mandated by the language standard.",
+        "D": "Precision is set by explicit type declarations, not by IMPLICIT NONE."
+      }
+    },
+    {
+      "id": "350-mcq-02",
+      "topicId": "MTH350-CH01-T01",
+      "category": "calculation",
+      "question": "What does the FORTRAN expression 1/2 evaluate to?",
+      "options": { "A": "0.5", "B": "0", "C": "1", "D": "A compile error" },
+      "correct": "B",
+      "explanation": "Both operands are integers, so FORTRAN performs integer division, truncating to 0.",
+      "whyOthersWrong": {
+        "A": "0.5 would require at least one operand to be REAL.",
+        "C": "Integer division of 1 by 2 truncates toward zero, giving 0, not 1.",
+        "D": "This is valid, if often unintended, FORTRAN code \u2014 not a compile error."
+      }
+    },
+    {
+      "id": "350-mcq-03",
+      "topicId": "MTH350-CH01-T01",
+      "category": "examiner-trap",
+      "question": "What is the default index of the first element of REAL :: A(10)?",
+      "options": { "A": "0", "B": "1", "C": "-1", "D": "Undefined until runtime" },
+      "correct": "B",
+      "explanation": "FORTRAN arrays default to 1-based indexing, unlike C-family languages.",
+      "whyOthersWrong": {
+        "A": "0-based indexing is the C/Python convention, not FORTRAN's default.",
+        "C": "Negative default indexing does not occur.",
+        "D": "The indexing convention is fixed by the declaration, not runtime-dependent."
+      }
+    }
+  ]
+}

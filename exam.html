@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Exam — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] }
+  };
+</script>
+</head>
+<body data-nav="courses">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap narrow" id="exam-page-wrap">
+        <p class="section-sub">Loading exam\u2026</p>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script>
+  const slug = Router.getParam('c');
+  const examId = Router.getParam('e');
+  const wrap = document.getElementById('exam-page-wrap');
+
+  function questionBlock(q, i) {
+    const sol = q.solution || {};
+    const statusClass = { complete: 'status-complete', partial: 'status-partial' }[sol.status] || 'status-not-available';
+    const statusLabel = { complete: 'Solved', partial: 'Partially solved' }[sol.status] || 'Not yet solved';
+    return `
+      <div class="exam-question-block">
+        <div style="display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap; margin-bottom:0.5rem;">
+          <span class="exam-question-num">Q${i + 1}.</span>
+          ${q.marks ? `<span class="marks-badge">${q.marks} marks</span>` : ''}
+          ${q.difficulty ? `<span class="difficulty-badge">${q.difficulty}</span>` : ''}
+          <span class="status-badge ${statusClass}">${statusLabel}</span>
+        </div>
+        <p style="margin:0 0 0.75rem;">${UI.escapeHtml(q.text)}</p>
+        ${q.originalText ? `<details class="solution-block"><summary>Original question wording</summary><div class="solution-block-body">${UI.escapeHtml(q.originalText)}${q.ocrAmbiguous ? '<p style="color:var(--gold); margin-top:0.5rem;"><strong>Note:</strong> source scan contains an OCR/scanning ambiguity \u2014 the normalized question above reflects the most reasonable interpretation.</p>' : ''}</div></details>` : ''}
+        ${sol.hint ? `<details class="solution-block"><summary>\ud83d\udca1 Hint</summary><div class="solution-block-body">${UI.escapeHtml(sol.hint)}</div></details>` : ''}
+        ${(sol.steps || sol.finalAnswer) ? `<details class="solution-block"><summary>\u2705 Full Solution</summary><div class="solution-block-body">
+            ${sol.steps ? `<div style="margin-bottom:0.75rem;">${sol.steps}</div>` : ''}
+            ${sol.finalAnswer ? `<p><strong>Final answer:</strong> ${sol.finalAnswer}</p>` : ''}
+          </div></details>` : ''}
+        ${sol.examReady ? `<details class="solution-block"><summary>\ud83d\udcdd Exam-ready answer</summary><div class="solution-block-body">${sol.examReady}</div></details>` : ''}
+        ${sol.commonMistakes ? `<details class="solution-block"><summary>\u2717 Common mistakes</summary><div class="solution-block-body">${sol.commonMistakes}</div></details>` : ''}
+        ${sol.status !== 'complete' && sol.status !== 'partial' ? `<p class="section-sub" style="margin:0.5rem 0 0;">This question is tracked but not yet solved on the site \u2014 the original wording above is preserved for your own practice.</p>` : ''}
+      </div>`;
+  }
+
+  function mcqBlock(m, i) {
+    const opts = Object.entries(m.options || {});
+    return `
+      <div class="mcq-card" data-mcq-id="${m.id}">
+        <div class="mcq-prompt">MCQ ${i + 1}. ${UI.escapeHtml(m.question)}</div>
+        ${opts.map(([letter, text]) => `
+          <div class="mcq-option" data-letter="${letter}" data-correct="${m.correct}">
+            <span class="mcq-option-letter">${letter}</span><span>${UI.escapeHtml(text)}</span>
+          </div>`).join('')}
+        <div class="mcq-explain">
+          <strong>Correct answer: ${m.correct}.</strong> ${UI.escapeHtml(m.explanation || '')}
+          ${m.whyOthersWrong ? `<div class="mcq-why-wrong">${Object.entries(m.whyOthersWrong).map(([l,t]) => `<div><strong>${l}:</strong> ${UI.escapeHtml(t)}</div>`).join('')}</div>` : ''}
+        </div>
+      </div>`;
+  }
+
+  Promise.all([App.getCourses(), Content.getExams(slug), Content.getQuestions(slug), Content.getMcqs(slug)])
+    .then(([coursesData, examData, questionData, mcqData]) => {
+      App.mountShell('courses', slug);
+      const course = coursesData.courses.find(c => c.slug === slug);
+      const exam = (examData.exams || []).find(e => e.id === examId);
+
+      if (!course || !exam) {
+        App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Courses', url: 'courses.html' }, { label: 'Not found' }]);
+        wrap.innerHTML = UI.emptyState('\u26a0\ufe0f', 'Exam not found', 'That exam link looks incomplete.');
+        return;
+      }
+
+      App.setBreadcrumbs([
+        { label: 'Home', url: 'index.html' },
+        { label: course.code, url: Router.courseUrl(slug) },
+        { label: 'Exams', url: `exams.html?c=${slug}` },
+        { label: exam.title }
+      ]);
+      document.title = `${exam.title} — MTH Notes`;
+
+      const allQuestions = questionData.questions || [];
+      const allMcqs = mcqData.mcqs || [];
+      const examQuestions = (exam.questionIds || []).map(id => allQuestions.find(q => q.id === id)).filter(Boolean);
+      const examMcqs = (exam.mcqIds || []).map(id => allMcqs.find(m => m.id === id)).filter(Boolean);
+
+      wrap.innerHTML = `
+        <div class="exam-paper-header">
+          <div class="lecture-eyebrow">${UI.escapeHtml(course.code)} \u00b7 ${UI.escapeHtml(course.title)}</div>
+          <h1>${UI.escapeHtml(exam.title)}</h1>
+          <p class="section-sub">${exam.totalMarks} marks \u00b7 ${exam.recommendedMinutes} minutes recommended \u00b7 <span class="difficulty-badge">${exam.difficulty}</span></p>
+          ${exam.instructions ? `<p style="font-style:italic; color:var(--ink-soft);">${UI.escapeHtml(exam.instructions)}</p>` : ''}
+        </div>
+
+        ${examQuestions.map(questionBlock).join('')}
+
+        ${examMcqs.length ? `<div class="section-head"><h2>Multiple Choice</h2></div>${examMcqs.map(mcqBlock).join('')}` : ''}
+
+        <div class="side-panel" style="margin-top:2rem;">
+          <div class="settings-label">Self-mark this attempt</div>
+          <p class="section-sub" style="margin:0 0 0.75rem;">Reveal the solutions above, mark your own answers, then log your score here to track it in your exam history.</p>
+          <div style="display:flex; gap:0.6rem; align-items:center;">
+            <input type="number" id="score-input" min="0" max="${exam.totalMarks}" placeholder="Score" style="width:90px; padding:0.5rem; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--bg-elevated); color:var(--ink);" />
+            <span>/ ${exam.totalMarks}</span>
+            <button class="btn btn-primary btn-sm" id="log-score-btn">Log score</button>
+          </div>
+        </div>
+      `;
+
+      // Wire MCQ interactivity
+      document.querySelectorAll('.mcq-card').forEach(card => {
+        card.querySelectorAll('.mcq-option').forEach(opt => {
+          opt.addEventListener('click', () => {
+            const correct = opt.getAttribute('data-correct');
+            card.querySelectorAll('.mcq-option').forEach(o => {
+              o.classList.remove('correct', 'incorrect');
+              if (o.getAttribute('data-letter') === correct) o.classList.add('correct');
+            });
+            if (opt.getAttribute('data-letter') !== correct) opt.classList.add('incorrect');
+            card.querySelector('.mcq-explain').classList.add('show');
+          });
+        });
+      });
+
+      document.getElementById('log-score-btn').addEventListener('click', () => {
+        const val = parseFloat(document.getElementById('score-input').value);
+        if (isNaN(val)) { UI.toast('Enter a score first'); return; }
+        Store.addExamAttempt({
+          examId: exam.id, courseSlug: slug, courseCode: course.code,
+          examTitle: exam.title, score: val, totalMarks: exam.totalMarks
+        });
+        UI.toast('Score logged to your exam history');
+      });
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise([wrap]);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      wrap.innerHTML = UI.emptyState('\u26a0\ufe0f', 'Something went wrong', 'Could not load exam data.');
+    });
+</script>
+</body>
+</html>

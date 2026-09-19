@@ -1,0 +1,25 @@
+{
+  "course": "MTH 305",
+  "formulas": [
+    {
+      "id": "305-f-01",
+      "chapterId": "MTH305-CH01",
+      "name": "Topology Axioms",
+      "formula": "\\emptyset,X\\in\\tau;\\quad \\bigcup_i U_i \\in\\tau;\\quad \\bigcap_{k=1}^n U_k \\in\\tau",
+      "symbols": "\\tau: the topology (collection of open sets).",
+      "conditions": "Union closure is arbitrary; intersection closure is finite only.",
+      "whenToUse": "Verifying whether a given collection is a topology.",
+      "commonMistake": "Assuming intersection closure holds for infinite collections too."
+    },
+    {
+      "id": "305-f-02",
+      "chapterId": "MTH305-CH01",
+      "name": "Closure Formula",
+      "formula": "\\bar A = A \\cup A'",
+      "symbols": "A': the derived set (all limit points of A).",
+      "conditions": "\\bar A is the smallest closed set containing A.",
+      "whenToUse": "Computing the closure of a set, or testing density (\\bar A = X).",
+      "commonMistake": "Assuming every point of A is automatically a limit point of A (false for isolated points)."
+    }
+  ]
+}

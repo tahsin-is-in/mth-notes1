@@ -1,0 +1,41 @@
+{
+  "course": "MTH 301",
+  "theorems": [
+    {
+      "id": "301-th-01",
+      "name": "Uniform Limit Theorem",
+      "topicId": "MTH301-CH01-T02",
+      "statement": "If f_n \\to f uniformly on S and each f_n is continuous on S, then f is continuous on S.",
+      "conditions": "Uniform (not merely pointwise) convergence is essential.",
+      "intuition": "For large n, f and f_n are everywhere close, so f_n's continuity 'transfers' to f with only a small uniform error.",
+      "proofSketch": "Three-epsilon argument: bound |f(x)-f(x0)| by |f(x)-f_n(x)| + |f_n(x)-f_n(x0)| + |f_n(x0)-f(x0)|, each term < \\varepsilon/3.",
+      "example": "f_n(x)=x^n on [0,1] fails to converge uniformly, and indeed the limit is discontinuous.",
+      "relatedTheorems": ["301-th-02"],
+      "examReady": "Uniform convergence + continuity of each f_n \\Rightarrow continuity of the limit."
+    },
+    {
+      "id": "301-th-02",
+      "name": "Weierstrass M-test",
+      "topicId": "MTH301-CH01-T02",
+      "statement": "If |f_n(x)| \\le M_n for all x \\in S and \\sum M_n converges, then \\sum f_n(x) converges uniformly (and absolutely) on S.",
+      "conditions": "The bound M_n must not depend on x.",
+      "intuition": "A convergent numerical series of bounds forces the tail of the function series to be uniformly small everywhere at once.",
+      "proofSketch": "Apply the Cauchy criterion: partial sum differences are bounded by tail sums of \\sum M_n, which vanish independent of x.",
+      "example": "\\sum \\cos(nx)/n^2 converges uniformly on R via M_n = 1/n^2.",
+      "relatedTheorems": ["301-th-01"],
+      "examReady": "Find M_n \\ge \\sup_x|f_n(x)| with \\sum M_n < \\infty."
+    },
+    {
+      "id": "301-th-03",
+      "name": "Banach Fixed-Point Theorem",
+      "topicId": "MTH301-CH03-T02",
+      "statement": "If (X,d) is a non-empty complete metric space and T:X\\to X satisfies d(Tx,Ty)\\le k\\,d(x,y) for some k\\in[0,1), then T has a unique fixed point in X.",
+      "conditions": "Completeness of X is essential; k must be strictly less than 1.",
+      "intuition": "Iterating T from any starting point produces a Cauchy sequence that (by completeness) must converge to a fixed point.",
+      "proofSketch": "Show x_0,Tx_0,T^2x_0,\\dots is Cauchy using the geometric decay from the contraction constant, then use completeness.",
+      "example": "T(x)=x/2 on (0,1] is a contraction with no fixed point, since (0,1] is not complete.",
+      "relatedTheorems": [],
+      "examReady": "Verify X complete, T a genuine contraction (k<1), conclude unique fixed point."
+    }
+  ]
+}

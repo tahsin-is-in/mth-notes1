@@ -1,0 +1,100 @@
+{
+  "course": "MTH 301",
+  "mcqs": [
+    {
+      "id": "301-mcq-01",
+      "topicId": "MTH301-CH01-T02",
+      "category": "definition",
+      "question": "Which single change distinguishes uniform convergence from pointwise convergence in the \u03b5\u2013N definition?",
+      "options": {
+        "A": "Uniform convergence requires \u03b5 to be smaller",
+        "B": "N depends only on \u03b5, not on x, in uniform convergence",
+        "C": "Uniform convergence only applies to continuous functions",
+        "D": "Pointwise convergence requires the domain to be bounded"
+      },
+      "correct": "B",
+      "explanation": "The entire distinction is that in uniform convergence, one N works simultaneously for every x in the domain.",
+      "whyOthersWrong": {
+        "A": "\u03b5 plays the same role in both definitions.",
+        "C": "Both pointwise and uniform convergence can apply to any functions, continuous or not.",
+        "D": "Neither definition requires a bounded domain."
+      }
+    },
+    {
+      "id": "301-mcq-02",
+      "topicId": "MTH301-CH01-T02",
+      "category": "counterexample",
+      "question": "Which sequence is the standard textbook counterexample showing pointwise convergence does not preserve continuity?",
+      "options": {
+        "A": "f_n(x) = x/n on [0,1]",
+        "B": "f_n(x) = x^n on [0,1]",
+        "C": "f_n(x) = sin(nx)/n on R",
+        "D": "f_n(x) = nx(1-x)^n on [0,1]"
+      },
+      "correct": "B",
+      "explanation": "f_n(x)=x^n converges pointwise to a function that jumps from 0 to 1 at x=1, despite every f_n being continuous.",
+      "whyOthersWrong": {
+        "A": "This converges uniformly to 0 \u2014 no discontinuity issue.",
+        "C": "This converges uniformly to 0 by a direct supremum bound.",
+        "D": "This converges pointwise to a continuous limit (0); the failure here is with integration, not continuity."
+      }
+    },
+    {
+      "id": "301-mcq-03",
+      "topicId": "MTH301-CH02-T01",
+      "category": "calculation",
+      "question": "Which of the following fails to be a metric on R?",
+      "options": {
+        "A": "d(x,y) = |x-y|",
+        "B": "d(x,y) = |x-y|/(1+|x-y|)",
+        "C": "d(x,y) = (x-y)^2",
+        "D": "d(x,y) = min(1, |x-y|)"
+      },
+      "correct": "C",
+      "explanation": "d(x,y)=(x-y)^2 fails the triangle inequality \u2014 e.g. with x=0,y=1,z=2, d(x,z)=4 but d(x,y)+d(y,z)=2.",
+      "whyOthersWrong": {
+        "A": "The standard metric on R.",
+        "B": "A well-known bounded metric equivalent to the standard one.",
+        "D": "Also a valid bounded metric equivalent to the standard one."
+      }
+    },
+    {
+      "id": "301-mcq-04",
+      "topicId": "MTH301-CH03-T02",
+      "category": "conceptual",
+      "question": "Which statement about completeness is correct?",
+      "options": {
+        "A": "Every bounded metric space is complete",
+        "B": "(0,1) with the usual metric is complete",
+        "C": "Q with the usual metric is not complete",
+        "D": "Completeness means every sequence converges"
+      },
+      "correct": "C",
+      "explanation": "Q is not complete: rational truncations of \u221a2 form a Cauchy sequence with no rational limit.",
+      "whyOthersWrong": {
+        "A": "Boundedness has nothing to do with completeness \u2014 (0,1) is bounded but incomplete.",
+        "B": "(0,1) is a standard example of an incomplete space (the Cauchy sequence 1/n has no limit in (0,1)).",
+        "D": "Completeness only requires Cauchy sequences to converge, not every sequence."
+      }
+    },
+    {
+      "id": "301-mcq-05",
+      "topicId": "MTH301-CH03-T02",
+      "category": "examiner-trap",
+      "question": "A contraction mapping T on a metric space X with contraction constant k<1 fails to have a fixed point in X. What is the most likely explanation?",
+      "options": {
+        "A": "The contraction constant must actually be greater than 1",
+        "B": "X is not complete",
+        "C": "T is not continuous",
+        "D": "Contractions never have fixed points"
+      },
+      "correct": "B",
+      "explanation": "The Banach Fixed-Point Theorem requires X to be complete; on an incomplete space, a genuine contraction can have no fixed point (e.g. T(x)=x/2 on (0,1]).",
+      "whyOthersWrong": {
+        "A": "The premise already states k<1, a genuine contraction.",
+        "C": "Every contraction is automatically continuous (even Lipschitz).",
+        "D": "Contractions on complete spaces always have a unique fixed point \u2014 that's the whole theorem."
+      }
+    }
+  ]
+}

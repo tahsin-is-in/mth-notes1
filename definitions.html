@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Definition Bank — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+<script>
+  window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] } };
+</script>
+</head>
+<body data-nav="definitions">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap narrow">
+        <div class="section-head" style="margin-top:0;"><h2>Definition Bank</h2></div>
+        <p class="section-sub">Every core term across every course, in one searchable list.</p>
+        <input type="text" class="search-input-lg" id="def-search" placeholder="Search for a term\u2026 e.g. compactness, martingale, ideal" />
+        <div id="def-list" style="margin-top:1.5rem;"></div>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script>
+  App.mountShell('definitions');
+  App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Definition Bank' }]);
+
+  let allDefs = [];
+  let courseMap = {};
+
+  function card(d) {
+    const course = courseMap[d.courseSlug];
+    return `
+      <div class="solution-block">
+        <div class="solution-block-body" style="padding-top:1.1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.5rem; flex-wrap:wrap;">
+            <div style="font-weight:700; font-family:var(--font-display); font-size:1.1rem;">${UI.escapeHtml(d.term)}</div>
+            ${course ? `<span style="font-size:0.76rem; color:var(--ink-faint);">${UI.escapeHtml(course.code)}</span>` : ''}
+          </div>
+          <p style="margin:0.5rem 0;">${UI.escapeHtml(d.shortDef)}</p>
+          <p style="margin:0; color:var(--ink-soft); font-size:0.92rem;">${d.formalDef}</p>
+          ${d.topicId ? `<a href="topic.html?c=${d.courseSlug}&t=${d.topicId}" style="font-size:0.8rem; color:var(--accent);">Full topic \u2192</a>` : ''}
+        </div>
+      </div>`;
+  }
+
+  function render(query) {
+    const q = (query || '').trim().toLowerCase();
+    const list = q
+      ? allDefs.filter(d => d.term.toLowerCase().includes(q) || d.shortDef.toLowerCase().includes(q))
+      : allDefs;
+    const el = document.getElementById('def-list');
+    el.innerHTML = list.length ? list.map(card).join('') : UI.emptyState('\ud83d\udcd6', 'No matches', 'Try a different search term.');
+    if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([el]);
+  }
+
+  Promise.all([App.getCourses(), Content.getDefinitions()]).then(([coursesData, defData]) => {
+    coursesData.courses.forEach(c => { courseMap[c.slug] = c; });
+    allDefs = (defData.definitions || []).sort((a, b) => a.term.localeCompare(b.term));
+    render('');
+  });
+
+  document.getElementById('def-search').addEventListener('input', e => render(e.target.value));
+</script>
+</body>
+</html>

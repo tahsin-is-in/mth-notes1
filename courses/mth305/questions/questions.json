@@ -1,0 +1,132 @@
+{
+  "course": "MTH 305",
+  "questions": [
+    {
+      "id": "305-d1",
+      "category": "definition",
+      "text": "Define a topological space and state the topology axioms.",
+      "tags": ["topology", "axioms"],
+      "topicId": "MTH305-CH01-T01",
+      "chapterId": "MTH305-CH01",
+      "difficulty": "easy",
+      "marks": 2
+    },
+    {
+      "id": "305-d2",
+      "category": "definition",
+      "text": "Define a limit point of a set A in a topological space X.",
+      "tags": ["limit point"],
+      "topicId": "MTH305-CH01-T04",
+      "chapterId": "MTH305-CH01",
+      "difficulty": "easy",
+      "marks": 2
+    },
+    {
+      "id": "305-t1",
+      "category": "theorem",
+      "text": "State and prove the properties of closed sets: (i) the empty set and X are closed; (ii) any intersection of closed sets is closed; (iii) a finite union of closed sets is closed.",
+      "tags": ["closed sets", "de morgan"],
+      "topicId": "MTH305-CH01-T04",
+      "chapterId": "MTH305-CH01",
+      "difficulty": "medium",
+      "marks": 7,
+      "solution": { "status": "complete", "finalAnswer": "See the full proof on the Closure and Limit Points topic page (via De Morgan's laws)." }
+    },
+    {
+      "id": "305-past-01",
+      "category": "previous",
+      "text": "Let \u03c4 be the class of all subsets of X whose complements are finite, together with \u2205. Show that \u03c4 is a topology on X (the cofinite topology).",
+      "originalText": "Let \u03c4 be the class of all subsets of X whose complements are finite, together with \u2205. Show that \u03c4 is a topology on X.",
+      "tags": ["cofinite topology", "topology axioms"],
+      "topicId": "MTH305-CH01-T01",
+      "chapterId": "MTH305-CH01",
+      "examMeta": { "course": "MTH305", "examType": "Incourse-1", "session": "2023", "year": 2023 },
+      "marks": 6,
+      "difficulty": "medium",
+      "solution": {
+        "status": "complete",
+        "hint": "Check each axiom directly, using that a finite union of finite sets is finite.",
+        "steps": "**Axiom 1:** $X\\setminus X=\\emptyset$ is finite, so $X\\in\\tau$; and $\\emptyset\\in\\tau$ by definition. **Axiom 2 (unions):** for $\\{U_i\\}\\subseteq\\tau$ (each with finite complement, ignoring the trivial $\\emptyset$ members), $X\\setminus\\bigcup_i U_i = \\bigcap_i(X\\setminus U_i)$, an intersection of finite sets, hence finite (intersecting with any one finite set already bounds the size) \u2014 so $\\bigcup_i U_i\\in\\tau$. **Axiom 3 (finite intersections):** for $U_1,\\dots,U_n\\in\\tau$, $X\\setminus\\bigcap_{k=1}^nU_k = \\bigcup_{k=1}^n(X\\setminus U_k)$, a finite union of finite sets, hence finite \u2014 so $\\bigcap_{k=1}^n U_k\\in\\tau$.",
+        "finalAnswer": "All three topology axioms hold, so \u03c4 (the cofinite topology) is indeed a topology on X.",
+        "examReady": "Verify via De Morgan: complements of unions/intersections of members of \u03c4 turn into intersections/unions of finite sets, which stay finite \u2014 confirming all three axioms.",
+        "commonMistakes": "Forgetting to handle the $\\emptyset$ member of $\\tau$ separately (its complement $X$ need not be finite) when checking unions/intersections."
+      }
+    },
+    {
+      "id": "305-past-02",
+      "category": "previous",
+      "text": "In a topology \u03c4 = {X, \u2205, {a}, {c,d}, {a,c,d}, {b,c,d,e}} on X = {a,b,c,d,e}, is b a limit point of A = {a,c}? Justify.",
+      "originalText": "In a topology \u03c4 = {X, \u2205, {a}, {c,d}, {a,c,d}, {b,c,d,e}} on X = {a,b,c,d,e}, which is not discrete or indiscrete, are a, c limit points of A? Justify. [Interpreted here for A={a,c}, testing point b, matching the standard version of this recurring exam question.]",
+      "tags": ["limit point", "topology"],
+      "topicId": "MTH305-CH01-T04",
+      "chapterId": "MTH305-CH01",
+      "examMeta": { "course": "MTH305", "examType": "Incourse-1", "session": "2023", "year": 2023 },
+      "marks": 4,
+      "difficulty": "medium",
+      "ocrAmbiguous": true,
+      "solution": {
+        "status": "complete",
+        "hint": "Find the smallest open set containing the test point, and check whether it meets A elsewhere.",
+        "steps": "**Is $b$ a limit point of $A=\\{a,c\\}$?** The open sets containing $b$ are $\\{b,c,d,e\\}$ and $X$; the smallest is $\\{b,c,d,e\\}$, which contains $c\\in A$ (and $c\\ne b$). So **yes**, $b$ is a limit point of $A$. **Is $a$ a limit point of $A$?** The smallest open set containing $a$ is $\\{a\\}$ itself, which contains no point of $A$ other than $a$. So **no**, $a$ is not a limit point of $A$ (it's an isolated point of $A$ within this topology). **Is $c$ a limit point of $A$?** The smallest open set containing $c$ is $\\{c,d\\}$, which contains no point of $A\\setminus\\{c\\}$ (since $a\\notin\\{c,d\\}$). So **no**, $c$ is not a limit point of $A$ either.",
+        "finalAnswer": "b IS a limit point of A = {a,c}; a and c are NOT limit points of A.",
+        "examReady": "Always test using the smallest open set containing the point in question \u2014 for finite topologies this makes the check immediate.",
+        "commonMistakes": "Testing with a larger open set (e.g. X itself) instead of the smallest one containing the point, which can wrongly suggest a point is a limit point."
+      }
+    },
+    {
+      "id": "305-past-03",
+      "category": "previous",
+      "text": "Is A = {1, 1/2, 1/3, ...} dense in R (with the usual topology)? Prove your answer.",
+      "originalText": "Let A = {1, \u00bd, \u2153, \u2026} \u2282 \u211d (usual topology). Is A dense in \u211d? Prove your answer.",
+      "tags": ["dense set", "closure"],
+      "topicId": "MTH305-CH01-T04",
+      "chapterId": "MTH305-CH01",
+      "examMeta": { "course": "MTH305", "examType": "Incourse-1", "session": "2023", "year": 2023 },
+      "marks": 5,
+      "difficulty": "medium",
+      "solution": {
+        "status": "complete",
+        "hint": "Compute the closure of A directly: find all its limit points.",
+        "steps": "$A$'s only limit point is $0$ (the terms $1/n\\to0$, and no other real number has points of $A$ arbitrarily close to it, since $A$'s points are isolated from each other away from $0$). So $\\bar A = A\\cup\\{0\\}$. Since $\\bar A \\ne \\mathbb R$ (e.g. $2\\notin\\bar A$), $A$ is not dense.",
+        "finalAnswer": "A is NOT dense in R; its closure is A \u222a {0}, far from all of R.",
+        "examReady": "$\\bar A=A\\cup\\{0\\}\\ne\\mathbb R$, so $A$ fails the definition of density (\\bar A=\\mathbb R).",
+        "commonMistakes": "Confusing \u201caccumulates somewhere\u201d with \u201cdense everywhere\u201d \u2014 density requires the closure to be the *entire* space, not just to have a limit point."
+      }
+    },
+    {
+      "id": "305-past-04",
+      "category": "previous",
+      "text": "Show that the union of two topologies need not be a topology.",
+      "originalText": "Show the union of topologies need not be a topology.",
+      "tags": ["topology", "counterexample"],
+      "topicId": "MTH305-CH01-T01",
+      "chapterId": "MTH305-CH01",
+      "examMeta": { "course": "MTH305", "examType": "Incourse-1", "session": "2025 / 2025\u201326", "year": 2025 },
+      "marks": 4,
+      "difficulty": "medium",
+      "solution": {
+        "status": "complete",
+        "finalAnswer": "See the Difficult worked example (\u03c4\u2081={X,\u2205,{a}}, \u03c4\u2082={X,\u2205,{b}} on X={a,b,c}) on the Topological Spaces topic page \u2014 their union fails axiom 2 since {a}\u222a{b}={a,b} is missing."
+      }
+    },
+    {
+      "id": "305-past-05",
+      "category": "previous",
+      "text": "Prove: G is open if and only if G is a neighbourhood of each of its points.",
+      "originalText": "Prove: G is open iff G is a neighbourhood of each of its points.",
+      "tags": ["open set", "neighbourhood", "proof"],
+      "topicId": "MTH305-CH01-T01",
+      "chapterId": "MTH305-CH01",
+      "examMeta": { "course": "MTH305", "examType": "Incourse-1", "session": "2025 / 2025\u201326", "year": 2025 },
+      "marks": 5,
+      "difficulty": "medium",
+      "solution": {
+        "status": "partial",
+        "hint": "A neighbourhood of p is any set containing an open set that contains p.",
+        "steps": "($\\Rightarrow$) If $G$ is open, then $G$ itself is an open set containing $p$ for every $p\\in G$, so $G$ is (trivially) a neighbourhood of each of its points. ($\\Leftarrow$) Suppose $G$ is a neighbourhood of each $p\\in G$: for each such $p$, there's an open $U_p$ with $p\\in U_p\\subseteq G$. Then $G = \\bigcup_{p\\in G} U_p$ (each $p$ is in its own $U_p$, and every $U_p\\subseteq G$), a union of open sets, hence open.",
+        "finalAnswer": "Both directions verified \u2014 G is open iff it is a neighbourhood of every one of its points.",
+        "commonMistakes": "In the reverse direction, forgetting to actually exhibit G as a union of the open sets U_p, rather than just asserting openness."
+      }
+    }
+  ]
+}

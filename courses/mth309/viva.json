@@ -1,0 +1,23 @@
+{
+  "course": "MTH 309",
+  "viva": [
+    {
+      "id": "309-viva-01",
+      "topicId": "MTH309-CH02-T02",
+      "question": "Is Brownian motion differentiable?",
+      "answer": "No \u2014 almost surely nowhere differentiable, despite being continuous everywhere.",
+      "why": "The difference quotient's standard deviation blows up like 1/sqrt(h) as h\\to0.",
+      "followUp": "What single fact forces the existence of Ito calculus?",
+      "trap": "Assuming continuous implies mostly differentiable, as with typical calculus functions."
+    },
+    {
+      "id": "309-viva-02",
+      "topicId": "MTH309-CH01-T01",
+      "question": "Why can't information in a filtration decrease over time?",
+      "answer": "Once observed, information can't be unobserved \u2014 F_s \\subseteq F_t for s\\le t encodes this.",
+      "why": "Every question answerable at time s using F_s must still be answerable at time t using F_t.",
+      "followUp": "What's the smallest sigma-algebra on any sample space?",
+      "trap": "Assuming sigma(A) for a single event A is just {A}."
+    }
+  ]
+}

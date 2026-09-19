@@ -1,0 +1,35 @@
+{
+  "course": "MTH 302",
+  "formulas": [
+    {
+      "id": "302-f-01",
+      "chapterId": "MTH302-CH02",
+      "name": "Cauchy\u2013Riemann Equations",
+      "formula": "u_x = v_y,\\qquad u_y = -v_x",
+      "symbols": "f=u+iv, the real and imaginary parts of a complex function.",
+      "conditions": "Necessary for differentiability; sufficient together with continuous partials.",
+      "whenToUse": "Checking whether a given f is analytic.",
+      "commonMistake": "Checking only one of the two equations."
+    },
+    {
+      "id": "302-f-02",
+      "chapterId": "MTH302-CH03",
+      "name": "Cauchy's Integral Formula",
+      "formula": "f(z_0) = \\frac{1}{2\\pi i}\\oint_C \\frac{f(z)}{z-z_0}\\,dz",
+      "symbols": "C: simple closed contour; z0: point inside C.",
+      "conditions": "f analytic on and inside C.",
+      "whenToUse": "Evaluating a contour integral with a simple pole inside the contour.",
+      "commonMistake": "Applying it when z0 is outside C (answer should be 0 there via Cauchy's Theorem instead)."
+    },
+    {
+      "id": "302-f-03",
+      "chapterId": "MTH302-CH03",
+      "name": "Generalized Cauchy Integral Formula",
+      "formula": "f^{(n)}(z_0) = \\frac{n!}{2\\pi i}\\oint_C \\frac{f(z)}{(z-z_0)^{n+1}}\\,dz",
+      "symbols": "n: the order of the derivative sought.",
+      "conditions": "f analytic on and inside C, z0 inside C.",
+      "whenToUse": "Evaluating integrals with a higher-order pole.",
+      "commonMistake": "Forgetting the n! factor."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "course": "MTH 310",
+  "theorems": [
+    {
+      "id": "310-th-01",
+      "name": "Recovering S from mu",
+      "topicId": "MTH310-CH04-T01",
+      "statement": "S(x) = \\exp\\left(-\\int_0^x \\mu(t)\\,dt\\right).",
+      "conditions": "S differentiable, strictly positive on the interval.",
+      "intuition": "The force of mortality is a logarithmic derivative of S; integrating and exponentiating undoes that.",
+      "proofSketch": "Integrate \\mu(x)=-d/dx[\\ln S(x)] from 0 to x, using S(0)=1.",
+      "example": "Given \\mu(x)=1/(100-x), integrate to recover S(x)=(100-x)/100 (a De Moivre-type law).",
+      "relatedTheorems": [],
+      "examReady": "Given mu(x), integrate then exponentiate; given S(x), differentiate and negate/divide."
+    },
+    {
+      "id": "310-th-02",
+      "name": "Annuity-Due to Annuity-Immediate Relation",
+      "topicId": "MTH310-CH02-T01",
+      "statement": "\\ddot a_{\\overline n|} = (1+i)\\,a_{\\overline n|} = 1 + a_{\\overline{n-1}|}.",
+      "conditions": "Same interest rate i and payment count n throughout.",
+      "intuition": "Every due-annuity payment happens exactly one period earlier than its immediate-annuity counterpart.",
+      "proofSketch": "Multiply every discounted term of a_n by (1+i), or split off the first due payment.",
+      "example": "A 5-year annuity-due of 1000/year at 6% equals (1.06) times the corresponding annuity-immediate value.",
+      "relatedTheorems": [],
+      "examReady": "Identify immediate vs. due from payment timing, apply the (1+i) conversion factor."
+    }
+  ]
+}

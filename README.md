@@ -24,6 +24,13 @@ This README assumes no prior experience with GitHub. Follow it top to bottom the
 14. [Customize the website](#14-customize-the-website)
 15. [Writing lecture notes: Markdown & math cheat sheet](#15-writing-lecture-notes-markdown--math-cheat-sheet)
 16. [Troubleshooting](#16-troubleshooting)
+17. [The exam-prep system: how it's organized](#17-the-exam-prep-system-how-its-organized)
+18. [Add a new chapter](#18-add-a-new-chapter)
+19. [Add a new topic (full study page)](#19-add-a-new-topic-full-study-page)
+20. [Add a solved question or a past paper](#20-add-a-solved-question-or-a-past-paper)
+21. [Add an MCQ](#21-add-an-mcq)
+22. [Add a theorem, formula, viva question, or definition](#22-add-a-theorem-formula-viva-question-or-definition)
+23. [Add a chapter exam or mock exam](#23-add-a-chapter-exam-or-mock-exam)
 
 ---
 
@@ -328,3 +335,201 @@ These are stored in your browser's `localStorage`, scoped to the exact URL. They
 ---
 
 Built for Mathematics students. Powered by HTML, CSS, JavaScript, GitHub Pages, and MathJax.
+
+---
+
+## 17. The exam-prep system: how it's organized
+
+On top of the lecture-notes system above, the site has a full study/question-bank/exam layer, driven entirely by data files — no JavaScript editing required to add content.
+
+```text
+data/chapters.json        \u2192 every course's chapter \u2192 topic breakdown, with stable IDs
+data/definitions.json     \u2192 the global, searchable definition bank
+
+courses/<slug>/topics/*.md         \u2192 one file per full topic study page (ELI5, definitions, proofs, examples\u2026)
+courses/<slug>/mcqs/mcqs.json      \u2192 that course's multiple-choice question bank
+courses/<slug>/exams/exams.json    \u2192 chapter exams and mock exams
+courses/<slug>/theorems.json       \u2192 that course's theorem database
+courses/<slug>/formulas.json       \u2192 that course's formula sheet
+courses/<slug>/viva.json           \u2192 that course's viva question bank
+courses/<slug>/questions/questions.json  \u2192 extended with topicId, examMeta, marks,
+                                             difficulty, and a full solution object
+```
+
+Every chapter, topic, question, and exam has a **stable ID** (e.g. `MTH301-CH01-T02`) so that different files can reference each other (a question can point at the topic it needs, a topic page can list the questions that use it, and so on).
+
+**Nothing here is faked.** A topic with no `.md` file yet is honestly shown as "not yet available" on its topic page, and every count on the [Coverage Dashboard](coverage.html) is computed live from the real files \u2014 never hand-typed.
+
+---
+
+## 18. Add a new chapter
+
+Open `data/chapters.json`, find your course's `"chapters"` array, and add:
+
+```json
+{
+  "id": "MTH305-CH07",
+  "title": "Metrization Theorems",
+  "topics": [
+    { "id": "MTH305-CH07-T01", "title": "The Urysohn Metrization Theorem", "status": "not-available" }
+  ]
+}
+```
+
+- `status` starts as `"not-available"` until you write the topic's `.md` file (step 19), then becomes `"complete"` (or `"partial"` if you've only done some of the template sections).
+- IDs must be unique site-wide and should follow the `COURSE-CHxx-Txx` pattern so cross-references keep working.
+
+The chapter immediately appears on `chapter.html` and in the course's "Chapters & Topics" list \u2014 no other file needs to change.
+
+---
+
+## 19. Add a new topic (full study page)
+
+1. Add the topic's metadata to its chapter in `data/chapters.json` (see step 18), with `"status": "complete"` and a `"file"` name:
+   ```json
+   { "id": "MTH305-CH07-T01", "title": "The Urysohn Metrization Theorem", "status": "complete", "file": "urysohn-metrization.md" }
+   ```
+2. Create `courses/<slug>/topics/urysohn-metrization.md` and write it using regular Markdown plus these special callout blocks (all optional \u2014 use whichever fit):
+
+   ```text
+   :::eli5
+   Plain-language intuition here.
+   :::
+
+   :::formal My Term
+   The precise mathematical definition.
+   :::
+
+   :::theorem Name
+   The theorem statement.
+   :::
+
+   :::proof
+   The full proof.
+   :::
+
+   :::example Level label
+   A worked example.
+   :::
+
+   :::counterexample
+   **Statement that looks true:** ...
+   **Counterexample:** ...
+   **Why it fails:** ...
+   :::
+
+   :::mistake
+   A common mistake.
+   :::
+
+   :::connection
+   How this links to another topic.
+   :::
+
+   :::application
+   A real-world use.
+   :::
+
+   :::examready
+   The concise, exam-writing version of the answer.
+   :::
+
+   :::viva
+   **Q:** ... **A:** ...
+   :::
+   ```
+
+3. That's it \u2014 `topic.html?c=<slug>&t=<topicId>` renders it automatically, with MathJax for any `$...$` / `\[...\]` math, a "Show LaTeX" panel, mastery tracking, and mode toggles (Full / ELI5 / Exam).
+
+---
+
+## 20. Add a solved question or a past paper
+
+Open (or create) `courses/<slug>/questions/questions.json` and add an entry. The original simple shape (`id`, `category`, `text`, `tags`) still works exactly as before \u2014 these fields are additions on top of it:
+
+```json
+{
+  "id": "305-past-06",
+  "category": "previous",
+  "text": "Cleaned-up, normalized version of the question.",
+  "originalText": "Verbatim OCR/scanned wording, kept as-is \u2014 include this whenever the source is a scanned paper.",
+  "ocrAmbiguous": false,
+  "tags": ["keyword1", "keyword2"],
+  "topicId": "MTH305-CH07-T01",
+  "chapterId": "MTH305-CH07",
+  "examMeta": { "course": "MTH305", "examType": "Incourse-1", "session": "2026", "year": 2026 },
+  "marks": 6,
+  "difficulty": "medium",
+  "solution": {
+    "status": "complete",
+    "hint": "A nudge in the right direction.",
+    "steps": "The full step-by-step derivation, in Markdown/LaTeX.",
+    "finalAnswer": "The final answer.",
+    "examReady": "The concise exam-writing version.",
+    "commonMistakes": "What usually goes wrong."
+  }
+}
+```
+
+- **`examMeta` present** \u2192 the question is tagged as a real past paper and shows up on `past-papers.html`, filterable by course/exam type.
+- **`solution.status`** must honestly be `"complete"`, `"partial"`, or omitted entirely (shown as "not yet solved") \u2014 never write a placeholder like "solution coming soon" in `steps`.
+- If the source scan was ambiguous, set `"ocrAmbiguous": true` and explain the ambiguity inside `steps` or `hint` \u2014 the page will flag it automatically.
+- Update the course's `"questionCount"` in `data/courses.json` to match the new total (or just count the array length \u2014 it doesn't have to be exact, but keeping it accurate keeps the course cards honest).
+
+---
+
+## 21. Add an MCQ
+
+Open (or create) `courses/<slug>/mcqs/mcqs.json`:
+
+```json
+{
+  "id": "305-mcq-06",
+  "topicId": "MTH305-CH07-T01",
+  "category": "conceptual",
+  "question": "Which statement is correct?",
+  "options": { "A": "...", "B": "...", "C": "...", "D": "..." },
+  "correct": "B",
+  "explanation": "Why B is correct.",
+  "whyOthersWrong": { "A": "...", "C": "...", "D": "..." }
+}
+```
+
+It appears automatically on that topic's page, on `mcqs.html`, and in any chapter/mock exam that lists its `id` under `mcqIds`.
+
+---
+
+## 22. Add a theorem, formula, viva question, or definition
+
+Same pattern for each \u2014 open (or create) the file and add an object to its array:
+
+- **Theorem** \u2192 `courses/<slug>/theorems.json`: `{ id, name, topicId, statement, conditions, intuition, proofSketch, example, examReady }`
+- **Formula** \u2192 `courses/<slug>/formulas.json`: `{ id, chapterId, name, formula, symbols, conditions, whenToUse, commonMistake }`
+- **Viva question** \u2192 `courses/<slug>/viva.json`: `{ id, topicId, question, answer, why, followUp, trap }`
+- **Definition** (site-wide bank) \u2192 `data/definitions.json`: `{ id, term, courseSlug, topicId, shortDef, formalDef }`
+
+Each shows up immediately on its respective page (`theorems.html`, `formulas.html`, `viva.html`, `definitions.html`), filterable by course, and is searchable through Ctrl+K.
+
+---
+
+## 23. Add a chapter exam or mock exam
+
+Open (or create) `courses/<slug>/exams/exams.json`:
+
+```json
+{
+  "id": "305-ch07-exam",
+  "type": "chapter",
+  "chapterId": "MTH305-CH07",
+  "title": "Chapter Exam \u2014 Metrization Theorems",
+  "totalMarks": 25,
+  "recommendedMinutes": 60,
+  "difficulty": "medium",
+  "instructions": "Answer all questions.",
+  "questionIds": ["305-past-06"],
+  "mcqIds": ["305-mcq-06"]
+}
+```
+
+Use `"type": "mock"` for a full-length mock exam instead of a chapter exam. `questionIds`/`mcqIds` reference the `id` fields from that course's `questions.json`/`mcqs.json` \u2014 nothing is duplicated. The exam then appears on `exams.html?c=<slug>`, and inside the linked chapter's page.
+

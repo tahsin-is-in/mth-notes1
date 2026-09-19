@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Exam Prep — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-nav="exam-prep">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap narrow">
+        <div class="section-head" style="margin-top:0;"><h2>\ud83c\udfaf Exam Prep</h2></div>
+        <p class="section-sub">Builds a study order from what's actually in the site \u2014 chapter sequence, topics most tested in past papers, then practice, then a chapter/mock exam. It does not invent difficulty or timing data that isn't in the database.</p>
+
+        <div class="side-panel" style="margin-bottom:1.5rem;">
+          <div class="settings-group">
+            <div class="settings-label">Course</div>
+            <select class="mastery-select" id="course-select" style="width:100%;"></select>
+          </div>
+          <div class="settings-group">
+            <div class="settings-label">Days until your exam</div>
+            <input type="number" id="days-input" min="1" value="7" class="mastery-select" style="width:100%;" />
+          </div>
+          <button class="btn btn-primary" id="generate-btn">Generate study sequence</button>
+        </div>
+
+        <div id="plan-output"></div>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+<script>
+  App.mountShell('exam-prep');
+  App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Exam Prep' }]);
+
+  let coursesData = null;
+
+  App.getCourses().then(data => {
+    coursesData = data;
+    const sel = document.getElementById('course-select');
+    sel.innerHTML = data.courses.map(c => `<option value="${c.slug}">${UI.escapeHtml(c.code)} \u2014 ${UI.escapeHtml(c.title)}</option>`).join('');
+  });
+
+  document.getElementById('generate-btn').addEventListener('click', async () => {
+    const slug = document.getElementById('course-select').value;
+    const days = Math.max(1, parseInt(document.getElementById('days-input').value, 10) || 7);
+    const course = coursesData.courses.find(c => c.slug === slug);
+    const output = document.getElementById('plan-output');
+    output.innerHTML = '<p class="section-sub">Building your sequence\u2026</p>';
+
+    const [chData, qData, mcqData, examData] = await Promise.all([
+      Content.getCourseChapters(slug), Content.getQuestions(slug), Content.getMcqs(slug), Content.getExams(slug)
+    ]);
+
+    const topics = Content.flattenTopics(chData);
+    const questions = qData.questions || [];
+    const mcqs = mcqData.mcqs || [];
+    const exams = examData.exams || [];
+
+    // Real, computed frequency: how many past-tagged questions reference each topic.
+    const freq = {};
+    questions.forEach(q => {
+      if (q.examMeta && q.topicId) freq[q.topicId] = (freq[q.topicId] || 0) + 1;
+    });
+
+    // Priority order: topics with content first (can actually be studied), sorted by past-paper frequency
+    // (descending), keeping syllabus/chapter order as the tiebreaker so prerequisites stay in sequence.
+    const withContent = topics.filter(t => t.status === 'complete');
+    const withoutContent = topics.filter(t => t.status !== 'complete');
+    withContent.sort((a, b) => (freq[b.id] || 0) - (freq[a.id] || 0));
+
+    const steps = [];
+    withContent.forEach(t => {
+      steps.push({ type: 'topic', topic: t, freq: freq[t.id] || 0 });
+      const topicMcqs = mcqs.filter(m => m.topicId === t.id);
+      if (topicMcqs.length) steps.push({ type: 'mcq', topic: t, count: topicMcqs.length });
+      const topicQuestions = questions.filter(q => q.topicId === t.id);
+      if (topicQuestions.length) steps.push({ type: 'questions', topic: t, count: topicQuestions.length });
+    });
+
+    const chapterExams = exams.filter(e => e.type === 'chapter');
+    const mockExams = exams.filter(e => e.type === 'mock');
+    chapterExams.forEach(e => steps.push({ type: 'chapter-exam', exam: e }));
+    mockExams.forEach(e => steps.push({ type: 'mock-exam', exam: e }));
+
+    const perDay = Math.max(1, Math.ceil(steps.length / days));
+
+    function stepHtml(s) {
+      if (s.type === 'topic') {
+        return `<a class="lecture-row" href="topic.html?c=${slug}&t=${s.topic.id}">
+          <span class="lecture-status-dot"></span>
+          <span class="lecture-row-main"><span class="lecture-row-title">Study: ${UI.escapeHtml(s.topic.title)}</span>
+          <span class="lecture-row-summary">${s.freq > 0 ? `Appeared in ${s.freq} tagged past question${s.freq === 1 ? '' : 's'}` : 'Not yet appearing in a tagged past question'}</span></span>
+          <span class="lecture-row-arrow">\u2192</span></a>`;
+      }
+      if (s.type === 'mcq') {
+        return `<a class="lecture-row" href="mcqs.html?c=${slug}&t=${s.topic.id}">
+          <span class="lecture-status-dot"></span>
+          <span class="lecture-row-main"><span class="lecture-row-title">Practice MCQs: ${UI.escapeHtml(s.topic.title)}</span>
+          <span class="lecture-row-summary">${s.count} question${s.count === 1 ? '' : 's'}</span></span>
+          <span class="lecture-row-arrow">\u2192</span></a>`;
+      }
+      if (s.type === 'questions') {
+        return `<a class="lecture-row" href="questions.html?c=${slug}">
+          <span class="lecture-status-dot"></span>
+          <span class="lecture-row-main"><span class="lecture-row-title">Solve questions: ${UI.escapeHtml(s.topic.title)}</span>
+          <span class="lecture-row-summary">${s.count} question${s.count === 1 ? '' : 's'} in the bank</span></span>
+          <span class="lecture-row-arrow">\u2192</span></a>`;
+      }
+      if (s.type === 'chapter-exam' || s.type === 'mock-exam') {
+        return `<a class="lecture-row" href="exam.html?c=${slug}&e=${s.exam.id}">
+          <span class="lecture-status-dot"></span>
+          <span class="lecture-row-main"><span class="lecture-row-title">${s.type === 'mock-exam' ? '\ud83c\udfaf Mock exam' : '\ud83d\udcdd Chapter exam'}: ${UI.escapeHtml(s.exam.title)}</span>
+          <span class="lecture-row-summary">${s.exam.totalMarks} marks \u00b7 ${s.exam.recommendedMinutes} min</span></span>
+          <span class="lecture-row-arrow">\u2192</span></a>`;
+      }
+      return '';
+    }
+
+    let html = `
+      <div class="section-head" style="margin-top:2rem;"><h2>${UI.escapeHtml(course.code)} \u2014 ${days}-day plan</h2></div>
+      <p class="section-sub">${steps.length} steps, roughly ${perDay} per day. Topics with no written study page yet (${withoutContent.length} of ${topics.length} total) are left out of the sequence below \u2014 check the Coverage Dashboard for the full list.</p>`;
+
+    if (!steps.length) {
+      html += UI.emptyState('\ud83d\udea7', 'Not enough content yet', 'This course doesn\u2019t have enough written topics, MCQs, or exams yet to build a sequence. Check back as more content is added.');
+    } else {
+      for (let d = 0; d < days && d * perDay < steps.length; d++) {
+        const daySteps = steps.slice(d * perDay, (d + 1) * perDay);
+        if (!daySteps.length) break;
+        html += `<div class="section-head"><h2>Day ${d + 1}</h2></div><div class="lecture-list">${daySteps.map(stepHtml).join('')}</div>`;
+      }
+    }
+
+    output.innerHTML = html;
+  });
+</script>
+</body>
+</html>

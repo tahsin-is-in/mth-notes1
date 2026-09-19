@@ -1,0 +1,23 @@
+{
+  "course": "MTH 302",
+  "viva": [
+    {
+      "id": "302-viva-01",
+      "topicId": "MTH302-CH02-T02",
+      "question": "Does satisfying the Cauchy-Riemann equations guarantee analyticity?",
+      "answer": "Only together with continuity of the partial derivatives near the point.",
+      "why": "The equations alone are necessary but the converse needs the extra continuity hypothesis \u2014 see the standard counterexample using sqrt(|xy|).",
+      "followUp": "Give a function where C-R holds only at an isolated point.",
+      "trap": "Assuming the equations alone are always sufficient."
+    },
+    {
+      "id": "302-viva-02",
+      "topicId": "MTH302-CH03-T02",
+      "question": "What's the single biggest consequence of Cauchy's Integral Formula?",
+      "answer": "Every analytic function is automatically infinitely differentiable \u2014 no real-variable analogue exists.",
+      "why": "The generalized formula gives f^(n) directly as a contour integral for every n, with no extra hypotheses needed.",
+      "followUp": "Why does this fail for real-differentiable functions?",
+      "trap": "Assuming complex and real differentiability behave similarly."
+    }
+  ]
+}

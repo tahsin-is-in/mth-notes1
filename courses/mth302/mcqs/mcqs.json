@@ -1,0 +1,47 @@
+{
+  "course": "MTH 302",
+  "mcqs": [
+    {
+      "id": "302-mcq-01",
+      "topicId": "MTH302-CH02-T02",
+      "category": "counterexample",
+      "question": "Which function is nowhere complex-differentiable?",
+      "options": { "A": "f(z) = z^2", "B": "f(z) = e^z", "C": "f(z) = z-bar (complex conjugate)", "D": "f(z) = z" },
+      "correct": "C",
+      "explanation": "f(z)=z-bar has u=x, v=-y, giving u_x=1 but v_y=-1 \u2014 the Cauchy-Riemann equations fail everywhere.",
+      "whyOthersWrong": {
+        "A": "z^2 is entire (differentiable everywhere).",
+        "B": "e^z is entire.",
+        "D": "The identity function is entire."
+      }
+    },
+    {
+      "id": "302-mcq-02",
+      "topicId": "MTH302-CH03-T02",
+      "category": "calculation",
+      "question": "For a simple closed contour C with z0 OUTSIDE C, and f analytic inside/on C, what is (1/2\u03c0i)\u2306_C f(z)/(z-z0) dz?",
+      "options": { "A": "f(z0)", "B": "0", "C": "2\u03c0i f(z0)", "D": "Undefined" },
+      "correct": "B",
+      "explanation": "If z0 is outside C, f(z)/(z-z0) is analytic everywhere inside C, so by Cauchy's Theorem the integral is 0.",
+      "whyOthersWrong": {
+        "A": "This is the answer only when z0 is INSIDE C.",
+        "C": "This equals the integral itself when z0 is inside, not the coefficient-normalized version outside.",
+        "D": "The integral is perfectly well-defined and evaluates to 0."
+      }
+    },
+    {
+      "id": "302-mcq-03",
+      "topicId": "MTH302-CH02-T02",
+      "category": "theorem condition",
+      "question": "Satisfying the Cauchy-Riemann equations at a single isolated point guarantees differentiability there:",
+      "options": { "A": "Always", "B": "Never", "C": "Only if the partial derivatives are also continuous nearby", "D": "Only for polynomials" },
+      "correct": "C",
+      "explanation": "The converse direction of the Cauchy-Riemann theorem requires continuity of the partial derivatives near the point, not just satisfaction of the equations at that one point.",
+      "whyOthersWrong": {
+        "A": "False \u2014 see the standard counterexample on the Analytic Functions topic page.",
+        "B": "Too strong \u2014 it can happen, just not automatically.",
+        "D": "The condition is about continuity of partials, unrelated to whether f is a polynomial."
+      }
+    }
+  ]
+}

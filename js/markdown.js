@@ -18,19 +18,39 @@ const CALLOUT_ICONS = {
   definition: '\u25a4',
   theorem: '\u2605',
   example: '\u270e',
-  important: '\u2726'
+  important: '\u2726',
+  eli5: '\ud83d\udca1',
+  formal: '\ud83d\udcd0',
+  proof: '\u220e',
+  counterexample: '\u26a0',
+  mistake: '\u2717',
+  connection: '\ud83d\udd17',
+  application: '\u2699',
+  examready: '\ud83d\udcdd',
+  viva: '\ud83c\udf99'
 };
 
 const CALLOUT_TITLES = {
   definition: 'Definition',
   theorem: 'Theorem',
   example: 'Example',
-  important: 'Important'
+  important: 'Important',
+  eli5: 'ELI5',
+  formal: 'Formal Definition',
+  proof: 'Proof',
+  counterexample: 'Counterexample',
+  mistake: 'Common Mistake',
+  connection: 'Connection',
+  application: 'Application',
+  examready: 'Exam-Ready Answer',
+  viva: 'Viva Question'
 };
+
+const CALLOUT_TYPE_LIST = Object.keys(CALLOUT_ICONS).join('|');
 
 function extractCallouts(raw) {
   const blocks = [];
-  const pattern = /:::(definition|theorem|example|important)([^\n]*)\n([\s\S]*?)\n:::/g;
+  const pattern = new RegExp(`:::(${CALLOUT_TYPE_LIST})([^\\n]*)\\n([\\s\\S]*?)\\n:::`, 'g');
   const withTokens = raw.replace(pattern, (match, type, titleLine, body) => {
     const token = `@@CALLOUT_${blocks.length}@@`;
     blocks.push({ type, title: titleLine.trim(), body });

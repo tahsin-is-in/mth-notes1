@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Theorem Sheet — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+<script>
+  window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] } };
+</script>
+</head>
+<body data-nav="theorems">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap">
+        <div class="section-head" style="margin-top:0;"><h2 id="page-heading">Theorem Sheet</h2></div>
+        <p class="section-sub" id="page-sub">Loading\u2026</p>
+        <div class="filter-bar" id="course-filter-bar"></div>
+        <div id="theorem-list"></div>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script>
+  const onlySlug = Router.getParam('c');
+  let all = [];
+  let activeCourse = onlySlug || 'all';
+
+  function card(item) {
+    const t = item.th;
+    return `
+      <details class="solution-block">
+        <summary style="font-weight:600;">
+          <span style="font-size:0.76rem; color:var(--ink-faint); font-weight:400;">${UI.escapeHtml(item.course.code)} \u2014</span>
+          ${UI.escapeHtml(t.name)}
+          ${t.topicId ? ` <a href="topic.html?c=${item.course.slug}&t=${t.topicId}" style="font-size:0.78rem; font-weight:500; color:var(--accent);">(full topic \u2192)</a>` : ''}
+        </summary>
+        <div class="solution-block-body">
+          <p><strong>Statement:</strong> ${t.statement}</p>
+          ${t.conditions ? `<p><strong>Conditions:</strong> ${UI.escapeHtml(t.conditions)}</p>` : ''}
+          ${t.intuition ? `<p><strong>Intuition:</strong> ${UI.escapeHtml(t.intuition)}</p>` : ''}
+          ${t.proofSketch ? `<p><strong>Proof sketch:</strong> ${UI.escapeHtml(t.proofSketch)}</p>` : ''}
+          ${t.example ? `<p><strong>Example:</strong> ${t.example}</p>` : ''}
+          ${t.examReady ? `<p><strong>Exam-ready:</strong> ${UI.escapeHtml(t.examReady)}</p>` : ''}
+        </div>
+      </details>`;
+  }
+
+  function render() {
+    let list = all;
+    if (activeCourse !== 'all') list = list.filter(x => x.course.slug === activeCourse);
+    const el = document.getElementById('theorem-list');
+    el.innerHTML = list.length ? list.map(card).join('') : UI.emptyState('\u2b50', 'No theorems here yet', 'Try a different course filter.');
+    if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([el]);
+  }
+
+  App.getCourses().then(async data => {
+    App.mountShell('theorems', onlySlug);
+    const target = onlySlug ? data.courses.find(c => c.slug === onlySlug) : null;
+    App.setBreadcrumbs(onlySlug
+      ? [{ label: 'Home', url: 'index.html' }, { label: target ? target.code : onlySlug, url: Router.courseUrl(onlySlug) }, { label: 'Theorem Sheet' }]
+      : [{ label: 'Home', url: 'index.html' }, { label: 'Theorem Sheet' }]);
+    document.getElementById('page-heading').textContent = onlySlug ? `${target ? target.code : onlySlug} \u2014 Theorem Sheet` : 'Theorem Sheet';
+
+    const courses = onlySlug ? data.courses.filter(c => c.slug === onlySlug) : data.courses;
+    const results = await Promise.all(courses.map(c => Content.getTheorems(c.slug).then(d => (d.theorems || []).map(th => ({ th, course: c })))));
+    all = results.flat();
+
+    document.getElementById('page-sub').textContent = all.length ? `${all.length} theorems, each with statement, conditions, intuition, and proof sketch.` : 'No theorems have been added yet.';
+
+    if (!onlySlug) {
+      const withT = [...new Set(all.map(x => x.course.slug))].map(s => all.find(x => x.course.slug === s).course);
+      const bar = document.getElementById('course-filter-bar');
+      bar.innerHTML = ['<button class="filter-chip active" data-course="all">All Courses</button>']
+        .concat(withT.map(c => `<button class="filter-chip" data-course="${c.slug}">${UI.escapeHtml(c.code)}</button>`)).join('');
+      bar.addEventListener('click', e => {
+        const chip = e.target.closest('[data-course]');
+        if (!chip) return;
+        activeCourse = chip.getAttribute('data-course');
+        document.querySelectorAll('#course-filter-bar .filter-chip').forEach(c => c.classList.toggle('active', c === chip));
+        render();
+      });
+    }
+    render();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "course": "MTH 304",
+  "theorems": [
+    {
+      "id": "304-th-01",
+      "name": "Subgroup Test",
+      "topicId": "MTH304-CH01-T02",
+      "statement": "A non-empty subset H \\subseteq G is a subgroup iff a*b^{-1} \\in H for all a,b \\in H.",
+      "conditions": "H must be non-empty.",
+      "intuition": "This one condition automatically forces both closure and the presence of inverses.",
+      "proofSketch": "Take a=b to get the identity; take a=e to get inverses; then general closure follows.",
+      "example": "H={0,2,4} in Z_6 passes the test since differences of elements stay in H.",
+      "relatedTheorems": ["304-th-02"],
+      "examReady": "Check a*b^{-1} \\in H for arbitrary a,b \\in H in one pass."
+    },
+    {
+      "id": "304-th-02",
+      "name": "Lagrange's Theorem",
+      "topicId": "MTH304-CH02-T02",
+      "statement": "If G is finite and H \\le G, then |H| divides |G|; specifically |G|=[G:H]\\cdot|H|.",
+      "conditions": "G must be finite.",
+      "intuition": "Cosets of H partition G into equal-sized blocks; counting blocks gives the formula.",
+      "proofSketch": "Show |aH|=|H| via a bijection h\\mapsto ah; show distinct cosets are disjoint; sum block sizes.",
+      "example": "A subgroup of S3 (order 6) must have order 1, 2, 3, or 6.",
+      "relatedTheorems": ["304-th-01"],
+      "examReady": "State the formula, note the converse is FALSE in general (cite A4)."
+    }
+  ]
+}

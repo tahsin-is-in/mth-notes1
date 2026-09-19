@@ -1,0 +1,23 @@
+{
+  "course": "MTH 303",
+  "viva": [
+    {
+      "id": "303-viva-01",
+      "topicId": "MTH303-CH02-T01",
+      "question": "What's the difference between an ordinary point and a regular singular point?",
+      "answer": "At an ordinary point, p and q are analytic; at a regular singular point, p,q may blow up, but (x-x0)p(x) and (x-x0)^2 q(x) remain analytic.",
+      "why": "This weaker condition is exactly what the Frobenius method needs, since it allows a controlled singularity.",
+      "followUp": "Which method applies at a regular singular point instead of the ordinary power series method?",
+      "trap": "Confusing ordinary and regular singular points when classifying a given ODE."
+    },
+    {
+      "id": "303-viva-02",
+      "topicId": "MTH303-CH07-T02",
+      "question": "Why does the Laplace method avoid finding arbitrary constants separately?",
+      "answer": "Initial conditions are plugged in directly during the transform step, so the resulting algebraic equation already encodes them.",
+      "why": "Classical solution methods find a general solution first and then solve for constants afterward; Laplace builds them in from the start.",
+      "followUp": "What kind of forcing term is the Laplace method especially good at handling?",
+      "trap": "Forgetting to include initial-condition terms when transforming derivatives."
+    }
+  ]
+}

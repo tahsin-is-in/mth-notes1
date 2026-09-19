@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Viva Prep — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-nav="viva">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap">
+        <div class="section-head" style="margin-top:0;"><h2 id="page-heading">\ud83c\udf99 Viva Preparation</h2></div>
+        <p class="section-sub" id="page-sub">Loading\u2026</p>
+        <div class="filter-bar" id="course-filter-bar"></div>
+        <div id="viva-list"></div>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+<script>
+  const onlySlug = Router.getParam('c');
+  let all = [];
+  let activeCourse = onlySlug || 'all';
+
+  function card(item) {
+    const v = item.v;
+    return `
+      <details class="solution-block">
+        <summary style="font-weight:600;">
+          <span style="font-size:0.76rem; color:var(--ink-faint); font-weight:400;">${UI.escapeHtml(item.course.code)} \u2014</span>
+          Q: ${UI.escapeHtml(v.question)}
+        </summary>
+        <div class="solution-block-body">
+          <p><strong>Short answer:</strong> ${UI.escapeHtml(v.answer)}</p>
+          ${v.why ? `<p><strong>Why?</strong> ${UI.escapeHtml(v.why)}</p>` : ''}
+          ${v.followUp ? `<p><strong>Follow-up:</strong> ${UI.escapeHtml(v.followUp)}</p>` : ''}
+          ${v.trap ? `<p style="color:var(--red);"><strong>Common examiner trap:</strong> ${UI.escapeHtml(v.trap)}</p>` : ''}
+          ${v.topicId ? `<a href="topic.html?c=${item.course.slug}&t=${v.topicId}" style="font-size:0.8rem; color:var(--accent);">Full topic \u2192</a>` : ''}
+        </div>
+      </details>`;
+  }
+
+  function render() {
+    let list = all;
+    if (activeCourse !== 'all') list = list.filter(x => x.course.slug === activeCourse);
+    document.getElementById('viva-list').innerHTML = list.length ? list.map(card).join('') : UI.emptyState('\ud83c\udf99', 'No viva questions here yet', 'Try a different course filter.');
+  }
+
+  App.getCourses().then(async data => {
+    App.mountShell('viva', onlySlug);
+    const target = onlySlug ? data.courses.find(c => c.slug === onlySlug) : null;
+    App.setBreadcrumbs(onlySlug
+      ? [{ label: 'Home', url: 'index.html' }, { label: target ? target.code : onlySlug, url: Router.courseUrl(onlySlug) }, { label: 'Viva Prep' }]
+      : [{ label: 'Home', url: 'index.html' }, { label: 'Viva Prep' }]);
+    document.getElementById('page-heading').textContent = onlySlug ? `${target ? target.code : onlySlug} \u2014 Viva Prep` : '\ud83c\udf99 Viva Preparation';
+
+    const courses = onlySlug ? data.courses.filter(c => c.slug === onlySlug) : data.courses;
+    const results = await Promise.all(courses.map(c => Content.getViva(c.slug).then(d => (d.viva || []).map(v => ({ v, course: c })))));
+    all = results.flat();
+
+    document.getElementById('page-sub').textContent = all.length ? `${all.length} viva questions with short answers, "why" explanations, and examiner traps.` : 'No viva questions have been added yet.';
+
+    if (!onlySlug) {
+      const withV = [...new Set(all.map(x => x.course.slug))].map(s => all.find(x => x.course.slug === s).course);
+      const bar = document.getElementById('course-filter-bar');
+      bar.innerHTML = ['<button class="filter-chip active" data-course="all">All Courses</button>']
+        .concat(withV.map(c => `<button class="filter-chip" data-course="${c.slug}">${UI.escapeHtml(c.code)}</button>`)).join('');
+      bar.addEventListener('click', e => {
+        const chip = e.target.closest('[data-course]');
+        if (!chip) return;
+        activeCourse = chip.getAttribute('data-course');
+        document.querySelectorAll('#course-filter-bar .filter-chip').forEach(c => c.classList.toggle('active', c === chip));
+        render();
+      });
+    }
+    render();
+  });
+</script>
+</body>
+</html>

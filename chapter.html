@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chapter — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-nav="courses">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap" id="chapter-page-wrap">
+        <p class="section-sub">Loading chapter\u2026</p>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+<script>
+  const slug = Router.getParam('c');
+  const chapterId = Router.getParam('ch');
+  const wrap = document.getElementById('chapter-page-wrap');
+
+  const STATUS_LABEL = { complete: 'Complete', partial: 'Partial', 'not-available': 'Not yet available' };
+  const STATUS_CLASS = { complete: 'status-complete', partial: 'status-partial', 'not-available': 'status-not-available' };
+  const MASTERY_LABELS = { 'not-started': 'Not Started', learning: 'Learning', practicing: 'Practicing', strong: 'Strong', mastered: 'Mastered' };
+
+  Promise.all([App.getCourses(), Content.getCourseChapters(slug), Content.getExams(slug)])
+    .then(([coursesData, chData, examData]) => {
+      App.mountShell('courses', slug);
+      const course = coursesData.courses.find(c => c.slug === slug);
+      const chapter = (chData.chapters || []).find(ch => ch.id === chapterId);
+
+      if (!course || !chapter) {
+        App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Courses', url: 'courses.html' }, { label: 'Not found' }]);
+        wrap.innerHTML = UI.emptyState('\u26a0\ufe0f', 'Chapter not found', 'That chapter link looks incomplete.');
+        return;
+      }
+
+      App.setBreadcrumbs([
+        { label: 'Home', url: 'index.html' },
+        { label: 'Courses', url: 'courses.html' },
+        { label: course.code, url: Router.courseUrl(slug) },
+        { label: chapter.title }
+      ]);
+      document.title = `${chapter.title} — MTH Notes`;
+
+      const topics = chapter.topics || [];
+      const chapterExams = (examData.exams || []).filter(e => e.chapterId === chapterId);
+
+      wrap.innerHTML = `
+        <div class="lecture-eyebrow">${UI.escapeHtml(course.code)} / ${UI.escapeHtml(chapter.id)}</div>
+        <h1 class="lecture-title">${UI.escapeHtml(chapter.title)}</h1>
+        <p class="section-sub">${topics.length} topic${topics.length === 1 ? '' : 's'} in this chapter.</p>
+
+        <div class="tab-cards">
+          ${chapterExams.map(e => `
+            <a class="tab-card" href="exam.html?c=${slug}&e=${e.id}">
+              <span class="tc-icon" aria-hidden="true">${e.type === 'mock' ? '\ud83c\udfaf' : '\ud83d\udcdd'}</span>
+              <span><span class="tc-title">${UI.escapeHtml(e.title)}</span><br /><span class="tc-count">${e.totalMarks} marks \u00b7 ${e.recommendedMinutes} min</span></span>
+            </a>`).join('')}
+        </div>
+
+        <div class="section-head"><h2>Topics</h2></div>
+        <div class="lecture-list" id="topic-list"></div>
+      `;
+
+      document.getElementById('topic-list').innerHTML = topics.map((t, i) => {
+        const mastery = Store.getMastery(t.id);
+        return `
+        <a class="lecture-row" href="topic.html?c=${slug}&t=${t.id}">
+          <span class="lecture-status-dot ${mastery === 'mastered' ? 'completed' : (mastery !== 'not-started' ? 'in-progress' : '')}"></span>
+          <span class="lecture-row-num">${String(i + 1).padStart(2, '0')}</span>
+          <span class="lecture-row-main">
+            <span class="lecture-row-title">${UI.escapeHtml(t.title)}</span>
+            <span class="lecture-row-summary">
+              <span class="status-badge ${STATUS_CLASS[t.status] || 'status-not-available'}">${STATUS_LABEL[t.status] || 'Not yet available'}</span>
+              &nbsp;${MASTERY_LABELS[mastery]}
+            </span>
+          </span>
+          <span class="lecture-row-arrow" aria-hidden="true">\u2192</span>
+        </a>`;
+      }).join('');
+    })
+    .catch(err => {
+      console.error(err);
+      wrap.innerHTML = UI.emptyState('\u26a0\ufe0f', 'Something went wrong', 'Could not load chapter data.');
+    });
+</script>
+</body>
+</html>

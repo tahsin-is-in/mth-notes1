@@ -1,0 +1,47 @@
+{
+  "course": "MTH 303",
+  "mcqs": [
+    {
+      "id": "303-mcq-01",
+      "topicId": "MTH303-CH02-T01",
+      "category": "definition",
+      "question": "At an ordinary point x0 of y'' + p(x)y' + q(x)y = 0, how many linearly independent power series solutions exist?",
+      "options": { "A": "1", "B": "2", "C": "0", "D": "Infinitely many" },
+      "correct": "B",
+      "explanation": "The existence theorem guarantees exactly two linearly independent series solutions at an ordinary point, matching the order of the ODE.",
+      "whyOthersWrong": {
+        "A": "A second-order linear ODE has a 2-dimensional solution space.",
+        "C": "Ordinary points always admit series solutions by the existence theorem.",
+        "D": "The solution space is exactly 2-dimensional, not infinite."
+      }
+    },
+    {
+      "id": "303-mcq-02",
+      "topicId": "MTH303-CH07-T02",
+      "category": "calculation",
+      "question": "What does the Laplace transform turn a linear ODE with initial conditions into?",
+      "options": { "A": "A nonlinear ODE", "B": "An algebraic equation", "C": "A PDE", "D": "An integral equation with no closed form" },
+      "correct": "B",
+      "explanation": "The Laplace transform converts derivatives into polynomial multiples of the transformed variable, turning the ODE into an algebraic equation in s.",
+      "whyOthersWrong": {
+        "A": "The transformed equation is linear and algebraic, not nonlinear.",
+        "C": "No extra spatial variable is introduced.",
+        "D": "The whole point of the method is to avoid this \u2014 it produces a closed-form algebraic equation."
+      }
+    },
+    {
+      "id": "303-mcq-03",
+      "topicId": "MTH303-CH02-T01",
+      "category": "examiner-trap",
+      "question": "For (1+x^2)y''+xy'-y=0 about x0=0, what determines the radius of convergence of the power series solution?",
+      "options": { "A": "The nearest real singular point only", "B": "The nearest singular point in the complex plane", "C": "The coefficients of the recurrence relation", "D": "Always infinity, since p,q look smooth on the real line" },
+      "correct": "B",
+      "explanation": "The radius of convergence is governed by the nearest singularity of the coefficient functions in the COMPLEX plane (here x=\u00b1i, giving radius 1), even if none appear on the real line.",
+      "whyOthersWrong": {
+        "A": "Real-line-only singularities can miss closer complex singularities.",
+        "C": "The recurrence's arithmetic doesn't directly reveal the radius \u2014 the coefficient functions' singularities do.",
+        "D": "A common but incorrect assumption \u2014 see the Power Series Solutions topic page's Difficult example."
+      }
+    }
+  ]
+}

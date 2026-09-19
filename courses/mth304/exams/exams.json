@@ -1,0 +1,40 @@
+{
+  "course": "MTH 304",
+  "exams": [
+    {
+      "id": "304-ch01-exam",
+      "type": "chapter",
+      "chapterId": "MTH304-CH01",
+      "title": "Chapter Exam \u2014 Groups",
+      "totalMarks": 25,
+      "recommendedMinutes": 60,
+      "difficulty": "medium",
+      "instructions": "Answer all questions.",
+      "questionIds": ["304-d1", "304-p1", "304-short1", "304-past-01", "304-past-02", "304-past-03"],
+      "mcqIds": ["304-mcq-01", "304-mcq-02", "304-mcq-05"]
+    },
+    {
+      "id": "304-ch02-exam",
+      "type": "chapter",
+      "chapterId": "MTH304-CH02",
+      "title": "Chapter Exam \u2014 Cosets and Lagrange's Theorem",
+      "totalMarks": 25,
+      "recommendedMinutes": 60,
+      "difficulty": "medium",
+      "instructions": "Answer all questions.",
+      "questionIds": ["304-t1", "304-p2", "304-pr1", "304-viva1", "304-imp1"],
+      "mcqIds": ["304-mcq-03", "304-mcq-04"]
+    },
+    {
+      "id": "304-mock-incourse1",
+      "type": "mock",
+      "title": "Mock Incourse Exam \u2014 MTH 304 Group Theory",
+      "totalMarks": 25,
+      "recommendedMinutes": 60,
+      "difficulty": "medium",
+      "instructions": "Best-answer MCQs plus short/long questions, matching the University of Dhaka incourse pattern.",
+      "questionIds": ["304-past-01", "304-past-02", "304-past-03", "304-p2"],
+      "mcqIds": ["304-mcq-01", "304-mcq-02", "304-mcq-03", "304-mcq-04", "304-mcq-05"]
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Practice Me — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+<script>
+  window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] } };
+</script>
+</head>
+<body data-nav="practice">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap narrow">
+        <div class="section-head" style="margin-top:0;"><h2>\ud83c\udfb2 Practice Me</h2></div>
+        <p class="section-sub">Pulls a random question from the site's actual question bank. Filter first, then draw.</p>
+
+        <div class="filter-bar" id="course-filter-bar"></div>
+        <div class="filter-bar" id="difficulty-filter-bar">
+          <button class="filter-chip active" data-diff="all">Any difficulty</button>
+          <button class="filter-chip" data-diff="easy">Easy</button>
+          <button class="filter-chip" data-diff="medium">Medium</button>
+          <button class="filter-chip" data-diff="hard">Hard</button>
+        </div>
+
+        <button class="btn btn-primary" id="draw-btn" style="margin:1rem 0 1.5rem;">\ud83c\udfb2 Draw a question</button>
+
+        <div id="practice-area"></div>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script>
+  App.mountShell('practice');
+  App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Practice Me' }]);
+
+  let pool = [];
+  let activeCourse = 'all';
+  let activeDiff = 'all';
+
+  function drawOne() {
+    let list = pool;
+    if (activeCourse !== 'all') list = list.filter(x => x.course.slug === activeCourse);
+    if (activeDiff !== 'all') list = list.filter(x => x.q.difficulty === activeDiff);
+    const area = document.getElementById('practice-area');
+    if (!list.length) {
+      area.innerHTML = UI.emptyState('\ud83c\udfb2', 'No questions match', 'Try loosening your filters.');
+      return;
+    }
+    const item = list[Math.floor(Math.random() * list.length)];
+    const q = item.q, sol = q.solution || {};
+    area.innerHTML = `
+      <div class="solution-block">
+        <div class="solution-block-body" style="padding-top:1.1rem;">
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.6rem;">
+            <span class="marks-badge">${UI.escapeHtml(item.course.code)}</span>
+            ${q.difficulty ? `<span class="difficulty-badge">${q.difficulty}</span>` : ''}
+            ${q.marks ? `<span class="marks-badge">${q.marks} marks</span>` : ''}
+          </div>
+          <p style="font-weight:500;">${UI.escapeHtml(q.text)}</p>
+        </div>
+        ${sol.hint ? `<details class="solution-block" style="border:none; border-top:1px solid var(--border); border-radius:0;"><summary>\ud83d\udca1 Hint</summary><div class="solution-block-body">${UI.escapeHtml(sol.hint)}</div></details>` : ''}
+        ${(sol.steps || sol.finalAnswer) ? `<details class="solution-block" style="border:none; border-top:1px solid var(--border); border-radius:0;"><summary>\u2705 Solution</summary><div class="solution-block-body">${sol.steps || ''}${sol.finalAnswer ? `<p><strong>Final answer:</strong> ${sol.finalAnswer}</p>` : ''}</div></details>` : ''}
+        ${sol.examReady ? `<details class="solution-block" style="border:none; border-top:1px solid var(--border); border-radius:0;"><summary>\ud83d\udcdd Exam answer</summary><div class="solution-block-body">${sol.examReady}</div></details>` : ''}
+      </div>`;
+    if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([area]);
+  }
+
+  App.getCourses().then(async data => {
+    const withQ = data.courses.filter(c => c.questionCount > 0);
+    const results = await Promise.all(withQ.map(c => Content.getQuestions(c.slug).then(d => (d.questions || []).map(q => ({ q, course: c })))));
+    pool = results.flat();
+
+    const bar = document.getElementById('course-filter-bar');
+    bar.innerHTML = ['<button class="filter-chip active" data-course="all">All Courses</button>']
+      .concat(withQ.map(c => `<button class="filter-chip" data-course="${c.slug}">${UI.escapeHtml(c.code)}</button>`)).join('');
+    bar.addEventListener('click', e => {
+      const chip = e.target.closest('[data-course]');
+      if (!chip) return;
+      activeCourse = chip.getAttribute('data-course');
+      document.querySelectorAll('#course-filter-bar .filter-chip').forEach(c => c.classList.toggle('active', c === chip));
+    });
+
+    document.getElementById('difficulty-filter-bar').addEventListener('click', e => {
+      const chip = e.target.closest('[data-diff]');
+      if (!chip) return;
+      activeDiff = chip.getAttribute('data-diff');
+      document.querySelectorAll('#difficulty-filter-bar .filter-chip').forEach(c => c.classList.toggle('active', c === chip));
+    });
+
+    document.getElementById('draw-btn').addEventListener('click', drawOne);
+    document.getElementById('practice-area').innerHTML = `<p class="section-sub">${pool.length} questions loaded. Click "Draw a question" to begin.</p>`;
+  });
+</script>
+</body>
+</html>

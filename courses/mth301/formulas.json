@@ -1,0 +1,45 @@
+{
+  "course": "MTH 301",
+  "formulas": [
+    {
+      "id": "301-f-01",
+      "chapterId": "MTH301-CH01",
+      "name": "Uniform Convergence Criterion",
+      "formula": "\\sup_{x\\in S}|f_n(x)-f(x)| \\to 0",
+      "symbols": "S: the common domain; f_n, f: the sequence and its limit.",
+      "conditions": "This supremum must be computed over the whole domain S, not sampled points.",
+      "whenToUse": "The direct test for uniform convergence when a candidate limit f is already known.",
+      "commonMistake": "Evaluating the error at a few fixed points instead of the true supremum."
+    },
+    {
+      "id": "301-f-02",
+      "chapterId": "MTH301-CH01",
+      "name": "Weierstrass M-test Bound",
+      "formula": "|f_n(x)| \\le M_n,\\quad \\sum_{n} M_n < \\infty",
+      "symbols": "M_n: an x-independent bound on |f_n|.",
+      "conditions": "M_n must not depend on x.",
+      "whenToUse": "Proving uniform convergence of a series of functions.",
+      "commonMistake": "Choosing a bound M_n that secretly still depends on x."
+    },
+    {
+      "id": "301-f-03",
+      "chapterId": "MTH301-CH02",
+      "name": "Metric Space Axioms",
+      "formula": "d(x,y)\\ge0,\\ d(x,y)=0\\iff x=y;\\quad d(x,y)=d(y,x);\\quad d(x,z)\\le d(x,y)+d(y,z)",
+      "symbols": "d: the metric; x,y,z: arbitrary points.",
+      "conditions": "All three must hold for every triple of points.",
+      "whenToUse": "Verifying a candidate distance function is a genuine metric.",
+      "commonMistake": "Forgetting to check d(x,y)=0 \\implies x=y (only checking the converse)."
+    },
+    {
+      "id": "301-f-04",
+      "chapterId": "MTH301-CH03",
+      "name": "Cauchy Sequence Criterion",
+      "formula": "\\forall \\varepsilon>0\\ \\exists N:\\ m,n\\ge N \\implies d(x_m,x_n)<\\varepsilon",
+      "symbols": "x_n: the sequence; d: the metric.",
+      "conditions": "Must hold for ALL pairs m,n \\ge N, not just consecutive terms.",
+      "whenToUse": "Testing whether a sequence is Cauchy (a prerequisite for using completeness).",
+      "commonMistake": "Only checking d(x_{n+1},x_n)\\to0, which is weaker than the Cauchy condition."
+    }
+  ]
+}

@@ -697,6 +697,24 @@ body {
 .callout-example .callout-label { color: var(--green); }
 .callout-important { border-left-color: var(--red); background: var(--red-soft); }
 .callout-important .callout-label { color: var(--red); }
+.callout-eli5 { border-left-color: var(--gold); background: var(--gold-soft); }
+.callout-eli5 .callout-label { color: var(--gold); }
+.callout-formal { border-left-color: var(--accent); }
+.callout-formal .callout-label { color: var(--accent-strong); }
+.callout-proof { border-left-color: var(--ink-faint); background: var(--bg-sunken); }
+.callout-proof .callout-label { color: var(--ink-soft); }
+.callout-counterexample { border-left-color: var(--red); background: var(--red-soft); }
+.callout-counterexample .callout-label { color: var(--red); }
+.callout-mistake { border-left-color: var(--red); }
+.callout-mistake .callout-label { color: var(--red); }
+.callout-connection { border-left-color: var(--accent); background: var(--accent-soft); }
+.callout-connection .callout-label { color: var(--accent-strong); }
+.callout-application { border-left-color: var(--green); background: var(--green-soft); }
+.callout-application .callout-label { color: var(--green); }
+.callout-examready { border-left-color: var(--gold); background: var(--gold-soft); }
+.callout-examready .callout-label { color: var(--gold); }
+.callout-viva { border-left-color: var(--accent); background: var(--accent-soft); }
+.callout-viva .callout-label { color: var(--accent-strong); }
 
 .lecture-footer-nav {
   display: flex;
@@ -980,7 +998,141 @@ body {
   display: none !important;
 }
 
+/* ---------- LaTeX show/copy panel ---------- */
+.latex-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin: 1.25rem 0;
+  background: var(--bg-elevated);
+}
+.latex-summary {
+  cursor: pointer;
+  padding: 0.75rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  list-style: none;
+}
+.latex-summary::-webkit-details-marker { display: none; }
+.latex-panel-body { padding: 0 1.1rem 1.1rem; }
+.latex-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.latex-row:last-of-type { border-bottom: none; }
+.latex-code {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  background: var(--code-bg);
+  padding: 0.5rem 0.7rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* ---------- Mode toggles (ELI5 / Exam mode) ---------- */
+.mode-toggle-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.mode-toggle-btn {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.83rem;
+  color: var(--ink-soft);
+  background: var(--bg-elevated);
+}
+.mode-toggle-btn.active { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
+.topic-section-hidden { display: none !important; }
+.mode-eli5-active .callout-formal,
+.mode-eli5-active .callout-proof,
+.mode-eli5-active .callout-connection { display: none; }
+.mode-exam-active .callout-eli5,
+.mode-exam-active .callout-connection,
+.mode-exam-active .callout-application { display: none; }
+
+/* ---------- Tabs ---------- */
+.tabs-bar { display: flex; gap: 0.25rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; overflow-x: auto; }
+.tab-btn {
+  padding: 0.7rem 1rem;
+  font-size: 0.88rem;
+  color: var(--ink-faint);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ---------- Mastery checklist ---------- */
+.mastery-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.78rem; font-weight: 600;
+  padding: 0.3rem 0.7rem; border-radius: 999px;
+}
+.mastery-not-started { background: var(--bg-sunken); color: var(--ink-faint); }
+.mastery-learning { background: var(--accent-soft); color: var(--accent-strong); }
+.mastery-practicing { background: var(--gold-soft); color: var(--gold); }
+.mastery-strong { background: var(--green-soft); color: var(--green); }
+.mastery-mastered { background: var(--green); color: #fff; }
+.mastery-select { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.4rem 0.6rem; background: var(--bg-elevated); color: var(--ink); }
+.checklist-item { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+.checklist-item:last-child { border-bottom: none; }
+.checklist-item input[type="checkbox"] { margin-top: 0.2rem; width: 16px; height: 16px; accent-color: var(--accent); }
+
+/* ---------- MCQ card ---------- */
+.mcq-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.3rem;
+  margin-bottom: 1rem;
+}
+.mcq-prompt { font-weight: 600; margin-bottom: 0.9rem; font-size: 0.95rem; }
+.mcq-option {
+  display: flex; align-items: center; gap: 0.65rem;
+  padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  margin-bottom: 0.5rem; font-size: 0.9rem; cursor: pointer;
+}
+.mcq-option:hover { border-color: var(--border-strong); }
+.mcq-option.correct { border-color: var(--green); background: var(--green-soft); }
+.mcq-option.incorrect { border-color: var(--red); background: var(--red-soft); }
+.mcq-option-letter { font-family: var(--font-mono); font-weight: 700; width: 20px; }
+.mcq-explain { margin-top: 0.9rem; padding-top: 0.9rem; border-top: 1px solid var(--border); font-size: 0.88rem; color: var(--ink-soft); display: none; }
+.mcq-explain.show { display: block; }
+.mcq-why-wrong { margin-top: 0.5rem; font-size: 0.85rem; color: var(--ink-faint); }
+
+/* ---------- Solution view ---------- */
+.solution-block { border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elevated); margin: 1rem 0; overflow: hidden; }
+.solution-block summary { cursor: pointer; padding: 0.85rem 1.1rem; font-weight: 600; font-size: 0.88rem; color: var(--ink-soft); list-style: none; }
+.solution-block summary::-webkit-details-marker { display: none; }
+.solution-block-body { padding: 0 1.1rem 1.1rem; }
+.status-badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.2rem 0.55rem; border-radius: 5px; }
+.status-complete { background: var(--green-soft); color: var(--green); }
+.status-partial { background: var(--gold-soft); color: var(--gold); }
+.status-not-available { background: var(--bg-sunken); color: var(--ink-faint); }
+.difficulty-badge { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 5px; background: var(--accent-soft); color: var(--accent-strong); }
+.marks-badge { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 5px; background: var(--bg-sunken); color: var(--ink-soft); }
+
+/* ---------- Exam paper layout ---------- */
+.exam-paper-header { text-align: center; padding-bottom: 1.5rem; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; }
+.exam-paper-header h1 { font-family: var(--font-display); margin: 0 0 0.4rem; }
+.exam-question-block { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+.exam-question-block:last-child { border-bottom: none; }
+.exam-question-num { font-family: var(--font-mono); font-weight: 700; color: var(--accent); }
+
+/* ---------- Coverage dashboard ---------- */
+.coverage-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.coverage-table th, .coverage-table td { padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); text-align: left; }
+.coverage-table th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); }
+.coverage-bar-mini { width: 80px; height: 6px; border-radius: 4px; background: var(--bg-sunken); overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 0.5rem; }
+.coverage-bar-mini-fill { height: 100%; background: var(--accent); }
+
 /* ---------- Print ---------- */
+
 @media print {
   .sidebar, .topbar, .lecture-toc, .lecture-actions, .lecture-footer-nav, .bottom-nav, .site-footer { display: none !important; }
   .lecture-layout { display: block; }

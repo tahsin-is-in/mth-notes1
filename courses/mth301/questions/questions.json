@@ -5,49 +5,176 @@
       "id": "301-d1",
       "category": "definition",
       "text": "Define a metric space and state the three axioms a metric must satisfy.",
-      "tags": ["metric space", "axioms"]
+      "tags": ["metric space", "axioms"],
+      "topicId": "MTH301-CH02-T01",
+      "chapterId": "MTH301-CH02",
+      "difficulty": "easy",
+      "marks": 2,
+      "solution": { "status": "complete", "finalAnswer": "See the Metric Spaces topic page for the full formal definition and all three axioms." }
     },
     {
       "id": "301-d2",
       "category": "definition",
       "text": "What does it mean for a metric space to be complete?",
-      "tags": ["completeness", "cauchy sequence"]
+      "tags": ["completeness", "cauchy sequence"],
+      "topicId": "MTH301-CH03-T02",
+      "chapterId": "MTH301-CH03",
+      "difficulty": "easy",
+      "marks": 2,
+      "solution": { "status": "complete", "finalAnswer": "Every Cauchy sequence in the space converges to a point of the space itself." }
     },
     {
       "id": "301-t1",
       "category": "theorem",
       "text": "State the Bolzano\u2013Weierstrass theorem.",
-      "tags": ["bolzano-weierstrass", "bounded sequence"]
+      "tags": ["bolzano-weierstrass", "bounded sequence"],
+      "topicId": "MTH301-CH03-T02",
+      "chapterId": "MTH301-CH03",
+      "difficulty": "medium",
+      "marks": 3,
+      "solution": { "status": "complete", "finalAnswer": "Every bounded sequence of real numbers has a convergent subsequence." }
     },
     {
       "id": "301-t2",
       "category": "theorem",
       "text": "State the Weierstrass M-test for uniform convergence of a series of functions.",
-      "tags": ["weierstrass m-test", "uniform convergence", "series"]
+      "tags": ["weierstrass m-test", "uniform convergence", "series"],
+      "topicId": "MTH301-CH01-T02",
+      "chapterId": "MTH301-CH01",
+      "difficulty": "medium",
+      "marks": 3
     },
     {
       "id": "301-p1",
       "category": "proof",
       "text": "Prove that every convergent sequence in a metric space is a Cauchy sequence.",
-      "tags": ["cauchy sequence", "convergence", "proof"]
+      "tags": ["cauchy sequence", "convergence", "proof"],
+      "topicId": "MTH301-CH03-T02",
+      "chapterId": "MTH301-CH03",
+      "difficulty": "medium",
+      "marks": 5,
+      "solution": { "status": "complete", "finalAnswer": "See the full proof on the Complete Metric Spaces topic page (three-epsilon-style triangle inequality argument)." }
     },
     {
       "id": "301-p2",
       "category": "proof",
       "text": "Prove that a uniform limit of a sequence of continuous functions is continuous.",
-      "tags": ["uniform convergence", "continuity", "proof"]
+      "tags": ["uniform convergence", "continuity", "proof"],
+      "topicId": "MTH301-CH01-T02",
+      "chapterId": "MTH301-CH01",
+      "difficulty": "medium",
+      "marks": 6,
+      "solution": { "status": "complete", "finalAnswer": "See the full proof (the Uniform Limit Theorem) on the Uniform Convergence topic page." }
     },
     {
       "id": "301-pr1",
       "category": "problem",
       "text": "Determine whether the sequence f_n(x) = x^n converges uniformly on [0, 1].",
-      "tags": ["uniform convergence", "pointwise convergence", "problem"]
+      "tags": ["uniform convergence", "pointwise convergence", "problem"],
+      "topicId": "MTH301-CH01-T02",
+      "chapterId": "MTH301-CH01",
+      "difficulty": "medium",
+      "marks": 5,
+      "solution": {
+        "status": "complete",
+        "hint": "Compute the pointwise limit first, then check whether it's continuous.",
+        "steps": "Pointwise, $f_n(x)=x^n \\to f(x) = 0$ for $x\\in[0,1)$ and $f(1)=1$. Each $f_n$ is continuous, but $f$ is not (it jumps at $x=1$). By the Uniform Limit Theorem, a uniform limit of continuous functions must be continuous \u2014 so since the limit $f$ is discontinuous, the convergence **cannot** be uniform on $[0,1]$.",
+        "finalAnswer": "Not uniformly convergent on [0,1] (though it is uniform on any $[0,1-\\delta]$, $\\delta>0$).",
+        "examReady": "$f_n(x)=x^n$ converges pointwise to a discontinuous function on $[0,1]$, so by the contrapositive of the Uniform Limit Theorem it cannot converge uniformly there.",
+        "commonMistakes": "Trying to compute $\\sup_x|f_n(x)-f(x)|$ directly without first checking continuity of the limit \u2014 the continuity argument is faster and is the standard exam-expected method."
+      }
     },
     {
       "id": "301-pq1",
       "category": "previous",
       "text": "(2024) Show that the space C[a, b] with the sup metric is a complete metric space.",
-      "tags": ["complete metric space", "function space", "sup metric"]
+      "tags": ["complete metric space", "function space", "sup metric"],
+      "topicId": "MTH301-CH03-T02",
+      "chapterId": "MTH301-CH03",
+      "examMeta": { "course": "MTH301", "examType": "Final", "session": "2023", "year": 2023 },
+      "marks": 8,
+      "difficulty": "hard",
+      "solution": { "status": "complete", "finalAnswer": "See the full worked \u201cExam level\u201d example on the Complete Metric Spaces topic page for the pointwise-to-uniform upgrade argument." }
+    },
+    {
+      "id": "301-past-01",
+      "category": "previous",
+      "text": "Using the epsilon\u2013N definition, prove lim_{(x,y)\u2192(1,1)} (x + xy + y^2) = 3.",
+      "originalText": "Using the definition, prove lim_{(x,y)\u2192(1,1)}(x+xy+y\u00b2) = 3.",
+      "tags": ["multivariable limit", "epsilon-delta"],
+      "topicId": "MTH301-CH06-T01",
+      "chapterId": "MTH301-CH06",
+      "examMeta": { "course": "MTH301", "examType": "Incourse-2", "session": "2023\u201324", "year": 2024 },
+      "marks": 5,
+      "difficulty": "medium",
+      "solution": {
+        "status": "complete",
+        "hint": "Bound $|x+xy+y^2-3|$ using $|x-1|<\\delta$ and $|y-1|<\\delta$, and control the algebra in a bounded neighbourhood.",
+        "steps": "Work in the region $|x-1|<1,\\,|y-1|<1$ (so $0<x<2,\\,0<y<2$). Write $x+xy+y^2-3 = (x-1) + (xy-1) + (y^2-1)$. Bound each: $|x-1|<\\delta$; $|xy-1| = |x(y-1)+(x-1)| \\le |x||y-1|+|x-1| < 2\\delta+\\delta=3\\delta$ (using $|x|<2$); $|y^2-1|=|y-1||y+1|<\\delta\\cdot 3 = 3\\delta$ (using $|y+1|<3$). So $|x+xy+y^2-3| < \\delta+3\\delta+3\\delta = 7\\delta$. Given $\\varepsilon>0$, choose $\\delta = \\min\\{1, \\varepsilon/7\\}$; then $\\|(x,y)-(1,1)\\|<\\delta \\implies |x+xy+y^2-3|<\\varepsilon$.",
+        "finalAnswer": "The limit equals 3, verified directly from the $\\varepsilon$\u2013$\\delta$ definition with $\\delta=\\min\\{1,\\varepsilon/7\\}$.",
+        "examReady": "Bound the expression by a constant multiple of $\\delta$ inside a bounded neighbourhood of $(1,1)$, then pick $\\delta$ to make that constant multiple less than $\\varepsilon$.",
+        "commonMistakes": "Forgetting to first restrict to a bounded neighbourhood (e.g. $\\delta\\le1$) before bounding $x$ and $y$ \u2014 without this, $|x|$ and $|y+1|$ have no fixed bound to work with."
+      }
+    },
+    {
+      "id": "301-past-02",
+      "category": "previous",
+      "text": "For f_n(x) = nx/(nx+1) on (0,1), n \u2265 1: does f_n have a uniform limit? Justify.",
+      "originalText": "For f\u2099(x)=nx/(nx+1) on (0,1), n\u22651: does f\u2099 have a uniform limit? Justify.",
+      "tags": ["uniform convergence", "pointwise convergence"],
+      "topicId": "MTH301-CH01-T02",
+      "chapterId": "MTH301-CH01",
+      "examMeta": { "course": "MTH301", "examType": "Incourse-2", "session": "2024\u201325", "year": 2024 },
+      "marks": 6,
+      "difficulty": "medium",
+      "solution": {
+        "status": "complete",
+        "hint": "Find the pointwise limit first, then test the supremum of the error directly rather than guessing.",
+        "steps": "Pointwise: for fixed $x\\in(0,1)$, as $n\\to\\infty$, $f_n(x) = \\dfrac{nx}{nx+1} = \\dfrac{x}{x+1/n} \\to \\dfrac{x}{x} = 1$. So $f_n \\to f \\equiv 1$ pointwise on $(0,1)$. Now test uniformity: $|f_n(x)-1| = \\left|\\dfrac{nx}{nx+1}-1\\right| = \\dfrac{1}{nx+1}$. As $x\\to0^+$ (with $x$ still in $(0,1)$), $\\dfrac{1}{nx+1}\\to 1$ for any fixed $n$, so $\\sup_{x\\in(0,1)}|f_n(x)-1| = 1$ for every $n$ (approached as $x\\to0^+$). This supremum does **not** tend to $0$.",
+        "finalAnswer": "f_n \u2192 1 pointwise on (0,1), but the convergence is NOT uniform on (0,1).",
+        "examReady": "Pointwise limit is 1; $\\sup_{(0,1)}|f_n-1|=1$ for every $n$ (via $x\\to0^+$), so convergence fails to be uniform.",
+        "commonMistakes": "Evaluating the supremum only at a few sample points instead of taking $x\\to0^+$ as a limiting case within the open interval $(0,1)$."
+      }
+    },
+    {
+      "id": "301-past-03",
+      "category": "previous",
+      "text": "Show that f(x) = x^3 is a contraction on X = (0, 1/3) with no fixed point in X. Does this contradict Banach's fixed point theorem?",
+      "originalText": "Show f(x)=x\u00b3 is a contraction on X=(0, \u2153) with no fixed point in X; does this contradict Banach's theorem?",
+      "tags": ["banach fixed point theorem", "contraction", "completeness"],
+      "topicId": "MTH301-CH03-T02",
+      "chapterId": "MTH301-CH03",
+      "examMeta": { "course": "MTH301", "examType": "Incourse-2", "session": "2024\u201325", "year": 2024 },
+      "marks": 5,
+      "difficulty": "medium",
+      "solution": {
+        "status": "complete",
+        "hint": "Check the contraction constant using the Mean Value Theorem on the given interval, then locate where the only candidate fixed point lies.",
+        "steps": "For $x,y \\in (0,\\tfrac13)$, by the Mean Value Theorem $|x^3-y^3| = |3c^2||x-y|$ for some $c$ between $x,y$, and since $0<c<\\tfrac13$, $3c^2 < 3\\cdot\\tfrac19=\\tfrac13$. So $|f(x)-f(y)| \\le \\tfrac13|x-y|$, a genuine contraction with $k=1/3<1$. Solving $f(x)=x$: $x^3=x \\implies x(x^2-1)=0 \\implies x=0,\\pm1$. The only root in the vicinity of $(0,\\tfrac13)$ is $x=0$, but $0\\notin(0,\\tfrac13)$ (the interval is open) \u2014 so $f$ has no fixed point *in* $X$.",
+        "finalAnswer": "f is a contraction on (0,1/3) but has no fixed point there; this does NOT contradict Banach's theorem.",
+        "examReady": "No contradiction: Banach's Fixed-Point Theorem requires $X$ to be a *complete* metric space, and $(0,\\tfrac13)$ (with the usual metric) is not complete \u2014 the \u201cmissing\u201d fixed point $x=0$ is exactly the point the space is incomplete at.",
+        "commonMistakes": "Concluding this is a contradiction, rather than recognizing that the hypothesis of completeness of the domain fails \u2014 the theorem's conclusion simply doesn't apply here."
+      }
+    },
+    {
+      "id": "301-past-04",
+      "category": "previous",
+      "text": "State Cauchy's criterion for uniform convergence and use it to discuss convergence of f_n(x) = tan^{-1}(nx).",
+      "originalText": "State Cauchy's criterion for uniform convergence; use it to discuss convergence of f\u2099(x)=tan\u207b\u00b9(nx).",
+      "tags": ["cauchy criterion", "uniform convergence"],
+      "topicId": "MTH301-CH01-T02",
+      "chapterId": "MTH301-CH01",
+      "examMeta": { "course": "MTH301", "examType": "Final", "session": "2023", "year": 2023 },
+      "marks": 6,
+      "difficulty": "medium",
+      "solution": {
+        "status": "complete",
+        "hint": "State the criterion, then find the pointwise limit of arctan(nx) and check whether it's continuous.",
+        "steps": "**Cauchy criterion:** $(f_n)$ converges uniformly on $S$ iff $\\forall \\varepsilon>0\\,\\exists N$ such that $m,n\\ge N \\implies \\sup_{x\\in S}|f_m(x)-f_n(x)|<\\varepsilon$. For $f_n(x)=\\tan^{-1}(nx)$ on, say, $\\mathbb R$: pointwise, for $x>0$, $nx\\to\\infty$ so $f_n(x)\\to \\pi/2$; for $x<0$, $f_n(x)\\to-\\pi/2$; at $x=0$, $f_n(0)=0$ for all $n$. The pointwise limit is discontinuous at $x=0$ (jumping from $-\\pi/2$ to $\\pi/2$).",
+        "finalAnswer": "f_n(x)=tan^{-1}(nx) converges pointwise but NOT uniformly on any interval containing 0, since the pointwise limit is discontinuous there.",
+        "examReady": "Since each $f_n$ is continuous but the pointwise limit is discontinuous at $x=0$, the Uniform Limit Theorem rules out uniform convergence on any interval containing $0$.",
+        "commonMistakes": "Attempting to verify the Cauchy criterion directly with a supremum computation, when the continuity contrapositive argument is much faster given the discontinuous pointwise limit."
+      }
     }
   ]
 }

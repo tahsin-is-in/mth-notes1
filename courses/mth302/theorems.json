@@ -1,0 +1,29 @@
+{
+  "course": "MTH 302",
+  "theorems": [
+    {
+      "id": "302-th-01",
+      "name": "Cauchy\u2013Riemann Equations",
+      "topicId": "MTH302-CH02-T02",
+      "statement": "If f=u+iv is differentiable at z0, then u_x=v_y and u_y=-v_x at that point; conversely, these plus continuous partials nearby imply differentiability.",
+      "conditions": "The converse direction needs continuity of the partial derivatives, not just their existence.",
+      "intuition": "Differentiability requires the same derivative value approaching from the real and imaginary directions; equating those two expressions gives the equations.",
+      "proofSketch": "Compute f'(z0) along h real and h purely imaginary separately, then equate real/imaginary parts.",
+      "example": "f(z)=z^2 satisfies both equations everywhere and is entire.",
+      "relatedTheorems": ["302-th-02"],
+      "examReady": "Compute u_x,u_y,v_x,v_y; check both equations; state domain of validity."
+    },
+    {
+      "id": "302-th-02",
+      "name": "Cauchy's Integral Formula",
+      "topicId": "MTH302-CH03-T02",
+      "statement": "f(z0) = (1/2\\pi i)\\oint_C f(z)/(z-z0)\\,dz for f analytic on/inside simple closed contour C, z0 inside C.",
+      "conditions": "f must be analytic on and inside C; z0 must be strictly inside C (0 if outside, by Cauchy's Theorem).",
+      "intuition": "Boundary values of an analytic function completely determine its interior values.",
+      "proofSketch": "Shrink C to a small circle around z0 using Cauchy's Theorem, then take the radius to 0.",
+      "example": "\\oint_{|z|=2} e^z/(z-1)\\,dz = 2\\pi i\\,e.",
+      "relatedTheorems": ["302-th-01"],
+      "examReady": "Check z0 is inside C; if f analytic throughout, apply formula directly."
+    }
+  ]
+}

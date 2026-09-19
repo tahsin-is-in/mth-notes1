@@ -1,0 +1,47 @@
+{
+  "course": "MTH 310",
+  "mcqs": [
+    {
+      "id": "310-mcq-01",
+      "topicId": "MTH310-CH04-T01",
+      "category": "conceptual",
+      "question": "Can the force of mortality mu(x) exceed 1?",
+      "options": { "A": "No, it's a probability", "B": "Yes, it's a rate, not a probability", "C": "Only at x=0", "D": "Only for x > 150" },
+      "correct": "B",
+      "explanation": "mu(x) is an instantaneous hazard rate, analogous to a probability density \u2014 it commonly exceeds 1 at advanced ages.",
+      "whyOthersWrong": {
+        "A": "A common misconception; mu(x) is not itself a probability.",
+        "C": "mu(0) is typically small, not where it's largest.",
+        "D": "It can exceed 1 well before age 150 under standard mortality laws."
+      }
+    },
+    {
+      "id": "310-mcq-02",
+      "topicId": "MTH310-CH02-T01",
+      "category": "calculation",
+      "question": "Which formula gives the present value of an annuity-due?",
+      "options": { "A": "a(n) = (1-v^n)/i", "B": "a-double-dot(n) = (1+i)\u00b7a(n)", "C": "a-double-dot(n) = a(n)/(1+i)", "D": "a-double-dot(n) = v^n\u00b7a(n)" },
+      "correct": "B",
+      "explanation": "Since each annuity-due payment happens one period earlier than the corresponding annuity-immediate payment, its value is scaled up by (1+i).",
+      "whyOthersWrong": {
+        "A": "This is the annuity-IMMEDIATE formula, not annuity-due.",
+        "C": "Dividing by (1+i) would understate the annuity-due's value, not overstate it as required.",
+        "D": "This describes a deferred annuity discount, not the immediate-to-due conversion."
+      }
+    },
+    {
+      "id": "310-mcq-03",
+      "topicId": "MTH310-CH04-T01",
+      "category": "examiner-trap",
+      "question": "Given a survival function S(x), what does mu(x) equal?",
+      "options": { "A": "S'(x)/S(x)", "B": "-S'(x)/S(x)", "C": "S(x)/S'(x)", "D": "1 - S(x)" },
+      "correct": "B",
+      "explanation": "mu(x) = -S'(x)/S(x): the negative sign is essential since S is decreasing (S'(x)<0), making mu(x) come out positive.",
+      "whyOthersWrong": {
+        "A": "Missing the negative sign would give a negative force of mortality, which is nonsensical.",
+        "C": "This inverts the correct ratio.",
+        "D": "1-S(x) is the CDF of the age-at-death distribution, not the force of mortality."
+      }
+    }
+  ]
+}

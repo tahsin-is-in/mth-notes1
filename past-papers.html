@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Past Papers — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+<script>
+  window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] } };
+</script>
+</head>
+<body data-nav="past-papers">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap">
+        <div class="section-head" style="margin-top:0;"><h2>Past Papers</h2></div>
+        <p class="section-sub" id="page-sub">Loading\u2026</p>
+
+        <div class="filter-bar" id="course-filter-bar"></div>
+        <div class="filter-bar" id="examtype-filter-bar"></div>
+
+        <div id="past-paper-list"></div>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script>
+  let allPast = [];
+  let activeCourse = 'all';
+  let activeExamType = 'all';
+
+  function pastCard(item) {
+    const q = item.q, course = item.course;
+    const sol = q.solution || {};
+    const statusClass = { complete: 'status-complete', partial: 'status-partial' }[sol.status] || 'status-not-available';
+    const statusLabel = { complete: 'Solved', partial: 'Partially solved' }[sol.status] || 'Not yet solved';
+    return `
+      <div class="solution-block" style="padding:0;">
+        <div style="padding:1.1rem 1.3rem 0.5rem;">
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.6rem;">
+            <span class="marks-badge">${UI.escapeHtml(course.code)}</span>
+            ${q.examMeta ? `<span class="marks-badge">${UI.escapeHtml(q.examMeta.examType || '')} ${UI.escapeHtml(String(q.examMeta.year || ''))}</span>` : ''}
+            ${q.marks ? `<span class="marks-badge">${q.marks} marks</span>` : ''}
+            ${q.difficulty ? `<span class="difficulty-badge">${q.difficulty}</span>` : ''}
+            <span class="status-badge ${statusClass}">${statusLabel}</span>
+          </div>
+          <p style="margin:0 0 0.5rem; font-weight:500;">${UI.escapeHtml(q.text)}</p>
+          ${q.topicId ? `<a href="topic.html?c=${course.slug}&t=${q.topicId}" style="font-size:0.82rem; color:var(--accent);">What do I need to study to solve this? \u2192</a>` : ''}
+        </div>
+        ${q.originalText ? `<details class="solution-block" style="border:none; border-top:1px solid var(--border); border-radius:0;"><summary>Original question wording</summary><div class="solution-block-body">${UI.escapeHtml(q.originalText)}${q.ocrAmbiguous ? '<p style="color:var(--gold); margin-top:0.5rem;"><strong>Note:</strong> source scan contains an OCR/scanning ambiguity.</p>' : ''}</div></details>` : ''}
+        ${sol.hint ? `<details class="solution-block" style="border:none; border-top:1px solid var(--border); border-radius:0;"><summary>\ud83d\udca1 Hint</summary><div class="solution-block-body">${UI.escapeHtml(sol.hint)}</div></details>` : ''}
+        ${(sol.steps || sol.finalAnswer) ? `<details class="solution-block" style="border:none; border-top:1px solid var(--border); border-radius:0;"><summary>\u2705 Full Solution</summary><div class="solution-block-body">${sol.steps || ''}${sol.finalAnswer ? `<p><strong>Final answer:</strong> ${sol.finalAnswer}</p>` : ''}</div></details>` : ''}
+        ${sol.examReady ? `<details class="solution-block" style="border:none; border-top:1px solid var(--border); border-radius:0;"><summary>\ud83d\udcdd Exam-ready answer</summary><div class="solution-block-body">${sol.examReady}</div></details>` : ''}
+      </div>`;
+  }
+
+  function render() {
+    let list = allPast;
+    if (activeCourse !== 'all') list = list.filter(x => x.course.slug === activeCourse);
+    if (activeExamType !== 'all') list = list.filter(x => (x.q.examMeta || {}).examType === activeExamType);
+    const el = document.getElementById('past-paper-list');
+    el.innerHTML = list.length ? list.map(pastCard).join('') : UI.emptyState('\ud83d\udcc4', 'No past papers match', 'Try a different filter.');
+    if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([el]);
+  }
+
+  App.getCourses().then(async data => {
+    App.mountShell('past-papers');
+    App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Past Papers' }]);
+
+    const withQuestions = data.courses.filter(c => c.questionCount > 0);
+    const results = await Promise.all(withQuestions.map(c =>
+      Content.getQuestions(c.slug).then(d => (d.questions || [])
+        .filter(q => q.examMeta)
+        .map(q => ({ q, course: c })))
+    ));
+    allPast = results.flat();
+
+    document.getElementById('page-sub').textContent = allPast.length
+      ? `${allPast.length} tagged past-exam question${allPast.length === 1 ? '' : 's'} from University of Dhaka 3rd Year papers.`
+      : 'No past papers have been tagged yet.';
+
+    const courseBar = document.getElementById('course-filter-bar');
+    const coursesWithPast = [...new Set(allPast.map(x => x.course.slug))].map(slug => allPast.find(x => x.course.slug === slug).course);
+    courseBar.innerHTML = ['<button class="filter-chip active" data-course="all">All Courses</button>']
+      .concat(coursesWithPast.map(c => `<button class="filter-chip" data-course="${c.slug}">${UI.escapeHtml(c.code)}</button>`)).join('');
+
+    const examTypes = [...new Set(allPast.map(x => (x.q.examMeta || {}).examType).filter(Boolean))];
+    const typeBar = document.getElementById('examtype-filter-bar');
+    typeBar.innerHTML = ['<button class="filter-chip active" data-type="all">All Exam Types</button>']
+      .concat(examTypes.map(t => `<button class="filter-chip" data-type="${t}">${UI.escapeHtml(t)}</button>`)).join('');
+
+    courseBar.addEventListener('click', e => {
+      const chip = e.target.closest('[data-course]');
+      if (!chip) return;
+      activeCourse = chip.getAttribute('data-course');
+      document.querySelectorAll('#course-filter-bar .filter-chip').forEach(c => c.classList.toggle('active', c === chip));
+      render();
+    });
+    typeBar.addEventListener('click', e => {
+      const chip = e.target.closest('[data-type]');
+      if (!chip) return;
+      activeExamType = chip.getAttribute('data-type');
+      document.querySelectorAll('#examtype-filter-bar .filter-chip').forEach(c => c.classList.toggle('active', c === chip));
+      render();
+    });
+
+    render();
+  });
+</script>
+</body>
+</html>

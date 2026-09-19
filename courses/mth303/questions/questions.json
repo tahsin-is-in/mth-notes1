@@ -5,37 +5,89 @@
       "id": "303-d1",
       "category": "definition",
       "text": "Define an ordinary point and a singular point of a linear second-order ODE.",
-      "tags": ["ordinary point", "singular point"]
+      "tags": ["ordinary point", "singular point"],
+      "topicId": "MTH303-CH02-T01",
+      "chapterId": "MTH303-CH02",
+      "difficulty": "easy",
+      "marks": 2
     },
     {
       "id": "303-t1",
       "category": "theorem",
       "text": "State the existence theorem for power series solutions near an ordinary point.",
-      "tags": ["power series solution", "existence theorem"]
+      "tags": ["power series solution", "existence theorem"],
+      "topicId": "MTH303-CH02-T01",
+      "chapterId": "MTH303-CH02",
+      "difficulty": "medium",
+      "marks": 3
     },
     {
       "id": "303-p1",
       "category": "proof",
       "text": "Derive the Laplace transform of f(t) = e^{at} from the defining integral.",
-      "tags": ["laplace transform", "proof"]
+      "tags": ["laplace transform", "proof"],
+      "topicId": "MTH303-CH07-T02",
+      "chapterId": "MTH303-CH07",
+      "difficulty": "easy",
+      "marks": 3,
+      "solution": { "status": "complete", "finalAnswer": "See the \u201cEasy\u201d worked example on the Laplace Transform topic page." }
     },
     {
       "id": "303-pr1",
       "category": "problem",
       "text": "Solve y'' - 2y' + y = e^t, y(0) = 0, y'(0) = 1, using the Laplace transform.",
-      "tags": ["laplace transform", "initial value problem", "problem"]
+      "tags": ["laplace transform", "initial value problem", "problem"],
+      "topicId": "MTH303-CH07-T02",
+      "chapterId": "MTH303-CH07",
+      "difficulty": "medium",
+      "marks": 6,
+      "solution": { "status": "complete", "finalAnswer": "y(t) = te^t + (t^2/2)e^t \u2014 see the full step-by-step solution on the Laplace Transform topic page." }
     },
     {
       "id": "303-pr2",
       "category": "problem",
       "text": "Find the first four terms of the power series solution to y'' + xy = 0 about x = 0.",
-      "tags": ["power series solution", "recurrence relation", "problem"]
+      "tags": ["power series solution", "recurrence relation", "problem"],
+      "topicId": "MTH303-CH02-T01",
+      "chapterId": "MTH303-CH02",
+      "difficulty": "medium",
+      "marks": 6,
+      "solution": { "status": "complete", "finalAnswer": "See the full worked \u201cExam level\u201d example on the Power Series Solutions topic page." }
     },
     {
       "id": "303-pq1",
       "category": "previous",
       "text": "(2023) Use Laplace transforms to solve a system of two coupled first-order ODEs.",
-      "tags": ["laplace transform", "system of odes"]
+      "tags": ["laplace transform", "system of odes"],
+      "topicId": "MTH303-CH07-T02",
+      "chapterId": "MTH303-CH07",
+      "examMeta": { "course": "MTH303", "examType": "Final", "session": "2023", "year": 2023 },
+      "marks": 8,
+      "difficulty": "hard",
+      "solution": {
+        "status": "not-available",
+        "hint": "Transform both equations simultaneously, solve the resulting 2x2 linear system for the transformed variables, then invert each."
+      }
+    },
+    {
+      "id": "303-past-01",
+      "category": "previous",
+      "text": "Show y' = y^2, y(0) = 2 has a unique solution; solve it and give the interval of validity.",
+      "originalText": "Show y\u2032=y\u00b2, y(0)=2 has a unique solution; solve it and give the interval of validity.",
+      "tags": ["existence uniqueness", "separable equation"],
+      "topicId": "MTH303-CH01-T01",
+      "chapterId": "MTH303-CH01",
+      "examMeta": { "course": "MTH303", "examType": "Incourse-1", "session": "2023\u201324/2024", "year": 2024 },
+      "marks": 6,
+      "difficulty": "medium",
+      "solution": {
+        "status": "complete",
+        "hint": "Check f(t,y)=y^2 and its partial derivative for continuity (Picard's existence-uniqueness conditions), then separate variables.",
+        "steps": "$f(t,y)=y^2$ and $\\partial f/\\partial y = 2y$ are both continuous everywhere, so by the fundamental existence-uniqueness theorem, a unique solution exists locally near $(0,2)$. Separating variables: $\\dfrac{dy}{y^2}=dt \\implies -\\dfrac1y = t+C$. Using $y(0)=2$: $-\\dfrac12=C$, so $-\\dfrac1y = t-\\dfrac12 \\implies y = \\dfrac{1}{\\tfrac12-t} = \\dfrac{2}{1-2t}$.",
+        "finalAnswer": "y(t) = 2/(1-2t), valid for t < 1/2 (the solution blows up as t \u2192 (1/2)^-, so the interval of validity is (-\u221e, 1/2).",
+        "examReady": "Existence/uniqueness from continuity of f and f_y; separate variables to solve explicitly; the interval of validity is determined by where the explicit solution stays finite, not by where the original ODE was defined.",
+        "commonMistakes": "Stating the interval of validity as \u201call real t\u201d without checking where the explicit solution actually blows up \u2014 a very common error, since the ODE itself looks perfectly well-defined everywhere."
+      }
     }
   ]
 }

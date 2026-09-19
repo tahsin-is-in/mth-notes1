@@ -1,0 +1,100 @@
+{
+  "course": "MTH 305",
+  "mcqs": [
+    {
+      "id": "305-mcq-01",
+      "topicId": "MTH305-CH01-T01",
+      "category": "definition",
+      "question": "Which closure property is NOT required of a topology?",
+      "options": {
+        "A": "Closed under arbitrary unions",
+        "B": "Closed under finite intersections",
+        "C": "Closed under arbitrary intersections",
+        "D": "Contains the empty set and the whole space"
+      },
+      "correct": "C",
+      "explanation": "A topology need only be closed under FINITE intersections \u2014 arbitrary intersections of open sets can fail to be open.",
+      "whyOthersWrong": {
+        "A": "Arbitrary union closure is exactly axiom 2.",
+        "B": "Finite intersection closure is exactly axiom 3.",
+        "D": "Containing \u2205 and X is axiom 1."
+      }
+    },
+    {
+      "id": "305-mcq-02",
+      "topicId": "MTH305-CH01-T01",
+      "category": "counterexample",
+      "question": "In (R, usual topology), what is \u2229_{n=1}^\u221e (-1/n, 1/n)?",
+      "options": {
+        "A": "(-1,1)",
+        "B": "{0}, which is not open",
+        "C": "The empty set",
+        "D": "R itself"
+      },
+      "correct": "B",
+      "explanation": "The infinite intersection collapses to {0}, a single point \u2014 not open in R, illustrating why the topology axioms only require finite intersection-closure.",
+      "whyOthersWrong": {
+        "A": "That would be the union, not the intersection, and even then not exactly this union.",
+        "C": "0 is in every (-1/n,1/n), so the intersection is not empty.",
+        "D": "The intersection shrinks, it does not grow to all of R."
+      }
+    },
+    {
+      "id": "305-mcq-03",
+      "topicId": "MTH305-CH01-T04",
+      "category": "conceptual",
+      "question": "If p \u2208 A, must p be a limit point of A?",
+      "options": {
+        "A": "Yes, always",
+        "B": "No \u2014 p could be an isolated point of A",
+        "C": "Only if A is open",
+        "D": "Only if A is finite"
+      },
+      "correct": "B",
+      "explanation": "A point can belong to a set without being a limit point of it \u2014 isolated points are the standard counterexample.",
+      "whyOthersWrong": {
+        "A": "False in general, as the isolated-point counterexample shows.",
+        "C": "Openness of A is unrelated to whether a given member is a limit point.",
+        "D": "Even infinite sets can have isolated points."
+      }
+    },
+    {
+      "id": "305-mcq-04",
+      "topicId": "MTH305-CH01-T04",
+      "category": "theorem condition",
+      "question": "Which union of closed sets is guaranteed to be closed?",
+      "options": {
+        "A": "Any arbitrary (possibly infinite) union",
+        "B": "Only a finite union",
+        "C": "Only a countable union",
+        "D": "No union of closed sets is guaranteed closed"
+      },
+      "correct": "B",
+      "explanation": "Dual to the open-set axioms: only finite unions of closed sets are guaranteed closed (e.g. [1/n,1] union over all n gives (0,1], not closed).",
+      "whyOthersWrong": {
+        "A": "Arbitrary unions of closed sets can fail to be closed.",
+        "C": "Even countable unions can fail (see the explanation).",
+        "D": "Finite unions ARE guaranteed closed, by De Morgan's laws applied to the open-set axioms."
+      }
+    },
+    {
+      "id": "305-mcq-05",
+      "topicId": "MTH305-CH01-T01",
+      "category": "application",
+      "question": "Why is the cofinite topology a valid topology on an infinite set X?",
+      "options": {
+        "A": "Because a finite union of finite sets is finite, and a finite intersection of finite sets is finite",
+        "B": "Because X is infinite",
+        "C": "Because it coincides with the discrete topology",
+        "D": "Because every subset of X is finite"
+      },
+      "correct": "A",
+      "explanation": "Checking the axioms via De Morgan reduces to: complements of unions/intersections of cofinite sets stay finite, since finite unions and finite sets combine to stay finite.",
+      "whyOthersWrong": {
+        "B": "Infiniteness of X alone doesn't establish the axioms \u2014 the argument is about finiteness of complements.",
+        "C": "The cofinite topology is generally strictly coarser than the discrete topology on an infinite set.",
+        "D": "This is false for most infinite sets (e.g. R itself is not finite)."
+      }
+    }
+  ]
+}

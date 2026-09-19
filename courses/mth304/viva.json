@@ -1,0 +1,23 @@
+{
+  "course": "MTH 304",
+  "viva": [
+    {
+      "id": "304-viva-01",
+      "topicId": "MTH304-CH01-T02",
+      "question": "Does closure alone make a subset a subgroup?",
+      "answer": "No \u2014 the identity and inverses must also be present, which the combined subgroup test checks in one step.",
+      "why": "The positive integers under addition are closed but contain no identity or inverses.",
+      "followUp": "Give an example of a closed subset that is not a subgroup.",
+      "trap": "Verifying only closure and stopping there."
+    },
+    {
+      "id": "304-viva-02",
+      "topicId": "MTH304-CH02-T02",
+      "question": "Does Lagrange's Theorem guarantee a subgroup of a given order exists?",
+      "answer": "No \u2014 only that IF a subgroup exists, its order divides |G|. The converse is false (A4 has no subgroup of order 6, though 6 | 12).",
+      "why": "Lagrange's Theorem is a counting/necessary condition, not a full characterization of which subgroups exist.",
+      "followUp": "What's the smallest counterexample to the converse?",
+      "trap": "Assuming every divisor of |G| corresponds to an actual subgroup."
+    }
+  ]
+}

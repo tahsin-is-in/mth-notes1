@@ -1,0 +1,35 @@
+{
+  "course": "MTH 310",
+  "formulas": [
+    {
+      "id": "310-f-01",
+      "chapterId": "MTH310-CH04",
+      "name": "Force of Mortality",
+      "formula": "\\mu(x) = -\\frac{S'(x)}{S(x)}",
+      "symbols": "S(x): the survival function.",
+      "conditions": "S differentiable and positive at x.",
+      "whenToUse": "Given S(x) explicitly, find the instantaneous mortality rate.",
+      "commonMistake": "Dropping the negative sign, giving a negative (nonsensical) force of mortality."
+    },
+    {
+      "id": "310-f-02",
+      "chapterId": "MTH310-CH02",
+      "name": "Annuity-Immediate Present Value",
+      "formula": "a_{\\overline n|} = \\frac{1-v^n}{i}",
+      "symbols": "v=1/(1+i): the discount factor; n: number of payments.",
+      "conditions": "Level payments of 1 at the end of each period.",
+      "whenToUse": "Valuing ordinary annuities.",
+      "commonMistake": "Using this formula when payments actually start immediately (annuity-due case)."
+    },
+    {
+      "id": "310-f-03",
+      "chapterId": "MTH310-CH02",
+      "name": "Deferred Annuity Value",
+      "formula": "{}_{m|}a_{\\overline n|} = v^m\\cdot a_{\\overline n|}",
+      "symbols": "m: number of deferral periods.",
+      "conditions": "Applies to either immediate or due versions.",
+      "whenToUse": "Valuing an annuity that starts m periods from now.",
+      "commonMistake": "Forgetting the extra v^m discount factor for the waiting period."
+    }
+  ]
+}

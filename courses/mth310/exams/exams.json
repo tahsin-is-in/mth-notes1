@@ -1,0 +1,17 @@
+{
+  "course": "MTH 310",
+  "exams": [
+    {
+      "id": "310-ch02-04-exam",
+      "type": "chapter",
+      "chapterId": "MTH310-CH04",
+      "title": "Chapter Exam \u2014 Annuities \u0026 Survival Functions",
+      "totalMarks": 25,
+      "recommendedMinutes": 60,
+      "difficulty": "hard",
+      "instructions": "Answer any five questions.",
+      "questionIds": ["310-d1", "310-d2", "310-t1", "310-past-01", "310-past-02", "310-past-04"],
+      "mcqIds": ["310-mcq-01", "310-mcq-02", "310-mcq-03"]
+    }
+  ]
+}

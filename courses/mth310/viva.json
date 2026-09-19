@@ -1,0 +1,23 @@
+{
+  "course": "MTH 310",
+  "viva": [
+    {
+      "id": "310-viva-01",
+      "topicId": "MTH310-CH04-T01",
+      "question": "Can the force of mortality exceed 1?",
+      "answer": "Yes \u2014 it's a rate, not a probability, and commonly exceeds 1 at advanced ages.",
+      "why": "mu(x) is analogous to a probability density, which can also exceed 1, not to a probability itself.",
+      "followUp": "What's the difference between mu(x) and q_x?",
+      "trap": "Assuming mu(x) must lie in [0,1] like a probability."
+    },
+    {
+      "id": "310-viva-02",
+      "topicId": "MTH310-CH02-T01",
+      "question": "What is the single relationship connecting immediate and due annuities?",
+      "answer": "a-double-dot(n) = (1+i)\\cdot a(n) \u2014 every due payment is discounted one less period.",
+      "why": "Shifting every payment one period earlier multiplies its present value by (1+i).",
+      "followUp": "How do you value a deferred annuity?",
+      "trap": "Using the wrong formula (immediate vs due) based on misreading the payment timing in a word problem."
+    }
+  ]
+}

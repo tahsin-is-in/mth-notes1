@@ -1,0 +1,29 @@
+{
+  "course": "MTH 305",
+  "theorems": [
+    {
+      "id": "305-th-01",
+      "name": "Topology Axioms",
+      "topicId": "MTH305-CH01-T01",
+      "statement": "A topology \\tau on X contains \\emptyset,X, is closed under arbitrary unions, and closed under FINITE intersections.",
+      "conditions": "The finite qualifier on intersections is essential.",
+      "intuition": "Infinite intersections of open sets can collapse to non-open sets (e.g. single points), so only finite intersection-closure is required.",
+      "proofSketch": "N/A \u2014 this is the definition itself.",
+      "example": "\\cap_{n=1}^\\infty (-1/n,1/n) = {0}, not open in R, showing why infinite intersection-closure isn't required.",
+      "relatedTheorems": ["305-th-02"],
+      "examReady": "State all three axioms; emphasize 'finite' for intersections."
+    },
+    {
+      "id": "305-th-02",
+      "name": "Closed Set Properties",
+      "topicId": "MTH305-CH01-T04",
+      "statement": "\\emptyset, X are closed; arbitrary intersections of closed sets are closed; FINITE unions of closed sets are closed.",
+      "conditions": "Dual to the open-set axioms via De Morgan's laws.",
+      "intuition": "Complementing an open-set statement flips unions and intersections.",
+      "proofSketch": "Apply De Morgan's laws to the topology axioms.",
+      "example": "[1/n,1] union over all n gives (0,1], not closed \u2014 showing infinite unions of closed sets can fail.",
+      "relatedTheorems": ["305-th-01"],
+      "examReady": "Derive directly from the open-set axioms via complementation."
+    }
+  ]
+}

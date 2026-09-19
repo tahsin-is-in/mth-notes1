@@ -5,43 +5,98 @@
       "id": "302-d1",
       "category": "definition",
       "text": "Define an analytic (holomorphic) function on an open set.",
-      "tags": ["analytic function", "holomorphic"]
+      "tags": ["analytic function", "holomorphic"],
+      "topicId": "MTH302-CH02-T02",
+      "chapterId": "MTH302-CH02",
+      "difficulty": "easy",
+      "marks": 2
     },
     {
       "id": "302-t1",
       "category": "theorem",
       "text": "State the Cauchy\u2013Riemann equations and the theorem that relates them to differentiability.",
-      "tags": ["cauchy-riemann equations", "differentiability"]
+      "tags": ["cauchy-riemann equations", "differentiability"],
+      "topicId": "MTH302-CH02-T02",
+      "chapterId": "MTH302-CH02",
+      "difficulty": "medium",
+      "marks": 5
     },
     {
       "id": "302-t2",
       "category": "theorem",
       "text": "State Cauchy's Integral Formula.",
-      "tags": ["cauchy integral formula"]
+      "tags": ["cauchy integral formula"],
+      "topicId": "MTH302-CH03-T02",
+      "chapterId": "MTH302-CH03",
+      "difficulty": "medium",
+      "marks": 3
     },
     {
       "id": "302-p1",
       "category": "proof",
       "text": "Prove that if f = u + iv is analytic, then u and v are harmonic functions.",
-      "tags": ["harmonic function", "cauchy-riemann equations", "proof"]
+      "tags": ["harmonic function", "cauchy-riemann equations", "proof"],
+      "topicId": "MTH302-CH02-T02",
+      "chapterId": "MTH302-CH02",
+      "difficulty": "medium",
+      "marks": 5,
+      "solution": { "status": "complete", "finalAnswer": "See the full proof on the Analytic Functions topic page." }
     },
     {
       "id": "302-pr1",
       "category": "problem",
       "text": "Evaluate the contour integral of 1/(z^2 + 1) around |z| = 2 using residues.",
-      "tags": ["contour integral", "residues", "problem"]
+      "tags": ["contour integral", "residues", "problem"],
+      "topicId": "MTH302-CH03-T02",
+      "chapterId": "MTH302-CH03",
+      "difficulty": "medium",
+      "marks": 5,
+      "solution": {
+        "status": "complete",
+        "steps": "Poles at $z=\\pm i$, both inside $|z|=2$. Write $\\dfrac{1}{z^2+1}=\\dfrac{1}{(z-i)(z+i)}$. By Cauchy's Integral Formula applied at each pole: residue at $z=i$ is $\\dfrac{1}{2i}$, at $z=-i$ is $\\dfrac{1}{-2i}$. Sum of residues $=0$, so the integral is $2\\pi i\\cdot0=0$.",
+        "finalAnswer": "The integral equals 0.",
+        "commonMistakes": "Only accounting for one of the two poles inside the contour."
+      }
     },
     {
       "id": "302-viva1",
       "category": "viva",
       "text": "Why must the Cauchy\u2013Riemann equations hold at a point for a function to be complex differentiable there, and why is that not sufficient on its own?",
-      "tags": ["cauchy-riemann equations", "viva"]
+      "tags": ["cauchy-riemann equations", "viva"],
+      "topicId": "MTH302-CH02-T02",
+      "chapterId": "MTH302-CH02",
+      "difficulty": "medium",
+      "marks": 3
     },
     {
       "id": "302-imp1",
       "category": "important",
       "text": "Every analytic function is infinitely differentiable \u2014 explain why this has no real-variable analogue.",
-      "tags": ["analytic function", "infinitely differentiable"]
+      "tags": ["analytic function", "infinitely differentiable"],
+      "topicId": "MTH302-CH03-T02",
+      "chapterId": "MTH302-CH03",
+      "difficulty": "hard",
+      "marks": 4
+    },
+    {
+      "id": "302-past-01",
+      "category": "previous",
+      "text": "Write the Cauchy\u2013Riemann equations in polar form and prove them: du/dr = (1/r) dv/d(theta), dv/dr = -(1/r) du/d(theta).",
+      "originalText": "Write the Cauchy\u2013Riemann equations; prove their polar form: \u2202u/\u2202r = (1/r)\u2202v/\u2202\u03b8, \u2202v/\u2202r = \u2212(1/r)\u2202u/\u2202\u03b8.",
+      "tags": ["cauchy-riemann equations", "polar form"],
+      "topicId": "MTH302-CH02-T02",
+      "chapterId": "MTH302-CH02",
+      "examMeta": { "course": "MTH302", "examType": "Incourse-1", "session": "2024\u201325", "year": 2025 },
+      "marks": 5,
+      "difficulty": "hard",
+      "solution": {
+        "status": "complete",
+        "hint": "Use the chain rule to convert x=r cos(theta), y=r sin(theta) into the Cartesian Cauchy-Riemann equations.",
+        "steps": "With $x=r\\cos\\theta,\\,y=r\\sin\\theta$: by the chain rule, $u_r = u_x\\cos\\theta+u_y\\sin\\theta$ and $u_\\theta = -u_xr\\sin\\theta+u_yr\\cos\\theta$, and similarly for $v$. Substituting the Cartesian C\u2013R equations $u_x=v_y,\\,u_y=-v_x$: $v_\\theta = -v_xr\\sin\\theta+v_yr\\cos\\theta = u_yr\\sin\\theta+u_xr\\cos\\theta = r(u_x\\cos\\theta+u_y\\sin\\theta)=ru_r$. This gives $u_r=\\dfrac1r v_\\theta$. A parallel substitution gives $v_r=-\\dfrac1ru_\\theta$.",
+        "finalAnswer": "u_r = (1/r) v_theta and v_r = -(1/r) u_theta, derived directly from the Cartesian Cauchy-Riemann equations via the chain rule.",
+        "examReady": "Substitute x=r cos\u03b8, y=r sin\u03b8 into the Cartesian C\u2013R equations using the chain rule for u_r, u_\u03b8, v_r, v_\u03b8, then algebraically isolate the polar form.",
+        "commonMistakes": "Sign errors when applying the chain rule to \u2202/\u2202\u03b8, since it introduces an extra factor of r and a sign flip from differentiating cos\u03b8/sin\u03b8."
+      }
     }
   ]
 }

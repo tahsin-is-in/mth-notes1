@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Topic — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+</script>
+</head>
+<body data-nav="courses">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap" id="topic-page-wrap">
+        <p class="section-sub">Loading topic\u2026</p>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/latex.js"></script>
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<script src="js/markdown.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script>
+  const slug = Router.getParam('c');
+  const topicId = Router.getParam('t');
+  const wrap = document.getElementById('topic-page-wrap');
+
+  const CHECKLIST_ITEMS = [
+    ['understand-intuition', 'I understand the intuition'],
+    ['know-definition', 'I know the formal definition'],
+    ['know-conditions', 'I know the conditions/hypotheses'],
+    ['explain-theorem', 'I can explain the theorem'],
+    ['can-prove', 'I can prove it'],
+    ['solve-standard', 'I can solve standard problems'],
+    ['solve-past', 'I can solve past questions'],
+    ['answer-mcq', 'I can answer MCQs'],
+    ['answer-viva', 'I can answer viva questions']
+  ];
+
+  const MASTERY_LEVELS = ['not-started', 'learning', 'practicing', 'strong', 'mastered'];
+  const MASTERY_LABELS = { 'not-started': 'Not Started', learning: 'Learning', practicing: 'Practicing', strong: 'Strong', mastered: 'Mastered' };
+
+  function masteryBadge(level) {
+    return `<span class="mastery-badge mastery-${level}">${MASTERY_LABELS[level]}</span>`;
+  }
+
+  function checklistHtml(topicId) {
+    const state = Store.getChecklist(topicId);
+    return CHECKLIST_ITEMS.map(([key, label]) => `
+      <label class="checklist-item">
+        <input type="checkbox" data-checklist-key="${key}" ${state[key] ? 'checked' : ''} />
+        <span>${label}</span>
+      </label>`).join('');
+  }
+
+  Promise.all([App.getCourses(), Content.getCourseChapters(slug), Content.getTopicMeta(slug, topicId)])
+    .then(async ([coursesData, chapterData, topicMeta]) => {
+      App.mountShell('courses', slug);
+      const course = coursesData.courses.find(c => c.slug === slug);
+
+      if (!course || !topicMeta) {
+        App.setBreadcrumbs([{ label: 'Home', url: 'index.html' }, { label: 'Courses', url: 'courses.html' }, { label: 'Not found' }]);
+        wrap.innerHTML = UI.emptyState('\u26a0\ufe0f', 'Topic not found', 'That topic link looks incomplete or the topic ID has changed.');
+        return;
+      }
+
+      App.setBreadcrumbs([
+        { label: 'Home', url: 'index.html' },
+        { label: 'Courses', url: 'courses.html' },
+        { label: course.code, url: Router.courseUrl(slug) },
+        { label: topicMeta.chapterTitle, url: `chapter.html?c=${slug}&ch=${topicMeta.chapterId}` },
+        { label: topicMeta.title }
+      ]);
+      document.title = `${topicMeta.title} — MTH Notes`;
+
+      const allTopics = Content.flattenTopics(chapterData);
+      const idx = allTopics.findIndex(t => t.id === topicId);
+      const prev = allTopics[idx - 1];
+      const next = allTopics[idx + 1];
+
+      const isFav = Store.isFavorite(`topic:${topicId}`);
+      const mastery = Store.getMastery(topicId);
+      const revisionTag = Store.getRevisionTag(topicId);
+
+      const statusLabel = { complete: 'Complete', partial: 'Partial', 'not-available': 'Not yet available' }[topicMeta.status] || 'Not yet available';
+      const statusClass = { complete: 'status-complete', partial: 'status-partial', 'not-available': 'status-not-available' }[topicMeta.status] || 'status-not-available';
+
+      wrap.innerHTML = `
+        <div class="lecture-eyebrow">${UI.escapeHtml(course.code)} / ${UI.escapeHtml(topicMeta.chapterTitle)} / ${UI.escapeHtml(topicMeta.id)}</div>
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+          <h1 class="lecture-title" style="margin-bottom:0.5rem;">${UI.escapeHtml(topicMeta.title)}</h1>
+          <span class="status-badge ${statusClass}">${statusLabel}</span>
+        </div>
+
+        <div class="lecture-actions" style="margin-bottom:1rem;">
+          <button class="btn btn-ghost btn-sm" id="bookmark-topic-btn">${isFav ? '\u2605 Bookmarked' : '\u2606 Bookmark'}</button>
+          <select class="mastery-select" id="mastery-select">
+            ${MASTERY_LEVELS.map(l => `<option value="${l}" ${l === mastery ? 'selected' : ''}>${MASTERY_LABELS[l]}</option>`).join('')}
+          </select>
+          <select class="mastery-select" id="revision-select">
+            <option value="">Tag for revision\u2026</option>
+            <option value="easy" ${revisionTag === 'easy' ? 'selected' : ''}>Easy</option>
+            <option value="medium" ${revisionTag === 'medium' ? 'selected' : ''}>Medium</option>
+            <option value="hard" ${revisionTag === 'hard' ? 'selected' : ''}>Hard</option>
+            <option value="needs-revision" ${revisionTag === 'needs-revision' ? 'selected' : ''}>Needs Revision</option>
+          </select>
+        </div>
+
+        <div class="mode-toggle-bar">
+          <button class="mode-toggle-btn active" data-mode="full">Full</button>
+          <button class="mode-toggle-btn" data-mode="eli5">ELI5 Mode</button>
+          <button class="mode-toggle-btn" data-mode="exam">Exam Mode</button>
+        </div>
+
+        <article class="lecture-article" id="topic-article">
+          <p class="section-sub">Loading content\u2026</p>
+        </article>
+
+        <div class="section-head"><h2>Mastery Checklist</h2></div>
+        <div class="side-panel" style="margin-bottom:1.5rem;">
+          ${checklistHtml(topicId)}
+        </div>
+
+        <div id="related-mcqs-section"></div>
+        <div id="related-questions-section"></div>
+        <div id="related-viva-section"></div>
+
+        <div class="lecture-footer-nav">
+          ${prev ? `<a class="footer-nav-link prev" href="topic.html?c=${slug}&t=${prev.id}"><span class="fnl-label">\u2190 Previous</span><span class="fnl-title">${UI.escapeHtml(prev.title)}</span></a>` : '<span></span>'}
+          ${next ? `<a class="footer-nav-link next" href="topic.html?c=${slug}&t=${next.id}"><span class="fnl-label">Next \u2192</span><span class="fnl-title">${UI.escapeHtml(next.title)}</span></a>` : ''}
+        </div>
+      `;
+
+      // Wire bookmark
+      document.getElementById('bookmark-topic-btn').addEventListener('click', e => {
+        const nowFav = Store.toggleFavorite({
+          id: `topic:${topicId}`, type: 'topic', title: topicMeta.title,
+          courseCode: course.code, courseSlug: slug, url: `topic.html?c=${slug}&t=${topicId}`
+        });
+        e.target.textContent = nowFav ? '\u2605 Bookmarked' : '\u2606 Bookmark';
+        UI.toast(nowFav ? 'Bookmarked' : 'Bookmark removed');
+      });
+
+      // Wire mastery + revision selects
+      document.getElementById('mastery-select').addEventListener('change', e => {
+        Store.setMastery(topicId, e.target.value);
+        UI.toast('Mastery updated');
+      });
+      document.getElementById('revision-select').addEventListener('change', e => {
+        if (e.target.value) { Store.setRevisionTag(topicId, e.target.value); UI.toast('Tagged for revision'); }
+      });
+
+      // Wire checklist
+      document.querySelectorAll('[data-checklist-key]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          Store.setChecklistItem(topicId, cb.getAttribute('data-checklist-key'), cb.checked);
+        });
+      });
+
+      // Wire mode toggles
+      const articleEl = document.getElementById('topic-article');
+      document.querySelectorAll('.mode-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.mode-toggle-btn').forEach(b => b.classList.toggle('active', b === btn));
+          articleEl.classList.remove('mode-eli5-active', 'mode-exam-active');
+          const mode = btn.getAttribute('data-mode');
+          if (mode === 'eli5') articleEl.classList.add('mode-eli5-active');
+          if (mode === 'exam') articleEl.classList.add('mode-exam-active');
+        });
+      });
+
+      // Load and render the topic's markdown content, if it exists.
+      if (topicMeta.status === 'complete' && topicMeta.file) {
+        const raw = await Content.getTopicContent(slug, topicMeta);
+        if (raw) {
+          const { html } = MarkdownRenderer.render(raw);
+          articleEl.innerHTML = html + LatexTool.panelHtml(raw, topicId);
+          LatexTool.wire();
+          if (window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise([articleEl]);
+          }
+        } else {
+          articleEl.innerHTML = UI.emptyState('\u26a0\ufe0f', 'Content failed to load', `Expected file not found: courses/${slug}/topics/${topicMeta.file}`);
+        }
+      } else {
+        articleEl.innerHTML = UI.emptyState('\ud83d\udea7', 'Full study page not yet written',
+          `This topic is on the syllabus and fully tracked (ID: ${topicMeta.id}), but its complete ELI5/formal/proof/example writeup hasn't been authored yet. Check the Coverage Dashboard for overall progress, or see the syllabus placement above.`);
+      }
+
+      // Related MCQs
+      Content.getMcqs(slug).then(data => {
+        const related = (data.mcqs || []).filter(m => m.topicId === topicId);
+        if (!related.length) return;
+        document.getElementById('related-mcqs-section').innerHTML = `
+          <div class="section-head"><h2>MCQs for this topic</h2>
+            <a class="section-link" href="mcqs.html?c=${slug}&t=${topicId}">Practice all \u2192</a>
+          </div>
+          <p class="section-sub">${related.length} question${related.length === 1 ? '' : 's'} available.</p>`;
+      });
+
+      // Related past/practice questions
+      Content.getQuestions(slug).then(data => {
+        const related = (data.questions || []).filter(q => q.topicId === topicId);
+        if (!related.length) return;
+        document.getElementById('related-questions-section').innerHTML = `
+          <div class="section-head"><h2>Questions using this topic</h2>
+            <a class="section-link" href="questions.html?c=${slug}">See all \u2192</a>
+          </div>
+          <div class="question-list">${related.map(q => UI.questionCard(q, course)).join('')}</div>`;
+      });
+
+      // Related viva questions
+      Content.getViva(slug).then(data => {
+        const related = (data.viva || []).filter(v => v.topicId === topicId);
+        if (!related.length) return;
+        document.getElementById('related-viva-section').innerHTML = `
+          <div class="section-head"><h2>Viva questions for this topic</h2>
+            <a class="section-link" href="viva.html?c=${slug}">Full viva bank \u2192</a>
+          </div>
+          ${related.map(v => `
+            <div class="solution-block" style="padding:1rem 1.2rem;">
+              <div style="font-weight:600; margin-bottom:0.4rem;">Q: ${UI.escapeHtml(v.question)}</div>
+              <div style="color:var(--ink-soft); font-size:0.9rem;">${UI.escapeHtml(v.answer)}</div>
+            </div>`).join('')}`;
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      wrap.innerHTML = UI.emptyState('\u26a0\ufe0f', 'Something went wrong', 'Could not load topic data.');
+    });
+</script>
+</body>
+</html>

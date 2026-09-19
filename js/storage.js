@@ -148,6 +148,72 @@ const Store = {
     recents = recents.slice(0, 8);
     safeSet('recents', recents);
     return recents;
+  },
+  /* ---------------- Mastery (per topic) ---------------- */
+  getAllMastery() {
+    return safeGet('mastery', {});
+  },
+  getMastery(topicId) {
+    return Store.getAllMastery()[topicId] || 'not-started';
+  },
+  setMastery(topicId, level) {
+    const all = Store.getAllMastery();
+    all[topicId] = level;
+    safeSet('mastery', all);
+  },
+
+  /* ---------------- Topic mastery checklist ----------------
+     checklist = { "MTH301-CH01-T02": { "understand-intuition": true, ... } }
+  */
+  getAllChecklists() {
+    return safeGet('checklists', {});
+  },
+  getChecklist(topicId) {
+    return Store.getAllChecklists()[topicId] || {};
+  },
+  setChecklistItem(topicId, key, value) {
+    const all = Store.getAllChecklists();
+    if (!all[topicId]) all[topicId] = {};
+    all[topicId][key] = value;
+    safeSet('checklists', all);
+    return all[topicId];
+  },
+
+  /* ---------------- Spaced revision tags ----------------
+     tags = { "MTH301-CH01-T02": { tag: "needs-revision", taggedAt: 169... } }
+  */
+  getAllRevisionTags() {
+    return safeGet('revisionTags', {});
+  },
+  setRevisionTag(topicId, tag) {
+    const all = Store.getAllRevisionTags();
+    all[topicId] = { tag, taggedAt: Date.now() };
+    safeSet('revisionTags', all);
+  },
+  getRevisionTag(topicId) {
+    const all = Store.getAllRevisionTags();
+    return all[topicId] ? all[topicId].tag : null;
+  },
+
+  /* ---------------- Mode preferences (ELI5 / Exam mode) ---------------- */
+  getModePrefs() {
+    return safeGet('modePrefs', { eli5: false, examMode: false });
+  },
+  setModePrefs(partial) {
+    const next = Object.assign({}, Store.getModePrefs(), partial);
+    safeSet('modePrefs', next);
+    return next;
+  },
+
+  /* ---------------- Practice / mock exam history ---------------- */
+  getExamAttempts() {
+    return safeGet('examAttempts', []);
+  },
+  addExamAttempt(attempt) {
+    const all = Store.getExamAttempts();
+    attempt.takenAt = Date.now();
+    all.unshift(attempt);
+    safeSet('examAttempts', all.slice(0, 30));
   }
 };
 

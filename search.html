@@ -42,6 +42,7 @@
 <script src="js/router.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/search.js"></script>
+<script src="js/content.js"></script>
 <script src="js/app.js"></script>
 <script>
   App.mountShell('search');
@@ -60,7 +61,10 @@
   });
 
   function typeIcon(type) {
-    return { course: '\ud83d\udcda', lecture: '\ud83d\udcd6', question: '\u2753', resource: '\ud83d\udcc4' }[type] || '\u2022';
+    return {
+      course: '\ud83d\udcda', lecture: '\ud83d\udcd6', question: '\u2753', resource: '\ud83d\udcc4',
+      topic: '\ud83d\udcd7', theorem: '\u2b50', formula: '\ud83e\uddee', mcq: '\u2705', viva: '\ud83c\udf99', definition: '\ud83d\udcd6'
+    }[type] || '\u2022';
   }
 
   function runSearch() {

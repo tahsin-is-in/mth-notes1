@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Formula Sheet — MTH Notes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+<script>
+  (function () {
+    try {
+      var t = JSON.parse(localStorage.getItem('mthnotes:theme'));
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/themes.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+<script>
+  window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] } };
+</script>
+</head>
+<body data-nav="formulas">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="app-shell">
+  <div id="sidebar-mount"></div>
+  <div class="main-col">
+    <div id="topbar-mount"></div>
+    <main id="main-content" class="main-content">
+      <div class="page-wrap">
+        <div class="section-head" style="margin-top:0;"><h2 id="page-heading">Formula Sheet</h2></div>
+        <p class="section-sub" id="page-sub">Loading\u2026</p>
+        <div class="filter-bar" id="course-filter-bar"></div>
+        <div id="formula-list"></div>
+      </div>
+    </main>
+    <div id="footer-mount"></div>
+  </div>
+</div>
+<div id="bottom-nav-mount"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/content.js"></script>
+<script src="js/latex.js"></script>
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script>
+  const onlySlug = Router.getParam('c');
+  let all = [];
+  let activeCourse = onlySlug || 'all';
+
+  function card(item, i) {
+    const f = item.f;
+    return `
+      <div class="solution-block">
+        <div class="solution-block-body" style="padding-top:1.1rem;">
+          <div style="font-size:0.76rem; color:var(--ink-faint); margin-bottom:0.3rem;">${UI.escapeHtml(item.course.code)}</div>
+          <div style="font-weight:600; margin-bottom:0.5rem;">${UI.escapeHtml(f.name)}</div>
+          <div class="latex-row" style="border-bottom:none;">
+            <code class="latex-code" id="formula-tex-${i}">\\[ ${f.formula} \\]</code>
+            <button class="btn btn-ghost btn-sm" data-copy-formula="${i}">\ud83d\udccb Copy</button>
+          </div>
+          <p style="font-size:0.85rem; color:var(--ink-soft); margin:0.6rem 0 0;"><strong>Symbols:</strong> ${UI.escapeHtml(f.symbols || '')}</p>
+          ${f.conditions ? `<p style="font-size:0.85rem; color:var(--ink-soft); margin:0.4rem 0 0;"><strong>Conditions:</strong> ${UI.escapeHtml(f.conditions)}</p>` : ''}
+          ${f.whenToUse ? `<p style="font-size:0.85rem; color:var(--ink-soft); margin:0.4rem 0 0;"><strong>When to use:</strong> ${UI.escapeHtml(f.whenToUse)}</p>` : ''}
+          ${f.commonMistake ? `<p style="font-size:0.85rem; color:var(--red); margin:0.4rem 0 0;"><strong>Common mistake:</strong> ${UI.escapeHtml(f.commonMistake)}</p>` : ''}
+        </div>
+      </div>`;
+  }
+
+  window.__formulaTexStore = [];
+
+  function render() {
+    let list = all;
+    if (activeCourse !== 'all') list = list.filter(x => x.course.slug === activeCourse);
+    window.__formulaTexStore = list.map(x => x.f.formula);
+    const el = document.getElementById('formula-list');
+    el.innerHTML = list.length ? list.map(card).join('') : UI.emptyState('\ud83e\uddee', 'No formulas here yet', 'Try a different course filter.');
+    if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([el]);
+  }
+
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-copy-formula]');
+    if (!btn) return;
+    const idx = +btn.getAttribute('data-copy-formula');
+    LatexTool.copyText(window.__formulaTexStore[idx]);
+    UI.toast('LaTeX copied');
+  });
+
+  App.getCourses().then(async data => {
+    App.mountShell('formulas', onlySlug);
+    const target = onlySlug ? data.courses.find(c => c.slug === onlySlug) : null;
+    App.setBreadcrumbs(onlySlug
+      ? [{ label: 'Home', url: 'index.html' }, { label: target ? target.code : onlySlug, url: Router.courseUrl(onlySlug) }, { label: 'Formula Sheet' }]
+      : [{ label: 'Home', url: 'index.html' }, { label: 'Formula Sheet' }]);
+    document.getElementById('page-heading').textContent = onlySlug ? `${target ? target.code : onlySlug} \u2014 Formula Sheet` : 'Formula Sheet';
+
+    const courses = onlySlug ? data.courses.filter(c => c.slug === onlySlug) : data.courses;
+    const results = await Promise.all(courses.map(c => Content.getFormulas(c.slug).then(d => (d.formulas || []).map(f => ({ f, course: c })))));
+    all = results.flat();
+
+    document.getElementById('page-sub').textContent = all.length ? `${all.length} formulas, organized by chapter.` : 'No formulas have been added yet.';
+
+    if (!onlySlug) {
+      const withF = [...new Set(all.map(x => x.course.slug))].map(s => all.find(x => x.course.slug === s).course);
+      const bar = document.getElementById('course-filter-bar');
+      bar.innerHTML = ['<button class="filter-chip active" data-course="all">All Courses</button>']
+        .concat(withF.map(c => `<button class="filter-chip" data-course="${c.slug}">${UI.escapeHtml(c.code)}</button>`)).join('');
+      bar.addEventListener('click', e => {
+        const chip = e.target.closest('[data-course]');
+        if (!chip) return;
+        activeCourse = chip.getAttribute('data-course');
+        document.querySelectorAll('#course-filter-bar .filter-chip').forEach(c => c.classList.toggle('active', c === chip));
+        render();
+      });
+    }
+    render();
+  });
+</script>
+</body>
+</html>

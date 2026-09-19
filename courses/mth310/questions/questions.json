@@ -1,0 +1,108 @@
+{
+  "course": "MTH 310",
+  "questions": [
+    {
+      "id": "310-d1",
+      "category": "definition",
+      "text": "Define the survival function S(x) and the force of mortality mu(x), and state the relationship between them.",
+      "tags": ["survival function", "force of mortality"],
+      "topicId": "MTH310-CH04-T01",
+      "chapterId": "MTH310-CH04",
+      "difficulty": "easy",
+      "marks": 3
+    },
+    {
+      "id": "310-d2",
+      "category": "definition",
+      "text": "Distinguish between an annuity-immediate and an annuity-due.",
+      "tags": ["annuity"],
+      "topicId": "MTH310-CH02-T01",
+      "chapterId": "MTH310-CH02",
+      "difficulty": "easy",
+      "marks": 3
+    },
+    {
+      "id": "310-t1",
+      "category": "theorem",
+      "text": "Prove the relation a-double-dot(n) = (1+i) a(n).",
+      "tags": ["annuity-due", "annuity-immediate"],
+      "topicId": "MTH310-CH02-T01",
+      "chapterId": "MTH310-CH02",
+      "difficulty": "medium",
+      "marks": 4,
+      "solution": { "status": "complete", "finalAnswer": "See the full proof on the Annuities topic page." }
+    },
+    {
+      "id": "310-past-01",
+      "category": "previous",
+      "text": "S(x) = (7700 - 40x - x^2)/7700: find (a) the limiting age omega, (b) verify it's a valid survival function, (c) the survival function for a life aged 25, (d) the probability of death between 35 and 45 given aged 25, (e) the force of mortality at 50.",
+      "originalText": "Survival function S(x) = (7700\u221240x\u2212x\u00b2)/7700: find (a) the limiting age \u03c9, (b) verify it's a valid survival function, (c) \u2082|q\u2080, (d) survival function for a life aged 25, (e) P(die between 35 and 45 | aged 25), (f) force of mortality at 50.",
+      "tags": ["survival function", "force of mortality", "limiting age"],
+      "topicId": "MTH310-CH04-T01",
+      "chapterId": "MTH310-CH04",
+      "examMeta": { "course": "MTH310", "examType": "Incourse-1", "session": "2023", "year": 2023 },
+      "marks": 9,
+      "difficulty": "hard",
+      "solution": {
+        "status": "complete",
+        "hint": "Find omega by setting S(omega)=0; the survival function for a life already aged 25 uses the conditional ratio S(25+t)/S(25).",
+        "steps": "**(a) Limiting age:** solve $7700-40\\omega-\\omega^2=0 \\iff \\omega^2+40\\omega-7700=0$. By the quadratic formula, $\\omega = \\dfrac{-40+\\sqrt{1600+30800}}{2}=\\dfrac{-40+180}{2}=70$. **(b) Validity:** $S(0)=7700/7700=1$ \\checkmark; $S$ is a downward-opening quadratic in $x$ restricted to $[0,70]$, and $S'(x)=(-40-2x)/7700<0$ throughout, so $S$ is strictly decreasing \\checkmark; $S(70)=0$ \\checkmark \u2014 all survival-function criteria hold on $[0,70]$. **(c/d) Survival function for a life aged 25:** $_tp_{25} = \\dfrac{S(25+t)}{S(25)}$. Compute $S(25)=(7700-1000-625)/7700 = 6075/7700$. **(e) P(die 35\u201345 | aged 25):** this is $_{10}p_{25} - {}_{20}p_{25} = \\dfrac{S(35)-S(45)}{S(25)}$. Compute $S(35)=(7700-1400-1225)/7700=5075/7700$, $S(45)=(7700-1800-2025)/7700=3875/7700$. So the probability is $\\dfrac{5075-3875}{6075} = \\dfrac{1200}{6075} \\approx 0.1975$. **(f) Force of mortality at 50:** $\\mu(x)=\\dfrac{-S'(x)}{S(x)} = \\dfrac{40+2x}{7700-40x-x^2}$; at $x=50$: $\\mu(50)=\\dfrac{40+100}{7700-2000-2500}=\\dfrac{140}{3200}=0.04375$.",
+        "finalAnswer": "\u03c9 = 70; S is valid on [0,70]; S(25)=6075/7700; P(die 35\u201345 | 25) \u2248 0.1975; \u03bc(50) = 0.04375.",
+        "examReady": "Solve S(\u03c9)=0 for the limiting age; check S(0)=1, S decreasing, S(\u03c9)=0 for validity; use S(x+t)/S(x) for conditional survival; use -S'(x)/S(x) for the force of mortality.",
+        "commonMistakes": "Forgetting to divide by S(25) (not S(0)) when computing probabilities conditional on already being alive at 25 \u2014 a very common source of lost marks."
+      }
+    },
+    {
+      "id": "310-past-02",
+      "category": "previous",
+      "text": "Find the discounted and accumulated value at rate i per period of a simple increasing annuity with payments R, 2R, 3R, ..., nR at period ends.",
+      "originalText": "Find the discounted and accumulated value at rate i per period of a simple increasing annuity with payments R, 2R, 3R, \u2026, nR at period ends.",
+      "tags": ["increasing annuity"],
+      "topicId": "MTH310-CH02-T01",
+      "chapterId": "MTH310-CH02",
+      "examMeta": { "course": "MTH310", "examType": "Incourse-1", "session": "2023", "year": 2023 },
+      "marks": 7,
+      "difficulty": "hard",
+      "solution": { "status": "complete", "finalAnswer": "See the full derivation of (Ia)_{n|} on the Annuities topic page." }
+    },
+    {
+      "id": "310-past-03",
+      "category": "previous",
+      "text": "A borrower has a Tk 60,00,000 loan at j_12=15% over 7 years, with an early-repayment penalty of 3 months' payments. After the 15th payment, a bank offers j_12=12%. Should he refinance?",
+      "originalText": "A borrower has a Tk 60,00,000 loan at j\u2081\u2082=15% over 7 years, with an early-repayment penalty of 3 months' payments. After the 15th payment, a bank offers j\u2081\u2082=12%. Should he refinance?",
+      "tags": ["loan refinancing", "amortization", "outstanding balance"],
+      "topicId": "MTH310-CH02-T01",
+      "chapterId": "MTH310-CH02",
+      "examMeta": { "course": "MTH310", "examType": "Incourse-1", "session": "2023", "year": 2023 },
+      "marks": 6,
+      "difficulty": "hard",
+      "solution": {
+        "status": "partial",
+        "hint": "Follow the four-step method: original payment, outstanding balance via the prospective method, new payment on (balance + penalty), then compare.",
+        "steps": "Method (see the fully worked 18,000/4-year version on the Annuities topic page for the identical procedure): (1) original monthly payment $P = 6{,}000{,}000 / a_{\\overline{84}|j}$ at $j=0.15/12=0.0125$; (2) outstanding balance after 15 payments, $B = P\\cdot a_{\\overline{69}|j}$ (69 payments remaining); (3) at the new rate $j'=0.12/12=0.01$, new payment $P' = (B+3P)/a_{\\overline{69}|j'}$ (balance plus the 3-month penalty, re-amortized over the same 69 remaining months); (4) refinance is worthwhile exactly when $P'<P$.",
+        "finalAnswer": "Numerical comparison of P and P' is needed to give a definitive yes/no \u2014 the interest-rate drop (15% \u2192 12%) makes refinancing likely favourable once the penalty is absorbed, but the exact comparison requires evaluating the annuity factors above.",
+        "commonMistakes": "Forgetting to add the 3-month penalty to the outstanding balance before recomputing the new payment \u2014 the penalty must be financed too if the borrower doesn't pay it out of pocket."
+      }
+    },
+    {
+      "id": "310-past-04",
+      "category": "previous",
+      "text": "Define the components of a mortality table and their relationships; find total deaths expected between ages 55-60 given 600 deaths between 55-56 and q_55=0.01001, q_56=0.01038, q_57=0.01081, q_58=0.01122, q_59=0.01172.",
+      "originalText": "Define the components of a mortality table and their relationships; write formulas for probabilities of survival and death. Find total deaths expected between ages 55\u201360 out of a group aged 55, given 600 deaths between 55\u201356 and q\u2085\u2085=0.01001, q\u2085\u2086=0.01038, q\u2085\u2087=0.01081, q\u2085\u2088=0.01122, q\u2085\u2089=0.01172.",
+      "tags": ["life table", "mortality table"],
+      "topicId": "MTH310-CH05-T01",
+      "chapterId": "MTH310-CH05",
+      "examMeta": { "course": "MTH310", "examType": "Incourse-2", "session": "2023\u201324/2024", "year": 2024 },
+      "marks": 8,
+      "difficulty": "hard",
+      "solution": {
+        "status": "complete",
+        "hint": "First recover l_55 from the given death count and q_55, then propagate l_x forward using l_{x+1}=l_x(1-q_x).",
+        "steps": "From $l_{55}\\,q_{55}=600$: $l_{55} = 600/0.01001 \\approx 59{,}940$. Propagate: $l_{56}=l_{55}(1-q_{55})\\approx59{,}940(0.98999)\\approx59{,}340$; $l_{57}=l_{56}(1-q_{56})\\approx59{,}340(0.98962)\\approx58{,}724$; $l_{58}=l_{57}(1-q_{57})\\approx58{,}724(0.98919)\\approx58{,}089$; $l_{59}=l_{58}(1-q_{58})\\approx58{,}089(0.98878)\\approx57{,}438$; $l_{60}=l_{59}(1-q_{59})\\approx57{,}438(0.98828)\\approx56{,}765$. Total deaths between 55 and 60: $l_{55}-l_{60} \\approx 59{,}940-56{,}765 = 3{,}175$.",
+        "finalAnswer": "Approximately 3,175 total deaths expected between ages 55 and 60 (figures rounded at each step; a spreadsheet-precision calculation would refine the final digits).",
+        "examReady": "Recover l_55 from the given death count, propagate l_x = l_{x-1}(1-q_{x-1}) year by year, then total deaths = l_55 - l_60.",
+        "commonMistakes": "Rounding l_x too aggressively at each intermediate step, which compounds into a noticeably different final answer \u2014 keep several decimal places through the recursion."
+      }
+    }
+  ]
+}
